@@ -7,4 +7,4 @@ https://google.github.io/styleguide/jsguide.html
 
 Analizador de código: 
 
-JSLint, http://jshint.com/
+JSHint, http://jshint.com/
