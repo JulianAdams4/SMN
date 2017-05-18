@@ -1,0 +1,30 @@
+{
+  "name": "smn",
+  "version": "1.0.0",
+  "description": "Proyecto de Ingenieria de Software I y II",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulianAdams4/SMN.git"
+  },
+  "author": "Julian Adams <jadams@espol.edu.ec> Joyce Benitez <jebenite@espol.edu.ec> Stalyn Gonzabay <stalgonz@espol.edu.ec> Maria Moreira <mavemore@espol.edu.ec> Ivan Mosquera <imosquer@espol.edu.ec>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulianAdams4/SMN/issues"
+  },
+  "homepage": "https://github.com/JulianAdams4/SMN#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.3",
+    "method-override": "^2.3.8",
+    "mongoose": "^4.9.9",
+    "morgan": "^1.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
