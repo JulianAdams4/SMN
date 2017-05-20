@@ -23,7 +23,7 @@ module.exports = function() {
   //app.set('view engine', 'ejs'); LINEA DE CODIGO QUE ESPECIFICA QUE TEMPLATE SE VA A USAR
   app.set('views', './app/views');
 
-  //require('../app/routes/COLLECTION.routes')(app);
+  require('../app/routes/pacientes.routes')(app);
 
   app.use(express.static('./public'));
 
