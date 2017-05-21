@@ -41,3 +41,16 @@ exports.pacienteById = function(req, res, next, id){
     next();
   });
 };
+
+exports.createPaciente = function(req, res){
+  var paciente = new Paciente(req.body);
+  paciente.save(function(err){
+    if (err) {
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      })
+    } else {
+      res.json(paciente);
+    }
+  });
+};

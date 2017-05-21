@@ -17,4 +17,6 @@ module.exports = function(app) {
   //Autor: Stalyn Gonzabay
   app.param('pacienteId', pacientes.pacienteById);
   
+  app.route('/api/pacientes')
+    .post(pacientes.createPaciente);
 }

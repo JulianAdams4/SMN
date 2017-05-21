@@ -24,7 +24,11 @@ var pacienteSchema = new Schema({
   direccion: String,
   celular: String,
   ocupacion: String,
-  motivoConsulta: String
+  motivoConsulta: String,
+  fechaIngreso: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 mongoose.model('Paciente', pacienteSchema);
