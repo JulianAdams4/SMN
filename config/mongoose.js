@@ -9,8 +9,7 @@ module.exports = function(){
       console.log('Conectado con la base');
     }
   });
-
-  //require('../app/models/COLLECTION.models');
+  require('../app/models/pacientes.model');
 
   return db;
 }
