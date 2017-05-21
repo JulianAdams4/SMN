@@ -54,3 +54,16 @@ exports.createPaciente = function(req, res){
     }
   });
 };
+
+exports.deletePaciente = function(req, res){
+  var pacienteId = req.params.pacienteId;
+  paciente.remove({_id:pacienteId},function(err,paciente){
+    if (err) {
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      })
+    } else {
+      res.json(paciente);
+    }
+  });
+};
