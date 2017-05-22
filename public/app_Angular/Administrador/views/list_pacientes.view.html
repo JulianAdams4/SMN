@@ -1,0 +1,35 @@
+<div class="row" data-ng-controller="PacientesController" data-ng-init="find()">
+  <ul class="nav navbar-right panel_toolbox">
+    <button type="button" class="btn btn-success"><a data-ng-href="#!/pacientes/create">Registrar Paciente</a></button>
+  </ul>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Pacientes</h4>
+                <p class="category">Lista de pacientes registrados</p>
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-striped">
+                    <thead>
+                      <th>#</th>
+                    	<th>Nombres</th>
+                    	<th>Apellidos</th>
+                    	<th>Sexo</th>
+                    	<th>Dirección</th>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="paciente in pacientes">
+                        	<td>{{$index + 1}}</td>
+                        	<td data-ng-bind="paciente.nombres"></td>
+                        	<td data-ng-bind="paciente.apellidos"></td>
+                        	<td data-ng-bind="paciente.sexo"></td>
+                        	<td data-ng-bind="paciente.direccion"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>

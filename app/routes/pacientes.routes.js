@@ -18,5 +18,6 @@ module.exports = function(app) {
   app.param('pacienteId', pacientes.pacienteById);
 
   app.route('/api/pacientes')
+    .get(pacientes.list)
     .post(pacientes.createPaciente);
 }

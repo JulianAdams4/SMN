@@ -42,6 +42,18 @@ exports.pacienteById = function(req, res, next, id){
   });
 };
 
+exports.list = function(req, res){
+  Paciente.find({}, function(err, pacientes){
+    if(err){
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      });
+    } else {
+      res.json(pacientes);
+    }
+  });
+};
+
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
   paciente.save(function(err){

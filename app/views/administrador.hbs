@@ -45,7 +45,7 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text">
-                    Creative Tim
+                    Angie Del Pezo
                 </a>
             </div>
 
@@ -112,7 +112,7 @@
                         <span class="icon-bar bar2"></span>
                         <span class="icon-bar bar3"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dashboard</a>
+                    <a class="navbar-brand">Administración</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -153,6 +153,8 @@
         <div class="content">
             <div class="container-fluid">
               <!--AQUI VA EL CONTENIDO DE LA PÁGINA -->
+							<section ng-view></section>
+
             </div>
         </div>
 
@@ -209,5 +211,14 @@
 
 	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 	<script src="/js/demo.js"></script>
+
+	<!-- Angular -->
+	<script src="/lib/angular/angular.min.js" charset="utf-8"></script>
+	<script src="/lib/angular-route/angular-route.min.js" charset="utf-8"></script>
+
+	<script src="/app_Angular/Administrador/administrador.js" charset="utf-8"></script>
+	<script src="/app_Angular/Administrador/config/pacientes.routes.js" charset="utf-8"></script>
+	<script src="/app_Angular/Administrador/controllers/pacientes.controllers.js" charset="utf-8"></script>
+
 
 </html>
