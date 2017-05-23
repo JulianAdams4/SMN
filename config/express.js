@@ -25,6 +25,7 @@ module.exports = function() {
 
   require('../app/routes/pacientes.routes')(app);
   require('../app/routes/administrador.routes')(app);
+  require('../app/routes/datosControl.routes')(app);
 
   app.use(express.static('./public'));
 
