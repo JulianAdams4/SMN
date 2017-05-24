@@ -7,4 +7,9 @@ module.exports = function(app) {
     .get(datosControl.read);
 
   app.param('datosControlId', datosControl.datosControlById);
+
+  app.route('/api/datosControl')
+    .post(datosControl.createDatosControl);
 }
+
+
