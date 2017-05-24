@@ -69,9 +69,22 @@ exports.createPaciente = function(req, res){
 
 exports.editPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  Paciente.update({_id:pacienteId},function(err,paciente){
+  console.log(req.body);
+  Paciente.findByIdAndUpdate(pacienteId,{
+    $set:{
+      cedula:req.body.cedula,
+      nombres:req.body.nombres,
+      apellidos:req.body.apellidos,
+      fechaNacimiento:req.body.fechaNacimiento,
+      sexo:req.body.sexo,
+      direccion:req.body.direccion,
+      celular:req.body.celular,
+      ocupacion:req.body.ocupacion,
+      motivoConsulta:req.body.motivoConsulta
+    }
+  }, function(err,paciente){
     if (err) {
-      return res.status(400).send({
+      return res.status(404).send({
         message: getErrorMessage(err)
       })
     } else {
