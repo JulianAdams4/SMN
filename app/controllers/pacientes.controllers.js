@@ -67,6 +67,19 @@ exports.createPaciente = function(req, res){
   });
 };
 
+exports.editPaciente = function(req, res){
+  var pacienteId = req.params.pacienteId;
+  Paciente.update({_id:pacienteId},function(err,paciente){
+    if (err) {
+      return res.status(400).send({
+        message: getErrorMessage(err)
+      })
+    } else {
+      res.json(paciente);
+    }
+  });
+};
+
 exports.deletePaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Paciente.remove({_id:pacienteId},function(err,paciente){

@@ -20,4 +20,10 @@ module.exports = function(app) {
   app.route('/api/pacientes')
     .get(pacientes.list)
     .post(pacientes.createPaciente);
+
+  //Sprint 1 : Crear el controlador para editar un paciente
+  //Autor: Verónica Moreira
+  app.route('/api/pacientes/:pacienteId')
+    .get(pacientes.read)
+    .put(pacientes.editPaciente);
 }
