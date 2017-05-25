@@ -10,6 +10,10 @@ var datosControlSchema = new Schema({
     ref: 'Paciente',
     required: true
   },
+  fechaDato: {
+    type: Date,
+    default: Date.now
+  },
   datos:[
     {
       nombreDato:{
@@ -19,10 +23,6 @@ var datosControlSchema = new Schema({
       valorDato:{
         type: SchemaTypes.Double,
         required: 'El valor es obligatorio'
-      },
-      fechaDato: {
-        type: Date,
-        default: Date.now
       },
       unidadDato: {
         type: String,
