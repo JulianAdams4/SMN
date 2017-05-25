@@ -11,5 +11,3 @@ module.exports = function(app) {
   app.route('/api/datosControl')
     .post(datosControl.createDatosControl);
 }
-
-

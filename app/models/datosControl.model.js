@@ -21,5 +21,10 @@ var datosControlSchema = new Schema({
     type: String,
     enum: ['%','mg/L','cm']
   },
+  idPaciente: {
+    type: Schema.Types.ObjectId,
+    ref: 'Paciente',
+    required: true
+  }
 });
 mongoose.model('DatosControl', datosControlSchema);
