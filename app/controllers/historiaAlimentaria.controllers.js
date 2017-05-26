@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Antecedentes = mongoose.model('Antecedentes');
+var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 
 var getErrorMessage = function(err){
   if(err.errors){
@@ -15,40 +15,42 @@ var getErrorMessage = function(err){
   }
 };
 
-exports.antecedentesByPaciente = function(req, res){
+/*Permite obtener los datos de control por id del paciente y se incluye la
+información del paciente con populate*/
+exports.historiaAlimentariaByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  Antecedentes.find({idPaciente:pacienteId}).populate('idPaciente')
-    .exec(function (err, antecedentes) {
+  HistoriaAlimentaria.find({idPaciente:pacienteId}).populate('idPaciente')
+    .exec(function (err, historiaAlimentaria) {
         if (err) {
           return res.status(400).send({
             message: getErrorMessage(err)
           });
         }
-        return res.status(200).json(antecedentes);
+        return res.status(200).json(historiaAlimentaria);
     });
 };
 
 exports.list = function(req, res){
-  Antecedentes.find({}, function(err, antecedentes){
+  HistoriaAlimentaria.find({}, function(err, historiaAlimentaria){
     if(err){
       return res.status(400).send({
         message: getErrorMessage(err)
       });
     } else {
-      res.json(antecedentes);
+      res.json(historiaAlimentaria);
     }
   });
 };
 
-exports.createAntecedente = function(req, res){
-  var antecedentes = new Antecedentes(req.body);
-  antecedentes.save(function(err){
+exports.createHistoriaAlimentaria = function(req, res){
+  var historiaAlimentaria = new HistoriaAlimentaria(req.body);
+  historiaAlimentaria.save(function(err){
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)
       })
     } else {
-      res.json(antecedentes);
+      res.json(historiaAlimentaria);
     }
   });
 };

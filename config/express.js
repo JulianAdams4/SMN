@@ -27,7 +27,8 @@ module.exports = function() {
   require('../app/routes/administrador.routes')(app);
   require('../app/routes/datosControl.routes')(app);
   require('../app/routes/antecedentes.routes')(app);
-  
+  require('../app/routes/historiaAlimentaria.routes')(app);
+
   app.use(express.static('./public'));
 
   return app;
