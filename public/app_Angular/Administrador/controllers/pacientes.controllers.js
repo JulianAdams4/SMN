@@ -3,6 +3,7 @@
 angular.module('administrador').controller('PacientesController',['$scope','$http','$routeParams','$location',
   function($scope, $http, $routeParams, $location) {
     $scope.paciente = {};
+    $scope.idPacienteEdit = '';
     $scope.pacienteEdit = {};
 
     $scope.create = function() {
@@ -31,10 +32,10 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     }
 
     $scope.initEdit = function () {
-      var idPac = $routeParams.idPaciente;
+      $scope.idPacienteEdit = $routeParams.idPaciente;
       $http({
         method: 'GET',
-        url: '/api/pacientes/' + idPac
+        url: '/api/pacientes/' + $scope.idPacienteEdit
       })
       .then(
         function(response){
@@ -50,14 +51,28 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         }, 
         function(errorResponse){
           console.log(errorResponse.data.message);
+          alert("Ha ocurrido un error al obtener la informacion del paciente");
         }
       );
     }
 
     $scope.edit = function () {
-      console.log("Guardar los datos de editado");
+      var idToEdit = $scope.idPacienteEdit;
       var dataFormEdit = $scope.pacienteEdit
-      console.log(dataFormEdit);
+     $http({
+        method: 'PUT',
+        url: '/api/pacientes/' + idToEdit,
+        data: dataFormEdit
+      })
+     .then(
+        function(response){
+          alert("Editado con exito");
+          $location.path("/pacientes")
+        }, 
+        function(errorResponse){
+          alert("Ocurrio un error al editar el paciente");
+        }
+      );
     }
 
   }]);
