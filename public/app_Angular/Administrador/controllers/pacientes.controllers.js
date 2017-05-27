@@ -51,7 +51,14 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         }, 
         function(errorResponse){
           console.log(errorResponse.data.message);
-          alert("Ha ocurrido un error al obtener la informacion del paciente");
+          demo.showCustomNotification(
+            'top', 
+            'right', 
+            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del paciente </h5>', 
+            'danger', 
+            'ti-close', 
+            3000
+          );
         }
       );
     }
@@ -66,11 +73,25 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       })
      .then(
         function(response){
-          alert("Editado con exito");
+          demo.showCustomNotification(
+            'top', 
+            'right', 
+            '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>', 
+            'success', 
+            'ti-check', 
+            3000
+          );
           $location.path("/pacientes")
         }, 
         function(errorResponse){
-          alert("Ocurrio un error al editar el paciente");
+          demo.showCustomNotification(
+            'top', 
+            'right', 
+            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>', 
+            'danger', 
+            'ti-close', 
+            3000
+          );
         }
       );
     }
