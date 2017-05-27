@@ -33,7 +33,7 @@ exports.pacienteById = function(req, res, next, id){
   Paciente.findById(id, function(err, paciente){
     if(err) return next(err);
     if(!paciente){
-      return res.status(400).send({
+      return res.status(404).send({
         message: 'No existe el paciente'
       })
     }

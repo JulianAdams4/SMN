@@ -1,11 +1,12 @@
-<div class="card" data-ng-controller='PacientesController'>
+<div class="card" data-ng-controller='PacientesController' ng-init="initEdit()">
     <div class="header">
-        <h4 class="title">Ingresar Paciente</h4>
+        <h4 class="title">Editar Paciente</h4>
     </div>
     <div class="content">
-        <form data-ng-submit="create()">
+        <form data-ng-submit="edit()">
 
-          <section ng-include="'app_Angular/Administrador/views/form_paciente.view.html'"></section>
+          <section ng-include="'app_Angular/Administrador/views/form_editarpaciente.view.html'">
+          </section>
 
           <div class="text-center">
               <!-- <div class="col-lg-6 col-md-6 col-xs-6 pull-right">
