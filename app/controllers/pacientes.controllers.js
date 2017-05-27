@@ -69,7 +69,6 @@ exports.createPaciente = function(req, res){
 
 exports.editPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  console.log(req.body);
 
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor

@@ -3,7 +3,7 @@
         <h4 class="title">Editar Paciente</h4>
     </div>
     <div class="content">
-        <form data-ng-submit="edit()">
+        <form name="editPacForm" data-ng-submit="edit()">
 
           <section ng-include="'app_Angular/Administrador/views/form_editarpaciente.view.html'">
           </section>
@@ -16,7 +16,7 @@
                   Cancelar
                 </a>
 
-                <button type="submit" class="btn btn-info btn-fill btn-wd">
+                <button type="submit" class="btn btn-info btn-fill btn-wd" ng-disabled="!editPacForm.$valid">
                   Guardar
                 </button> 
 
