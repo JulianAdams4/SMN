@@ -15,16 +15,21 @@ var pacienteSchema = new Schema({
     required: 'Los apellidos son obligatorios'
   },
   fechaNacimiento: {
-    type: Date
+    type: Date,
+    required: 'La fecha de nacimiento son obligatorios'
   },
   sexo: {
     type: String,
-    enum: ['Masculino','Femenino']
+    enum: ['Masculino','Femenino'],
+    required: 'El sexo es obligatorio'
   },
   direccion: String,
   celular: String,
   ocupacion: String,
-  motivoConsulta: String,
+  motivoConsulta: {
+    type: String,
+    required: 'El motivo de consulta es obligatorio'
+  },
   fechaIngreso: {
     type: Date,
     default: Date.now
