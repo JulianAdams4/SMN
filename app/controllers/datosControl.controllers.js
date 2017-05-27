@@ -69,7 +69,12 @@ exports.createDatosControl = function(req, res){
       return res.status(404).send({
         message: getErrorMessage(err)
       })
-    } else {
+    }else if(datosControl.datos.length<=0){
+      return res.status(404).send({
+        message: "No se ingresaron datos de control."
+      })
+    }
+    else {
       return res.json(datosControl);
     }
   });
