@@ -2,13 +2,12 @@ var mongoose = require('mongoose');
 require('mongoose-double')(mongoose);
 
 var Schema = mongoose.Schema;
-var SchemaTypes = mongoose.Schema.Types;
 var datosControlSchema = new Schema({
   //aqui van los campos
   idPaciente: {
     type: Schema.Types.ObjectId,
     ref: 'Paciente',
-    required: true
+    required: 'El dato debe pertenecer a un paciente.',
   },
   fechaDato: {
     type: Date,
@@ -24,7 +23,7 @@ var datosControlSchema = new Schema({
         required: 'El nombre del dato es obligatorio.'
       },
       valorDato:{
-        type: SchemaTypes.Double,
+        type: String,
         required: 'El valor es obligatorio'
       },
       unidadDato: {

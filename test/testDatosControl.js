@@ -15,15 +15,17 @@ chai.use(chaiHttp);
 describe('datosControl', () => {
     beforeEach((done) => {
         DatosControl.remove({}, (err) => { 
+          done();
+          });   
         Paciente.remove({}, (err) => {
           done();
-         });       
-      });     
+         });           
     });
 });
 
 var patId = '';
 describe('/POST datosControl', () => {
+  //EXISTE PACIENTE
   it('Debe guardar los datos de control de un paciente', (done) => {
     var paciente = new Paciente({
           cedula: "0900045780",
@@ -65,23 +67,24 @@ describe('/POST datosControl', () => {
             });
         });
   });
+  //NO EXISTE PACIENTE
   it('No existe un paciente con ese id para los datos de control', (done) => {
     var datosControl = {
         idPaciente: '5928bafb9fa058092098ae88',
-		fechaDato: '2017-04-13',
-		observaciones:'prueba',
-		datos:[
-		  {
-		    nombreDato:'Peso',
-		    valorDato: 150.00,
-		    unidadDato: 'lbs'
-		  },
-		  {
-		    nombreDato:'Altura',
-		    valorDato: 165.00,
-		    unidadDato: 'cm'
-		   }
-		]
+    		fechaDato: '2017-04-13',
+    		observaciones:'prueba',
+    		datos:[
+    		  {
+    		    nombreDato:'Peso',
+    		    valorDato: 150.00,
+    		    unidadDato: 'lbs'
+    		  },
+    		  {
+    		    nombreDato:'Altura',
+    		    valorDato: 165.00,
+    		    unidadDato: 'cm'
+    		   }
+    		]
     }
     chai.request('http://localhost:3000')
         .post('/api/datosControlPaciente/5928bafb9fa058092098ae88')
@@ -91,22 +94,23 @@ describe('/POST datosControl', () => {
           done();
         });
   });
+  //NO INGRESA FECHA DATO
   it('No ingresa fecha de registro del dato de control', (done) => {
     var datosControl = {
         idPaciente: patId,
-		observaciones:'prueba',
-		datos:[
-		  {
-		    nombreDato:'Peso',
-		    valorDato: 150.00,
-		    unidadDato: 'lbs'
-		  },
-		  {
-		    nombreDato:'Altura',
-		    valorDato: 165.00,
-		    unidadDato: 'cm'
-		   }
-		]
+    		observaciones:'prueba',
+    		datos:[
+    		  {
+    		    nombreDato:'Peso',
+    		    valorDato: 150.00,
+    		    unidadDato: 'lbs'
+    		  },
+    		  {
+    		    nombreDato:'Altura',
+    		    valorDato: 165.00,
+    		    unidadDato: 'cm'
+    		   }
+    		]
     }
     chai.request('http://localhost:3000')
         .post('/api/datosControlPaciente/'+patId)
@@ -116,17 +120,99 @@ describe('/POST datosControl', () => {
           done();
         });
   });
+  //NO INGRESA FECHA DATO
+  it('No ingresa observaciones del dato de control', (done) => {
+    var datosControl = {
+        idPaciente: patId,
+        datos:[
+          {
+            nombreDato:'Peso',
+            valorDato: 150.00,
+            unidadDato: 'lbs'
+          }
+        ]
+    }
+    chai.request('http://localhost:3000')
+        .post('/api/datosControlPaciente/'+patId)
+        .send(datosControl)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+  });
+  //NO INGRESA DATO
   it('No ingresa ningún dato de control', (done) => {
     var datosControl = {
         idPaciente: patId,
         fechaDato: '2017-04-13',
-		observaciones:'prueba',
+	     	observaciones:'prueba',
     }
     chai.request('http://localhost:3000')
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
           res.should.have.status(404);
+          done();
+        });
+  });
+  //NO INGRESA NOMBRE DATO
+  it('No ingresa el nombre de un dato de control', (done) => {
+    var datosControl = {
+        idPaciente: patId,
+        fechaDato: '2017-04-13',
+        observaciones:'prueba',
+        datos:[
+          {
+            valorDato: ''+150.00,
+            unidadDato: 'lbs'
+          }
+        ]
+    }
+    chai.request('http://localhost:3000')
+        .post('/api/datosControlPaciente/'+patId)
+        .send(datosControl)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+  });
+  //NO INGRESA NOMBRE DATO
+  it('No ingresa el valor de un dato de control', (done) => {
+    var datosControl = {
+        idPaciente: patId,
+        fechaDato: '2017-04-13',
+        observaciones:'prueba',
+        datos:[
+          {
+            nombre: 'Peso',
+            unidadDato: 'lbs'
+          }
+        ]
+    }
+    chai.request('http://localhost:3000')
+        .post('/api/datosControlPaciente/'+patId)
+        .send(datosControl)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+  });
+  //NO INGRESA UNIDAD DATO
+  it('No ingresa unidad de un dato de control', (done) => {
+    var datosControl = {
+        idPaciente: patId,
+        datos:[
+          {
+            nombreDato:'Complexión',
+            valorDato: 'Pálida',
+          }
+        ]
+    }
+    chai.request('http://localhost:3000')
+        .post('/api/datosControlPaciente/'+patId)
+        .send(datosControl)
+        .end((err, res) => {
+          res.should.have.status(200);
           done();
         });
   });
