@@ -14,6 +14,9 @@ var datosControlSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  observaciones:{
+    type:String,
+  },
   datos:[
     {
       nombreDato:{
@@ -26,9 +29,10 @@ var datosControlSchema = new Schema({
       },
       unidadDato: {
         type: String,
-        enum: ['%','mg/L','cm']
+        enum: ['%','mg/L','cm','lbs']
       }
     }
   ]
 });
 mongoose.model('DatosControl', datosControlSchema);
+

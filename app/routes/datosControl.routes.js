@@ -7,11 +7,11 @@ module.exports = function(app) {
     .get(datosControl.read);
 
   app.route('/api/datosControlPaciente/:pacienteId')
-    .get(datosControl.datosControlByPaciente);
+    .get(datosControl.datosControlByPaciente)
+    .post(datosControl.createDatosControl);
 
   app.param('datosControlId', datosControl.datosControlById);
 
   app.route('/api/datosControl')
-    .post(datosControl.createDatosControl)
     .get(datosControl.list);
 }

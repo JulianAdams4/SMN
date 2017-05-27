@@ -63,14 +63,14 @@ exports.list = function(req, res){
 };
 
 exports.createDatosControl = function(req, res){
-  var datos = new DatosControl(req.body);
-  datos.save(function(err){
+  var datosControl = new DatosControl(req.body);
+  datosControl.save(function(err){
     if (err) {
       return res.status(404).send({
         message: getErrorMessage(err)
       })
     } else {
-      res.json(datos);
+      return res.json(datosControl);
     }
   });
 };
