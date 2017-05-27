@@ -21,7 +21,7 @@ describe('Paciente', () => {
   * Test the /POST route
   */
   describe('/POST paciente', () => {
-	  it('Crea un paciente un éxito', (done) => {
+	  it('Crea un paciente con éxito', (done) => {
 	  	let paciente = {
 	  		cedula: "0975489076",
 	  		nombres: "Nombre Prueba",
@@ -48,11 +48,31 @@ describe('Paciente', () => {
 		      done();
 		    });
 	  });
-		it('Crea un paciente sin éxito', (done) => {
+		it('No crea un paciente por falta de datos obligatorios', (done) => {
 	  	let paciente = {
         direccion: "Direccion prueba",
         celular: "0992426763",
         ocupacion: "Estudiante"
+	  	}
+			chai.request('http://localhost:3000')
+		    .post('/api/pacientes')
+		    .send(paciente)
+		    .end((err, res) => {
+			  	res.should.have.status(400);
+		      done();
+		    });
+	  });
+		it('No crea un paciente por formato de fecha con formato errado', (done) => {
+			let paciente = {
+	  		cedula: "0975489076",
+	  		nombres: "Nombre Prueba",
+	  		apellidos: "Apellido Prueba",
+	  		fechaNacimiento: "19/08/05",
+        sexo: "Masculino",
+        direccion: "Direccion prueba",
+        celular: "0992426763",
+        ocupacion: "Estudiante",
+        motivoConsulta: "Motivo de prueba"
 	  	}
 			chai.request('http://localhost:3000')
 		    .post('/api/pacientes')
