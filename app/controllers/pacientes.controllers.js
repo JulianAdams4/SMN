@@ -59,7 +59,7 @@ exports.createPaciente = function(req, res){
   paciente.save(function(err){
     if (err) {
       return res.status(400).send({
-        message: getErrorMessage(err)
+        message: "Faltan datos obligatorios"
       })
     } else {
       res.json(paciente);
@@ -75,12 +75,12 @@ exports.editPaciente = function(req, res){
     if (err) {
       res.status(500).send({ message: 'Ocurrió un error en el servidor' });
     }
-    
+
     // Paciente no encontrado
     if (!paciente) {
       res.status(404).send({ message: 'Paciente no encontrado' });
     }
-    
+
     // Si existe el campo en el body, se reemplaza
     // caso contrario se deja el valor que estaba
     paciente.cedula = req.body.cedula ? req.body.cedula : paciente.cedula;
@@ -92,7 +92,7 @@ exports.editPaciente = function(req, res){
     paciente.celular = req.body.celular ? req.body.celular : paciente.celular;
     paciente.ocupacion = req.body.ocupacion ? req.body.ocupacion : paciente.ocupacion;
     paciente.motivoConsulta = req.body.motivoConsulta ? req.body.motivoConsulta : paciente.motivoConsulta;
-    
+
     // Guardamos los cambios
     paciente.save( function(err) {
       // Error del servidor

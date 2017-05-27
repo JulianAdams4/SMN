@@ -21,7 +21,7 @@ describe('Paciente', () => {
   * Test the /POST route
   */
   describe('/POST paciente', () => {
-	  it('Paciente guardado con éxito', (done) => {
+	  it('Crea un paciente un éxito', (done) => {
 	  	let paciente = {
 	  		cedula: "0975489076",
 	  		nombres: "Nombre Prueba",
@@ -45,6 +45,20 @@ describe('Paciente', () => {
 			  	res.body.should.have.property('fechaNacimiento');
           res.body.should.have.property('sexo');
           res.body.should.have.property('motivoConsulta');
+		      done();
+		    });
+	  });
+		it('Crea un paciente sin éxito', (done) => {
+	  	let paciente = {
+        direccion: "Direccion prueba",
+        celular: "0992426763",
+        ocupacion: "Estudiante"
+	  	}
+			chai.request('http://localhost:3000')
+		    .post('/api/pacientes')
+		    .send(paciente)
+		    .end((err, res) => {
+			  	res.should.have.status(400);
 		      done();
 		    });
 	  });
