@@ -49,4 +49,35 @@ describe('Paciente', () => {
 		    });
 	  });
   });
+
+
+	describe('/PUT /pacientes/:idPaciente', () => {
+	    it('Actualiza los datos de un paciente con un determinado ID', function(done){
+		  	let paciente = new Paciente({
+		  		cedula: "0900000000",
+		  		nombres: "Julian",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err, patient) => {
+
+		        chai.request('http://localhost:3000')
+		            .put('/api/pacientes/' + patient._id)
+		            .send({ cedula: '0900000001' })
+		            .end(function(err, res){
+		     			res.should.have.status(200);
+		                res.body.should.be.a('object');
+		                res.body.should.have.property('_id').to.deep.equal( String(patient._id) );
+		              	done();
+		            });
+
+		  	});
+	    });
+	});
+
 });
