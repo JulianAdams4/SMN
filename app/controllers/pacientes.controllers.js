@@ -70,26 +70,40 @@ exports.createPaciente = function(req, res){
 exports.editPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   console.log(req.body);
-  Paciente.findByIdAndUpdate(pacienteId,{
-    $set:{
-      cedula:req.body.cedula,
-      nombres:req.body.nombres,
-      apellidos:req.body.apellidos,
-      fechaNacimiento:req.body.fechaNacimiento,
-      sexo:req.body.sexo,
-      direccion:req.body.direccion,
-      celular:req.body.celular,
-      ocupacion:req.body.ocupacion,
-      motivoConsulta:req.body.motivoConsulta
-    }
-  }, function(err,paciente){
+
+  Paciente.findById( pacienteId, function (err, paciente) {
+    // Error del servidor
     if (err) {
-      return res.status(404).send({
-        message: getErrorMessage(err)
-      })
-    } else {
-      res.json(paciente);
+      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
     }
+    
+    // Paciente no encontrado
+    if (!paciente) {
+      res.status(404).send({ message: 'Paciente no encontrado' });
+    }
+    
+    // Si existe el campo en el body, se reemplaza
+    // caso contrario se deja el valor que estaba
+    paciente.cedula = req.body.cedula ? req.body.cedula : paciente.cedula;
+    paciente.nombres = req.body.nombres ? req.body.nombres : paciente.nombres;
+    paciente.apellidos = req.body.apellidos ? req.body.apellidos : paciente.apellidos;
+    paciente.fechaNacimiento = req.body.fechaNacimiento ? req.body.fechaNacimiento : paciente.fechaNacimiento;
+    paciente.sexo = req.body.sexo ? req.body.sexo : paciente.sexo;
+    paciente.direccion = req.body.direccion ? req.body.direccion : paciente.direccion;
+    paciente.celular = req.body.celular ? req.body.celular : paciente.celular;
+    paciente.ocupacion = req.body.ocupacion ? req.body.ocupacion : paciente.ocupacion;
+    paciente.motivoConsulta = req.body.motivoConsulta ? req.body.motivoConsulta : paciente.motivoConsulta;
+    
+    // Guardamos los cambios
+    paciente.save( function(err) {
+      // Error del servidor
+      if (err) {
+        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+      }
+      // Editado con exito
+      res.status(200).json(paciente);
+    });
+
   });
 };
 
