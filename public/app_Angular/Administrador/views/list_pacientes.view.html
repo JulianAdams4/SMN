@@ -16,6 +16,7 @@
                     	<th>Apellidos</th>
                     	<th>Sexo</th>
                     	<th>Dirección</th>
+                        <th>Acciones</th>
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="paciente in pacientes">
@@ -24,6 +25,19 @@
                         	<td data-ng-bind="paciente.apellidos"></td>
                         	<td data-ng-bind="paciente.sexo"></td>
                         	<td data-ng-bind="paciente.direccion"></td>
+                            <td>
+                                <a title="Ver informacion">
+                                    <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>    
+                                </a>
+                                &nbsp;
+                                <a title="Editar paciente" data-ng-href="#!/pacientes/create">
+                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" style="color:green"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Eliminar paciente">
+                                    <i class="fa fa-lg fa-trash-o" aria-hidden="true" style="color:red"></i>    
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
