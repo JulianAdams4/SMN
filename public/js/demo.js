@@ -130,22 +130,41 @@ demo = {
         marker.setMap(map);
     },
 
-	showNotification: function(from, align){
-    	color = Math.floor((Math.random() * 4) + 1);
+  	showNotification: function(from, align){
+      	color = Math.floor((Math.random() * 4) + 1);
 
-    	$.notify({
-        	icon: "ti-gift",
-        	message: "Welcome to <b>Paper Dashboard</b> - a beautiful freebie for every web developer."
+      	$.notify({
+          	icon: "ti-gift",
+          	message: "Welcome to <b>Paper Dashboard</b> - a beautiful freebie for every web developer."
 
-        },{
-            type: type[color],
-            timer: 4000,
-            placement: {
-                from: from,
-                align: align
-            }
-        });
-	},
+          },{
+              type: type[color],
+              timer: 4000,
+              placement: {
+                  from: from,
+                  align: align
+              }
+          });
+  	},
+
+    // Modified by Julian Adams
+    showCustomNotification: function(from, align, customMessage, customType, customIcon, customTimer){
+        color = Math.floor((Math.random() * 4) + 1);
+
+        $.notify({
+            icon: customIcon,
+            message: customMessage
+          },{
+              type: customType,
+              timer: customTimer,
+              placement: {
+                  from: from,
+                  align: align
+              }
+          });
+    },
+
+
     initDocumentationCharts: function(){
     //     	init single simple line chart
         var dataPerformance = {

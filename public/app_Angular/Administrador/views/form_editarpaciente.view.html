@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-md-3 col-sm-3">
+      <div class="form-group" 
+           ng-class="{'has-error': editPacForm.cedula.$invalid && !editPacForm.cedula.$pristine }">
+          <label>Cédula</label>
+          <input type="text" 
+                 class="form-control border-input" 
+                 data-ng-model="pacienteEdit.cedula" 
+                 name="cedula" 
+                 minlength="10" 
+                 maxlength="10" 
+                 onkeypress="return event.charCode>47 && event.charCode<58" 
+                 placeholder="Cédula"
+                 required>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4">
+      <div class="form-group" 
+           ng-class="{'has-error': editPacForm.nombres.$invalid && !editPacForm.nombres.$pristine }">
+          <label>Nombres</label>
+          <input type="text" 
+                 class="form-control border-input" 
+                 name="nombres"  
+                 minlength="2" 
+                 maxlength="50" 
+                 onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
+                 data-ng-model="pacienteEdit.nombres" 
+                 placeholder="Nombres" 
+                 required>
+      </div>
+    </div>
+
+    <div class="col-md-5 col-sm-5">
+      <div class="form-group" 
+           ng-class="{'has-error': editPacForm.apellidos.$invalid && !editPacForm.apellidos.$pristine }">
+          <label>Apellidos</label>
+          <input type="text" 
+                 class="form-control border-input" 
+                 name="apellidos" 
+                 minlength="2" 
+                 maxlength="50" 
+                 onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
+                 data-ng-model="pacienteEdit.apellidos" 
+                 placeholder="Apellidos" 
+                 required>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 col-sm-3">
+      <div class="form-group">
+        <label>Sexo:</label>
+        <select class="form-control border-input" data-ng-model="pacienteEdit.sexo" required>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4">
+      <div class="form-group" 
+           ng-class="{'has-error': editPacForm.nacimiento.$invalid && !editPacForm.nacimiento.$pristine }">
+        <label>Fecha de Nacimiento</label>
+        <input type="Date" 
+               class="form-control border-input" 
+               name="nacimiento" 
+               data-ng-model="pacienteEdit.fechaNacimiento"
+               required>
+      </div>
+    </div>
+
+    <div class="col-md-5 col-sm-5">
+      <div class="form-group" 
+           ng-class="{'has-error': editPacForm.celular.$invalid && !editPacForm.celular.$pristine }">
+        <label>Celular</label>
+        <input type="text" 
+               class="form-control border-input" 
+               name="celular" 
+               data-ng-model="pacienteEdit.celular" 
+               minlength="10" 
+               onkeypress="return event.charCode>47 && event.charCode<58" 
+               placeholder="Celular" 
+               required>
+      </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-sm-4">
+        <div class="form-group">
+            <label>Ocupación</label>
+            <input type="text" 
+                   class="form-control border-input" 
+                   maxlength="50" 
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
+                   data-ng-model="pacienteEdit.ocupacion" 
+                   placeholder="Ocupación">
+        </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+        <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" 
+                   class="form-control border-input" 
+                   maxlength="200" 
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)" 
+                   data-ng-model="pacienteEdit.direccion" 
+                   placeholder="Dirección">
+        </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="form-group" 
+         ng-class="{'has-error': editPacForm.motivo.$invalid && !editPacForm.motivo.$pristine }">
+        <label>Motivo de la Consulta</label>
+        <input type="text" 
+               class="form-control border-input" 
+               name="motivo" 
+               minlength="5" 
+               maxlength="300" 
+               onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
+               data-ng-model="pacienteEdit.motivoConsulta" 
+               placeholder="Motivo de la consulta"
+               required>
+    </div>
+  </div>
+</div>
