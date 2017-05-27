@@ -64,9 +64,8 @@ describe('Paciente', () => {
 	  });
   });
 
-
 	describe('/PUT /pacientes/:idPaciente', () => {
-	    it('Actualiza los datos de un paciente con un determinado ID', function(done){
+		it('Actualiza los datos de un paciente con un determinado ID', function(done){
 		  	let paciente = new Paciente({
 		  		cedula: "0900000000",
 		  		nombres: "Julian",
