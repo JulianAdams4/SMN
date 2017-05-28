@@ -19,7 +19,7 @@ var getErrorMessage = function(err){
 información del paciente con populate*/
 exports.historiaAlimentariaByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  HistoriaAlimentaria.find({idPaciente:pacienteId}).populate('idPaciente')
+  HistoriaAlimentaria.find({idPaciente: pacienteId, borrado: false}).populate('idPaciente')
     .exec(function (err, historiaAlimentaria) {
         if (err) {
           return res.status(400).send({
@@ -31,7 +31,7 @@ exports.historiaAlimentariaByPaciente = function(req, res){
 };
 
 exports.list = function(req, res){
-  HistoriaAlimentaria.find({}, function(err, historiaAlimentaria){
+  HistoriaAlimentaria.find({borrado: false}, function(err, historiaAlimentaria){
     if(err){
       return res.status(400).send({
         message: getErrorMessage(err)
@@ -53,4 +53,20 @@ exports.createHistoriaAlimentaria = function(req, res){
       res.json(historiaAlimentaria);
     }
   });
+};
+
+exports.deleteHistoria = function(req, res){
+  var historiaAlimentariaId = req.params.historiaAlimentariaId;
+  console.log(historiaAlimentariaId);
+  HistoriaAlimentaria.findByIdAndUpdate(historiaAlimentariaId, {
+    $set: {
+      borrado: true
+    }
+  }, function(err, historiaAlimentaria) {
+        if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        } else {
+            res.status(200).json(historiaAlimentaria);
+        }
+    });
 };

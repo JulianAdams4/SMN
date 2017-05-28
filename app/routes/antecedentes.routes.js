@@ -9,4 +9,7 @@ module.exports = function(app) {
 
   app.route('/api/antecedentesPaciente/:pacienteId')
     .get(antecedentes.antecedentesByPaciente);
+
+  app.route('/api/antecedentes/:antecedenteId')
+    .delete(antecedentes.deleteAntecedente);
 }

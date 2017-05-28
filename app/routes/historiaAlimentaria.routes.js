@@ -7,6 +7,9 @@ module.exports = function(app) {
     .post(historiaAlimentaria.createHistoriaAlimentaria)
     .get(historiaAlimentaria.list);
 
+  app.route('/api/historiaAlimentaria/:historiaAlimentariaId')
+    .delete(historiaAlimentaria.deleteHistoria);
+
   app.route('/api/historiaAlimentariaPaciente/:pacienteId')
     .get(historiaAlimentaria.historiaAlimentariaByPaciente);
 }

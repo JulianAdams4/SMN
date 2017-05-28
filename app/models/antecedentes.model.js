@@ -6,6 +6,10 @@ var antecedenteSchema = new Schema({
     ref: 'Paciente',
     required: true
   },
+  borrado: {
+    type: Boolean,
+    default: false
+  },
   alteracionApetito: Boolean,
   nausea: Boolean,
   vomito: Boolean,

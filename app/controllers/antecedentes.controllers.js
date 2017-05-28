@@ -17,7 +17,7 @@ var getErrorMessage = function(err){
 
 exports.antecedentesByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  Antecedentes.find({idPaciente:pacienteId}).populate('idPaciente')
+  Antecedentes.find({idPaciente:pacienteId, borrado: false}).populate('idPaciente')
     .exec(function (err, antecedentes) {
         if (err) {
           return res.status(400).send({
@@ -29,7 +29,7 @@ exports.antecedentesByPaciente = function(req, res){
 };
 
 exports.list = function(req, res){
-  Antecedentes.find({}, function(err, antecedentes){
+  Antecedentes.find({borrado:false}, function(err, antecedentes){
     if(err){
       return res.status(400).send({
         message: getErrorMessage(err)
@@ -51,4 +51,19 @@ exports.createAntecedente = function(req, res){
       res.json(antecedentes);
     }
   });
+};
+
+exports.deleteAntecedente = function(req, res){
+  var antecedenteId = req.params.antecedenteId;
+  Antecedentes.findByIdAndUpdate(antecedenteId, {
+    $set: {
+      borrado: true
+    }
+  }, function(err, antecedente) {
+        if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        } else {
+            res.status(200).json(antecedente);
+        }
+    });
 };

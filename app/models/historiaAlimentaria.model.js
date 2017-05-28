@@ -4,7 +4,11 @@ var historiaAlimentariaSchema = new Schema({
   idPaciente: {
     type: Schema.Types.ObjectId,
     ref: 'Paciente',
-    required: true
+    required: 'El dato debe pertenecer a un paciente.'
+  },
+  borrado: {
+    type: Boolean,
+    default: false
   },
   comidasAlDia: Number,
   preparadoPor: String,
