@@ -1,0 +1,47 @@
+<div class="row" data-ng-controller="DatosController" data-ng-init="find()">
+    <ul class="nav navbar-right panel_toolbox">
+      <button type="button" class="btn btn-success"><a data-ng-href="#!">Registrar Datos de control</a></button>
+    </ul>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Datos de Control</h4>
+                <p class="category">Lista de datos de control</p>
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-striped">
+                    <thead>
+                      <th>#</th>
+                    	<th>Nombres</th>
+                    	<th>Apellidos</th>
+                    	<th>Fecha registro datos de control</th>
+                      <th>Acciones</th>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="dato in datosControl">
+                        	<td>{{$index + 1}}</td>
+                        	<td data-ng-bind="dato.idPaciente.nombres"></td>
+                        	<td data-ng-bind="dato.idPaciente.apellidos"></td>
+                        	<td data-ng-bind="dato.fechaDato"></td>
+                            <td>
+                                <a title="Ver informacion">
+                                    <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Editar dato" data-ng-href="#!">
+                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" style="color:green"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Eliminar dato" data-ng-href="#!" ng-click="">
+                                    <i class="fa fa-lg fa-trash-o" aria-hidden="true" style="color:red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>

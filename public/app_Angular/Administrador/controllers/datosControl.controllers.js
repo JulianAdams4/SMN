@@ -19,11 +19,13 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     };
 
     $scope.find = function(){
+      $scope.idPaciente = $routeParams.idPaciente;
       $http({
         method: 'GET',
-        url: 'api/datosControlPaciente/:pacienteId'
+        url: 'api/datosControlPaciente/'+$scope.idPaciente
       }).then(function(response){
         $scope.datosControl = response.data;
+        console.log(response.data);
       }, function(errorResponse){
         console.log(errorResponse.data.message);
       })

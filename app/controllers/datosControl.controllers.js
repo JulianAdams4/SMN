@@ -67,7 +67,7 @@ exports.createDatosControl = function(req, res){
   datosControl.save(function(err){
     if (err) {
       return res.status(404).send({
-        message: getErrorMessage(err)
+        message: "Error del servidor"
       })
     }else if(datosControl.datos.length<=0){
       return res.status(404).send({
