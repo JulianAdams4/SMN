@@ -5,6 +5,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.paciente = {};
     $scope.idPacienteEdit = '';
     $scope.pacienteEdit = {};
+    $scope.idPacienteDelete = '';
 
     $scope.create = function() {
       console.log($scope.paciente);
@@ -96,8 +97,9 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       );
     }
 
-    $scope.delete = function () {
-      var idPacienteDelete = $routeParams.idPaciente;
+    $scope.delete = function (idPaciente) {
+      var idPacienteDelete = idPaciente;
+      console.log($scope.idPacienteDelete);
      $http({
         method: 'DELETE',
         url: '/api/pacientes/' + idPacienteDelete
