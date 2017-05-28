@@ -27,7 +27,7 @@
                         	<td data-ng-bind="paciente.direccion"></td>
                             <td>
                                 <a title="Ver informacion">
-                                    <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i> 
+                                    <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
                                 </a>
                                 &nbsp;
                                 <a title="Editar paciente" data-ng-href="#!/pacientes/edit/{{paciente._id}}">
@@ -35,7 +35,11 @@
                                 </a>
                                 &nbsp;
                                 <a title="Eliminar paciente" data-ng-href="#!/pacientes/delete/{{paciente._id}}" ng-click="delete(paciente._id)">
-                                    <i class="fa fa-lg fa-trash-o" aria-hidden="true" style="color:red"></i>    
+                                    <i class="fa fa-lg fa-trash-o" aria-hidden="true" style="color:red"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Ver datos de control" data-ng-href="#!/pacientes/listDatosControl/{{paciente._id}}">
+                                    <i class="fa fa-lg fa-file-o" aria-hidden="true" style="color:black"></i>
                                 </a>
                             </td>
                         </tr>
