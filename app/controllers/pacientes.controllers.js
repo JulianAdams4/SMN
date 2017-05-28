@@ -43,7 +43,7 @@ exports.pacienteById = function(req, res, next, id){
 };
 
 exports.list = function(req, res){
-  Paciente.find({}, function(err, pacientes){
+  Paciente.find({borrado: false}, function(err, pacientes){
     if(err){
       return res.status(400).send({
         message: getErrorMessage(err)
@@ -108,13 +108,15 @@ exports.editPaciente = function(req, res){
 
 exports.deletePaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  Paciente.remove({_id:pacienteId},function(err,paciente){
-    if (err) {
-      return res.status(400).send({
-        message: getErrorMessage(err)
-      })
-    } else {
-      res.json(paciente);
+  Paciente.findByIdAndUpdate(pacienteId, {
+    $set: {
+      borrado: true
     }
-  });
+  }, function(err, paciente) {
+        if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        } else {
+            res.status(200).json(paciente);
+        }
+    });
 };

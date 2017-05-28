@@ -34,6 +34,10 @@ var pacienteSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  borrado: {
+    type: Boolean,
+    default: false
+  },
 });
 
 mongoose.model('Paciente', pacienteSchema);
