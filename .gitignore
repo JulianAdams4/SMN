@@ -38,3 +38,6 @@ jspm_packages
 
 # Datos de Desarrollo
 config/env/*
+
+#VScode settings
+.VScode

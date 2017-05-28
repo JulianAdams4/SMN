@@ -96,4 +96,35 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       );
     }
 
+    $scope.delete = function () {
+      var idPacienteDelete = $routeParams.idPaciente;
+     $http({
+        method: 'DELETE',
+        url: '/api/pacientes/' + idPacienteDelete
+      })
+     .then(
+        function(response){
+          demo.showCustomNotification(
+            'top', 
+            'right', 
+            '<h5> ¡Paciente eliminado <b>exitosamente</b>! </h5>', 
+            'success', 
+            'ti-check', 
+            3000
+          );
+          $location.path("/pacientes")
+        }, 
+        function(errorResponse){
+          demo.showCustomNotification(
+            'top', 
+            'right', 
+            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>', 
+            'danger', 
+            'ti-close', 
+            3000
+          );
+        }
+      );
+    }
+
   }]);
