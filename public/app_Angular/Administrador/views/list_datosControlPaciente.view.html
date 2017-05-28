@@ -6,23 +6,19 @@
         <div class="card">
             <div class="header">
                 <h4 class="title">Datos de Control</h4>
-                <p class="category">Lista de datos de control</p>
+                <p class="category">Lista de datos de control del paciente {{datosControl[0].idPaciente.nombres}} {{datosControl[0].idPaciente.apellidos}}</p>
             </div>
-            <div class="content table-responsive table-full-width">
+            <div id="datatable-buttons" datatable='ng' class="content table-responsive table-full-width">
                 <table class="table table-striped">
                     <thead>
                       <th>#</th>
-                    	<th>Nombres</th>
-                    	<th>Apellidos</th>
                     	<th>Fecha registro datos de control</th>
                       <th>Acciones</th>
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="dato in datosControl">
                         	<td>{{$index + 1}}</td>
-                        	<td data-ng-bind="dato.idPaciente.nombres"></td>
-                        	<td data-ng-bind="dato.idPaciente.apellidos"></td>
-                        	<td data-ng-bind="dato.fechaDato"></td>
+                        	<td data-ng-bind="dato.fechaDato | date:'dd/MM/yyyy'"></td>
                             <td>
                                 <a title="Ver informacion">
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>

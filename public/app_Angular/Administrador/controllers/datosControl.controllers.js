@@ -25,7 +25,6 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         url: 'api/datosControlPaciente/'+$scope.idPaciente
       }).then(function(response){
         $scope.datosControl = response.data;
-        console.log(response.data);
       }, function(errorResponse){
         console.log(errorResponse.data.message);
       })
