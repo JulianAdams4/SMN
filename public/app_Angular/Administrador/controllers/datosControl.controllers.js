@@ -2,6 +2,7 @@
 
 angular.module('administrador').controller('DatosController',['$scope','$http','$routeParams','$location',
   function($scope, $http, $routeParams, $location) {
+    $scope.idPaciente = '';
     $scope.datosControl = {};
 
     $scope.create = function() {
@@ -29,4 +30,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         console.log(errorResponse.data.message);
       })
     }
+
+    
+    
   }]);
