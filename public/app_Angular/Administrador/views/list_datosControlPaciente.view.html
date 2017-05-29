@@ -1,6 +1,6 @@
 <div class="row" data-ng-controller="DatosController" data-ng-init="find()">
     <ul class="nav navbar-right panel_toolbox">
-      <button type="button" class="btn btn-success"><a data-ng-href="#!">Registrar Datos de control</a></button>
+      <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listDatosControl/{{idPaciente}}/create"> Registrar dato de control </a>
     </ul>
     <div class="col-md-12">
         <div class="card">
@@ -11,9 +11,9 @@
             <div id="datatable-buttons" datatable='ng' class="content table-responsive table-full-width">
                 <table class="table table-striped">
                     <thead>
-                      <th>#</th>
+                        <th>#</th>
                     	<th>Fecha registro datos de control</th>
-                      <th>Acciones</th>
+                        <th>Acciones</th>
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="dato in datosControl">

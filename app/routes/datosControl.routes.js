@@ -8,7 +8,8 @@ module.exports = function(app) {
 
   app.route('/api/datosControlPaciente/:pacienteId')
     .get(datosControl.datosControlByPaciente)
-    .post(datosControl.createDatosControl);
+    .post(datosControl.createDatosControl)
+    .delete(datosControl.borrarDatosControlByPaciente);
 
   app.param('datosControlId', datosControl.datosControlById);
 
