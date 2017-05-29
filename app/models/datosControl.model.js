@@ -31,7 +31,11 @@ var datosControlSchema = new Schema({
         enum: ['%','mg/L','cm','lbs']
       }
     }
-  ]
+  ],
+  borrado: {
+    type: Boolean,
+    default: false
+  }
 });
 mongoose.model('DatosControl', datosControlSchema);
 

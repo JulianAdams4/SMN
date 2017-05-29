@@ -64,18 +64,32 @@ exports.list = function(req, res){
 
 exports.createDatosControl = function(req, res){
   var datosControl = new DatosControl(req.body);
-  datosControl.save(function(err){
+  datosControl.save( function(err){
     if (err) {
-      return res.status(404).send({
+      return res.status(500).send({
         message: "Error del servidor"
-      })
-    }else if(datosControl.datos.length<=0){
-      return res.status(404).send({
-        message: "No se ingresaron datos de control."
       })
     }
     else {
       return res.json(datosControl);
     }
+  });
+};
+
+exports.borrarDatosControlByPaciente = function (req, res) {
+  var _idPaciente = req.params.pacienteId;
+  DatosControl.update(
+    { idPaciente: _idPaciente }, 
+    { $set:{ borrado: true } }, 
+    function (err, datos) {
+      if (err) {
+        res.status(500).send({
+          message: getErrorMessage(err)
+        });
+      }
+      // No errors
+      return res.status(204).json({
+        message: "Datos eliminados exitosamente"
+      });
   });
 };

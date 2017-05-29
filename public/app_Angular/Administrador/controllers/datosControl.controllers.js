@@ -67,7 +67,6 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         observaciones: $scope.datosControlForm.observaciones,
         datos: $scope.listaDatos
       }
-      console.log(data);
       
       $http({
         method: 'POST',
