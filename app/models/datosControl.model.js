@@ -14,7 +14,7 @@ var datosControlSchema = new Schema({
     default: Date.now
   },
   observaciones:{
-    type:String,
+    type:String
   },
   datos:[
     {

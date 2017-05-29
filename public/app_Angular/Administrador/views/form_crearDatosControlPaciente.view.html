@@ -38,44 +38,60 @@
     <div class="col-md-2 col-sm-2"></div>
 
     <div class="col-md-8 col-sm-8" style="padding:0px;">
-      <div class="col-md-6 col-sm-6" style="padding-left:0px;">
-        <div class="form-group">
-          <label>Nombre del dato:</label>
-          <input type="text" 
-                 class="form-control border-input" 
-                 maxlength="50" 
-                 onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
-                 data-ng-model="datosControlForm.ocupacion" 
-                 placeholder="Nombre" 
-                 required>
+      <div class="col-md-12 col-sm-12" ng-repeat="dato in listaDatos" style="padding:0px; margin:0px;">
+        
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group" ng-class="{'has-error': createControlD.nombreDato.$invalid && !createControlD.nombreDato.$pristine }">
+            <label>Nombre del dato:</label>
+            <input type="text" 
+                   class="form-control border-input" 
+                   name="nombreDato" 
+                   maxlength="50" 
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
+                   data-ng-model="dato.nombreDato" 
+                   placeholder="Nombre" 
+                   required>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-3 col-sm-3">
-        <div class="form-group">
-          <label>Valor:</label>
-          <input type="text" 
-                 class="form-control border-input" 
-                 maxlength="200" 
-                 onkeypress="return event.charCode>47 && event.charCode<58" 
-                 data-ng-model="datosControlForm.valorDato" 
-                 placeholder="Valor" 
-                 required>
+        <div class="col-md-3 col-sm-3">
+          <div class="form-group" ng-class="{'has-error': createControlD.valorDato.$invalid && !createControlD.valorDato.$pristine }">
+            <label>Valor:</label>
+            <input type="text" 
+                   class="form-control border-input" 
+                   name="valorDato" 
+                   maxlength="200" 
+                   onkeypress="return event.charCode>47 && event.charCode<58" 
+                   data-ng-model="dato.valorDato" 
+                   placeholder="Valor" 
+                   required>
+          </div>
         </div>
-      </div>
 
-      <div class="col-md-3 col-sm-3" style="padding-right:0px;">
-        <div class="form-group">
-          <label>Unidad:</label>
-          <select class="form-control border-input" 
-                  data-ng-model="datosControlForm.unidadDato" 
-                  required>
-            <option value="%"> % </option>
-            <option value="mg/L"> mg/L </option>
-            <option value="cm"> cm </option>
-            <option value="lbs"> lbs </option>
-          </select>
+        <div class="col-md-3 col-sm-3">
+          <div class="form-group" ng-class="{'has-error': createControlD.unidadDato.$invalid && !createControlD.unidadDato.$pristine }">
+            <label>Unidad:</label>
+            <select class="form-control border-input" 
+                    name="unidadDato" 
+                    data-ng-model="dato.unidadDato" 
+                    required>
+              <option value="%"> % </option>
+              <option value="mg/L"> mg/L </option>
+              <option value="cm"> cm </option>
+              <option value="lbs"> lbs </option>
+            </select>
+          </div>
         </div>
+
+        <div class="col-md-2 col-sm-2" style="height:100%">
+          <div class="form-group">
+            <label>Eliminar:</label>
+            <button class="btn btn-danger" ng-click="removerDato(dato)">
+              <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -84,7 +100,7 @@
     <div class="col-md-12 col-sm-12 text-center" style="margin-bottom:15px;">
       <a type="button" 
          class="btn btn-info btn-fill btn-wd" 
-         data-ng-click="agregarCampos()"> 
+         data-ng-click="agregarDato()"> 
          <i class="fa fa-lg fa-plus" aria-hidden="true"></i> &nbsp;
          Agregar nuevo dato 
       </a>
