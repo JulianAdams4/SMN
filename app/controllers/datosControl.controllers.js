@@ -38,7 +38,7 @@ exports.datosControlById = function(req, res, next, id){
 información del paciente con populate*/
 exports.datosControlByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  DatosControl.find({idPaciente:pacienteId}).populate('idPaciente')
+  DatosControl.find({idPaciente:pacienteId, borrado:false}).populate('idPaciente')
     .exec(function (err, datosControl) {
         if (err) {
           return res.status(400).send({
