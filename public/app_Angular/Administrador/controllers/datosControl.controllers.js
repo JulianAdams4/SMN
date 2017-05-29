@@ -54,7 +54,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
 
 
     $scope.removerDato = function($index){
-      if ( $scope.listaDatos.length>0 ){
+      if ( $scope.listaDatos.length>1 ){
         $scope.listaDatos.splice($index, 1);
       }
     }
