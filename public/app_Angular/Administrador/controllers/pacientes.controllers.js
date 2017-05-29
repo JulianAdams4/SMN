@@ -17,7 +17,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         //$scope.pacientes.push(response.data);
         $location.path('pacientes');
       }, function(errorResponse){
-        console.log(error.Response.data.message);
+        console.log(errorResponse.data.message);
       });
     };
 
@@ -49,15 +49,15 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           $scope.pacienteEdit.ocupacion = response.data.ocupacion;
           $scope.pacienteEdit.direccion = response.data.direccion;
           $scope.pacienteEdit.motivoConsulta = response.data.motivoConsulta;
-        }, 
+        },
         function(errorResponse){
           console.log(errorResponse.data.message);
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del paciente </h5>', 
-            'danger', 
-            'ti-close', 
+            'top',
+            'right',
+            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del paciente </h5>',
+            'danger',
+            'ti-close',
             3000
           );
         }
@@ -75,22 +75,22 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
      .then(
         function(response){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>', 
-            'success', 
-            'ti-check', 
+            'top',
+            'right',
+            '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
             3000
           );
           $location.path("/pacientes")
-        }, 
+        },
         function(errorResponse){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>', 
-            'danger', 
-            'ti-close', 
+            'top',
+            'right',
+            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>',
+            'danger',
+            'ti-close',
             3000
           );
         }
@@ -107,22 +107,22 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
      .then(
         function(response){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> ¡Paciente eliminado <b>exitosamente</b>! </h5>', 
-            'success', 
-            'ti-check', 
+            'top',
+            'right',
+            '<h5> ¡Paciente eliminado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
             3000
           );
           $location.path("/pacientes")
-        }, 
+        },
         function(errorResponse){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>', 
-            'danger', 
-            'ti-close', 
+            'top',
+            'right',
+            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>',
+            'danger',
+            'ti-close',
             3000
           );
         }
