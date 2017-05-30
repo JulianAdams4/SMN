@@ -8,7 +8,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.idPacienteDelete = '';
 
     $scope.create = function() {
-      console.log($scope.paciente);
       $http({
         method: 'POST',
         url: '/api/pacientes',
@@ -17,7 +16,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         //$scope.pacientes.push(response.data);
         $location.path('pacientes');
       }, function(errorResponse){
-        console.log(errorResponse.data.message);
+        demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       });
     };
 
@@ -28,7 +27,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       }).then(function(response){
         $scope.pacientes = response.data;
       }, function(errorResponse){
-        console.log(errorResponse.data.message);
+        demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })
     }
 
@@ -52,14 +51,15 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         },
         function(errorResponse){
           console.log(errorResponse.data.message);
-          demo.showCustomNotification(
+          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          /*demo.showCustomNotification(
             'top',
             'right',
             '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del paciente </h5>',
             'danger',
             'ti-close',
             3000
-          );
+          );*/
         }
       );
     }

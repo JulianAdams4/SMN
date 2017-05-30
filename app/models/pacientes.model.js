@@ -4,31 +4,31 @@ var pacienteSchema = new Schema({
   cedula: {
     type: String,
     unique: true,
-    required: 'La cédula es obligatoria'
+    required: '<i class="fa ti-alert"></i>La cédula es <b>obligatoria</b>'
   },
   nombres:{
     type: String,
-    required: 'Los nombres son obligatorios'
+    required: '<i class="fa ti-alert"></i>Los nombres son <b>obligatorios</b>'
   },
   apellidos:{
     type: String,
-    required: 'Los apellidos son obligatorios'
+    required: '<i class="fa ti-alert"></i>Los apellidos son <b>obligatorios</b>'
   },
   fechaNacimiento: {
     type: Date,
-    required: 'La fecha de nacimiento son obligatorios'
+    required: '<i class="fa ti-alert"></i>La fecha de nacimiento es <b>obligatoria</b>'
   },
   sexo: {
     type: String,
     enum: ['Masculino','Femenino'],
-    required: 'El sexo es obligatorio'
+    required: '<i class="fa ti-alert"></i>El campo sexo es <b>obligatorio</b>'
   },
   direccion: String,
   celular: String,
   ocupacion: String,
   motivoConsulta: {
     type: String,
-    required: 'El motivo de consulta es obligatorio'
+    required: '<i class="fa ti-alert"></i>El motivo de consulta es <b>obligatorio</b>'
   },
   fechaIngreso: {
     type: Date,

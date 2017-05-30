@@ -6,16 +6,32 @@ var Paciente = mongoose.model('Paciente');
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
 //Autor: Stalyn Gonzabay
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+// Crear un nuevo método controller manejador de errores
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
+
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+  if (err.code) {
+    switch (err.code) {
+      // Si un eror de index único ocurre configurar el mensaje de error
+      case 11000:
+      case 11001:
+        message = '<i class="fa ti-alert"></i>El paciente ya existe';
+        break;
+      // Si un error general ocurre configurar el mensaje de error
+      default:
+        message = '<i class="fa ti-alert"></i>Se ha producido un error';
     }
   } else {
-    return 'Error de servidor desconocido';
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
+    }
   }
+
+  // Devolver el mensaje de error
+  return message;
 };
 
 //Sprint 1 : Crear el controlador para consultar un paciente
@@ -31,10 +47,16 @@ exports.read = function(req, res){
 //Autor: Stalyn Gonzabay
 exports.pacienteById = function(req, res, next, id){
   Paciente.findById(id, function(err, paciente){
-    if(err) return next(err);
+    if(err){
+      return res.status(500).send({
+        message: getErrorMessage(err),
+        type: 'danger'
+      })
+    }
     if(!paciente){
       return res.status(404).send({
-        message: 'No existe el paciente'
+        message: '<i class="fa ti-alert"></i>No existe el paciente',
+        type: 'danger'
       })
     }
     req.paciente = paciente;
@@ -46,7 +68,8 @@ exports.list = function(req, res){
   Paciente.find({borrado: false}, function(err, pacientes){
     if(err){
       return res.status(400).send({
-        message: getErrorMessage(err)
+        message: getErrorMessage(err),
+        type: 'danger'
       });
     } else {
       res.json(pacientes);
@@ -59,7 +82,8 @@ exports.createPaciente = function(req, res){
   paciente.save(function(err){
     if (err) {
       return res.status(400).send({
-        message: "Faltan datos obligatorios"
+        message: getErrorMessage(err),
+        type: "danger"
       })
     } else {
       res.json(paciente);
@@ -73,12 +97,15 @@ exports.editPaciente = function(req, res){
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+      res.status(500).send({
+        message:  getErrorMessage(err),
+        type: 'danger'
+      });
     }
 
     // Paciente no encontrado
     if (!paciente) {
-      res.status(404).send({ message: 'Paciente no encontrado' });
+      res.status(404).send({ message: 'Paciente no encontrado', type: 'danger' });
     }
 
     // Si existe el campo en el body, se reemplaza

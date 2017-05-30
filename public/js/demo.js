@@ -147,6 +147,21 @@ demo = {
           });
   	},
 
+    mostrarNotificacion: function(tipo, mensaje){
+
+      	$.notify({
+          	message: mensaje
+
+          },{
+              type: tipo,
+              timer: 4000,
+              placement: {
+                  from: 'top',
+                  align: 'right'
+              }
+          });
+  	},
+
     // Modified by Julian Adams
     showCustomNotification: function(from, align, customMessage, customType, customIcon, customTimer){
         color = Math.floor((Math.random() * 4) + 1);
