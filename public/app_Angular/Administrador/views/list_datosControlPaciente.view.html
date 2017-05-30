@@ -1,19 +1,35 @@
 <div class="row" data-ng-controller="DatosController" data-ng-init="find()">
-    <ul class="nav navbar-right panel_toolbox">
-      <button type="button" class="btn btn-success"><a data-ng-href="#!">Registrar Datos de control</a></button>
+    <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
+      <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listDatosControl/{{idPaciente}}/create">
+        <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
+        Registrar dato de control
+      </a>
     </ul>
     <div class="col-md-12">
         <div class="card">
             <div class="header">
+              <div class="row">
+                <div class="col-md-10">
                 <h4 class="title">Datos de Control</h4>
                 <p class="category">Lista de datos de control del paciente {{datosControl[0].idPaciente.nombres}} {{datosControl[0].idPaciente.apellidos}}</p>
+              </div>
+                <div class="col-md-2">
+                <div class="text-right">
+                  <a type="button" class="btn btn-info btn-fill btn-wd" style="margin-right: 1%" data-ng-href="#!/pacientes">
+                    <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i> &nbsp;
+                    Regresar
+                  </a>
+              </div>
+              </div>
             </div>
+            </div>
+
             <div id="datatable-buttons" datatable='ng' class="content table-responsive table-full-width">
                 <table class="table table-striped">
                     <thead>
-                      <th>#</th>
+                        <th>#</th>
                     	<th>Fecha registro datos de control</th>
-                      <th>Acciones</th>
+                        <th>Acciones</th>
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="dato in datosControl">
@@ -24,7 +40,7 @@
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
                                 </a>
                                 &nbsp;
-                                <a title="Editar dato" data-ng-href="#!">
+                                <a title="Editar dato" data-ng-href="#!/pacientes/listDatosControl/{{datosControl[0].idPaciente._id}}/edit/{{dato._id}}">
                                     <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" style="color:green"></i>
                                 </a>
                                 &nbsp;
@@ -35,8 +51,7 @@
                         </tr>
                     </tbody>
                 </table>
-
-            </div>
+              </div>
         </div>
     </div>
 

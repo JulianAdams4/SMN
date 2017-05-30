@@ -38,7 +38,7 @@ exports.datosControlById = function(req, res, next, id){
 información del paciente con populate*/
 exports.datosControlByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  DatosControl.find({idPaciente:pacienteId}).populate('idPaciente')
+  DatosControl.find({idPaciente:pacienteId, borrado:false}).populate('idPaciente')
     .exec(function (err, datosControl) {
         if (err) {
           return res.status(400).send({
@@ -64,18 +64,65 @@ exports.list = function(req, res){
 
 exports.createDatosControl = function(req, res){
   var datosControl = new DatosControl(req.body);
-  datosControl.save(function(err){
+  datosControl.save( function(err){
     if (err) {
-      return res.status(404).send({
+      return res.status(500).send({
         message: "Error del servidor"
-      })
-    }else if(datosControl.datos.length<=0){
-      return res.status(404).send({
-        message: "No se ingresaron datos de control."
       })
     }
     else {
       return res.json(datosControl);
     }
+  });
+};
+
+exports.editDatosControl = function(req, res){
+  var datosControlId = req.params.datosControlId;
+
+  DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
+    // Error del servidor
+    if (err) {
+      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+    }
+
+    // Paciente no encontrado
+    if (!datosControl) {
+      res.status(404).send({ message: 'Datos de Control no encontrados' });
+    }
+
+    // Si existe el campo en el body, se reemplaza
+    // caso contrario se deja el valor que estaba
+    datosControl.fechaDato = req.body.fechaDato ? req.body.fechaDato : datosControl.fechaDato;
+    datosControl.observaciones = req.body.observaciones ? req.body.observaciones : datosControl.observaciones;
+    datosControl.datos = req.body.datos ? req.body.datos : datosControl.datos;
+
+    // Guardamos los cambios
+    datosControl.save( function(err) {
+      // Error del servidor
+      if (err) {
+        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+      }
+      // Editado con exito
+      res.status(200).json(datosControl);
+    });
+
+  });
+};
+
+exports.borrarDatosControlByPaciente = function (req, res) {
+  var _idPaciente = req.params.pacienteId;
+  DatosControl.update(
+    { idPaciente: _idPaciente }, 
+    { $set:{ borrado: true } }, 
+    function (err, datos) {
+      if (err) {
+        res.status(500).send({
+          message: getErrorMessage(err)
+        });
+      }
+      // No errors
+      return res.status(204).json({
+        message: "Datos eliminados exitosamente"
+      });
   });
 };

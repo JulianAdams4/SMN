@@ -37,7 +37,7 @@ var pacienteSchema = new Schema({
   borrado: {
     type: Boolean,
     default: false
-  },
+  }
 });
 
 mongoose.model('Paciente', pacienteSchema);
