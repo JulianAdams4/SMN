@@ -76,6 +76,39 @@ exports.createDatosControl = function(req, res){
   });
 };
 
+exports.editDatosControl = function(req, res){
+  var datosControlId = req.params.datosControlId;
+
+  DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
+    // Error del servidor
+    if (err) {
+      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+    }
+
+    // Paciente no encontrado
+    if (!datosControl) {
+      res.status(404).send({ message: 'Datos de Control no encontrados' });
+    }
+
+    // Si existe el campo en el body, se reemplaza
+    // caso contrario se deja el valor que estaba
+    datosControl.fechaDato = req.body.fechaDato ? req.body.fechaDato : datosControl.fechaDato;
+    datosControl.observaciones = req.body.observaciones ? req.body.observaciones : datosControl.observaciones;
+    datosControl.datos = req.body.datos ? req.body.datos : datosControl.datos;
+
+    // Guardamos los cambios
+    datosControl.save( function(err) {
+      // Error del servidor
+      if (err) {
+        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+      }
+      // Editado con exito
+      res.status(200).json(datosControl);
+    });
+
+  });
+};
+
 exports.borrarDatosControlByPaciente = function (req, res) {
   var _idPaciente = req.params.pacienteId;
   DatosControl.update(

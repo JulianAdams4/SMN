@@ -4,7 +4,8 @@ var datosControl = require('../controllers/datosControl.controllers');
 
 module.exports = function(app) {
   app.route('/api/datosControl/:datosControlId')
-    .get(datosControl.read);
+    .get(datosControl.read)
+    .put(datosControl.editDatosControl);
 
   app.route('/api/datosControlPaciente/:pacienteId')
     .get(datosControl.datosControlByPaciente)
