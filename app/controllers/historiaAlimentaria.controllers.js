@@ -1,5 +1,5 @@
 'use strict';
-
+var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 
@@ -22,8 +22,8 @@ exports.historiaAlimentariaByPaciente = function(req, res){
   HistoriaAlimentaria.find({idPaciente: pacienteId, borrado: false}).populate('idPaciente')
     .exec(function (err, historiaAlimentaria) {
         if (err) {
-          return res.status(400).send({
-            message: getErrorMessage(err)
+          return res.status(404).send({
+            message: 'No se ha encontrado'
           });
         }
         return res.status(200).json(historiaAlimentaria);
@@ -33,24 +33,30 @@ exports.historiaAlimentariaByPaciente = function(req, res){
 exports.list = function(req, res){
   HistoriaAlimentaria.find({borrado: false}, function(err, historiaAlimentaria){
     if(err){
-      return res.status(400).send({
-        message: getErrorMessage(err)
+      return res.status(500).send({
+        message: 'Ocurrió un error en el servidor'
       });
     } else {
-      res.json(historiaAlimentaria);
+      return res.status(200).json(historiaAlimentaria);
     }
   });
 };
 
 exports.createHistoriaAlimentaria = function(req, res){
   var historiaAlimentaria = new HistoriaAlimentaria(req.body);
+  var campos = ["idPaciente", "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
+  "comeEntreComidas", "queCome", "aguaAlDia","cafeAlDia","cigarrosAlDia","alcoholALaSemana",
+  "grupoAlimentos"];
+  if(!validador.camposSonValidos(campos,req)){
+    return res.status(500).json({ message: 'Faltan campos'});
+  }
   historiaAlimentaria.save(function(err){
     if (err) {
-      return res.status(400).send({
-        message: getErrorMessage(err)
+      return res.status(500).send({
+        message: 'Ocurrió un error en el servidor'
       })
     } else {
-      res.json(historiaAlimentaria);
+      return res.status(201).json(historiaAlimentaria);
     }
   });
 };
@@ -66,7 +72,7 @@ exports.deleteHistoria = function(req, res){
         if (err) {
             res.status(500).send({ message: 'Ocurrió un error en el servidor' });
         } else {
-            res.status(200).json(historiaAlimentaria);
+            res.status(204).json(historiaAlimentaria);
         }
     });
 };
