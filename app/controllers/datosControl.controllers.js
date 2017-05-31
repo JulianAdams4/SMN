@@ -64,8 +64,7 @@ exports.list = function(req, res){
 
 exports.createDatosControl = function(req, res){
   var datosControl = new DatosControl(req.body);
-  console.log(datosControl);
-  var campos = ["idPaciente", "observaciones", "datos"];
+  var campos = ["idPaciente", "datos"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }

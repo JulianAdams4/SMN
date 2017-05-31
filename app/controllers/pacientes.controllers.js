@@ -89,7 +89,7 @@ exports.createPaciente = function(req, res){
   }
   paciente.save(function(err){
     if (err) {
-      return res.status(400).send({
+      return res.status(500).send({
         message: getErrorMessage(err),
         type: "danger"
       })

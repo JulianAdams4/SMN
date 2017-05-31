@@ -151,7 +151,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(500);
           done();
         });
   });
@@ -172,7 +172,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(500);
           done();
         });
   });
@@ -193,7 +193,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.should.have.status(500);
           done();
         });
   });
