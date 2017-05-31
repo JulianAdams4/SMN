@@ -6,6 +6,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.idPacienteEdit = '';
     $scope.pacienteEdit = {};
     $scope.idPacienteDelete = '';
+    $scope.antecedente = {};
 
     $scope.create = function() {
       $http({
@@ -13,7 +14,17 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         url: '/api/pacientes',
         data: $scope.paciente
       }).then(function(response){
-        //$scope.pacientes.push(response.data);
+        console.log(response.data._id);
+        $scope.antecedente.idPaciente = response.data._id;
+        $http({
+          method: 'POST',
+          url: '/api/antecedentes',
+          data: $scope.antecedente
+        }).then(function(response){
+
+        }, function(errorResponse){
+          demo.mostrarNotificacion('danger',errorResponse.data.message);
+        })
         $location.path('pacientes');
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);

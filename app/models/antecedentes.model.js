@@ -10,23 +10,74 @@ var antecedenteSchema = new Schema({
     type: Boolean,
     default: false
   },
-  alteracionApetito: Boolean,
-  nausea: Boolean,
-  vomito: Boolean,
-  estrenimiento: Boolean,
-  diarrea: Boolean,
-  flatulencia: Boolean,
-  acidez: Boolean,
-  gastritis: Boolean,
-  problemasMasticacion: Boolean,
-  cambioSaborComidas: Boolean,
-  alergia: Boolean,
-  suplementoVitaminicos: Boolean,
-  medicamento: Boolean,
-  ojos: Boolean,
-  cabello: Boolean,
-  uñas: Boolean,
-  piel: Boolean
+  alteracionApetito: {
+    type: Boolean,
+    default: false
+  },
+  nausea: {
+    type: Boolean,
+    default: false
+  },
+  vomito: {
+    type: Boolean,
+    default: false
+  },
+  estrenimiento: {
+    type: Boolean,
+    default: false
+  },
+  diarrea: {
+    type: Boolean,
+    default: false
+  },
+  flatulencia: {
+    type: Boolean,
+    default: false
+  },
+  acidez: {
+    type: Boolean,
+    default: false
+  },
+  gastritis: {
+    type: Boolean,
+    default: false
+  },
+  problemasMasticacion: {
+    type: Boolean,
+    default: false
+  },
+  cambioSaborComidas: {
+    type: Boolean,
+    default: false
+  },
+  alergia: {
+    type: Boolean,
+    default: false
+  },
+  suplementoVitaminicos: {
+    type: Boolean,
+    default: false
+  },
+  medicamento: {
+    type: Boolean,
+    default: false
+  },
+  ojos: {
+    type: Boolean,
+    default: false
+  },
+  cabello: {
+    type: Boolean,
+    default: false
+  },
+  unias: {
+    type: Boolean,
+    default: false
+  },
+  piel: {
+    type: Boolean,
+    default: false
+  }
 });
 
 mongoose.model('Antecedentes', antecedenteSchema);
