@@ -1,6 +1,6 @@
 var mainAplicationModuleName = 'administrador';
 
-var mainAplicationModule = angular.module(mainAplicationModuleName, ['ngRoute','administrador']);
+var mainAplicationModule = angular.module(mainAplicationModuleName, ['ngRoute']);
 
 mainAplicationModule.config(['$locationProvider',
   function($locationProvider){
