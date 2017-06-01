@@ -20,7 +20,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           url: '/api/antecedentes',
           data: $scope.antecedente
         }).then(function(response){
-
         }, function(errorResponse){
           demo.mostrarNotificacion('danger',errorResponse.data.message);
         })
@@ -30,7 +29,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       });
     };
 
-    $scope.find = function(){
+    var find = function(){
       $http({
         method: 'GET',
         url: '/api/pacientes'
@@ -40,7 +39,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })
     }
-
+    find();
     $scope.initEdit = function () {
       $scope.idPacienteEdit = $routeParams.idPaciente;
       $http({
@@ -107,36 +106,89 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       );
     }
 
-    $scope.delete = function (idPaciente) {
+    $scope.desactivarPaciente = function (idPaciente) {
       var idPacienteDelete = idPaciente;
-      console.log($scope.idPacienteDelete);
-     $http({
-        method: 'DELETE',
-        url: '/api/pacientes/' + idPacienteDelete
-      })
-     .then(
-        function(response){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> ¡Paciente eliminado <b>exitosamente</b>! </h5>',
-            'success',
-            'ti-check',
-            3000
-          );
-          $location.path("/pacientes")
-        },
-        function(errorResponse){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );
+      BootstrapDialog.confirm({
+        title: 'ADVERTENCIA',
+        message: 'Desea desactivar el paciente?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: 'No',
+        btnOKLabel: 'Sí',
+        btnOKClass: 'btn-warning',
+        callback: function(result) {
+          if(result) {
+            $http({
+              method: 'PUT',
+              url: '/api/desactivarPaciente/' + idPacienteDelete
+            }).then(function(response){
+              demo.showCustomNotification(
+                'top',
+                'right',
+                '<h5> ¡Paciente desactivado <b>exitosamente</b>! </h5>',
+                'success',
+                'ti-check',
+                3000
+              );
+              find();
+            },function(errorResponse){
+              demo.showCustomNotification(
+                'top',
+                'right',
+                '<h5> Ocurrio un <b>error</b> al desactivar el paciente </h5>',
+                'danger',
+                'ti-close',
+                3000
+              );
+            });
+          }
         }
-      );
+      });
     }
 
+    $scope.activarPaciente = function (idPaciente) {
+      var idPacienteDelete = idPaciente;
+      BootstrapDialog.confirm({
+        title: 'ADVERTENCIA',
+        message: 'Desea activar el paciente?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: 'No',
+        btnOKLabel: 'Sí',
+        btnOKClass: 'btn-warning',
+        callback: function(result) {
+          if(result) {
+            $http({
+               method: 'PUT',
+               url: '/api/activarpaciente/' + idPacienteDelete
+             })
+            .then(
+               function(response){
+                 demo.showCustomNotification(
+                   'top',
+                   'right',
+                   '<h5> ¡Paciente activado <b>exitosamente</b>! </h5>',
+                   'success',
+                   'ti-check',
+                   3000
+                 );
+                 find();
+               },
+               function(errorResponse){
+                 demo.showCustomNotification(
+                   'top',
+                   'right',
+                   '<h5> Ocurrio un <b>error</b> al activar el paciente </h5>',
+                   'danger',
+                   'ti-close',
+                   3000
+                 );
+               }
+             );
+          }
+        }
+      });
+    }
   }]);

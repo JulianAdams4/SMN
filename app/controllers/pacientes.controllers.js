@@ -66,7 +66,7 @@ exports.pacienteById = function(req, res, next, id){
 };
 
 exports.list = function(req, res){
-  Paciente.find({borrado: false}, function(err, pacientes){
+  Paciente.find({}, function(err, pacientes){
     if(err){
       return res.status(400).send({
         message: getErrorMessage(err),
@@ -80,7 +80,7 @@ exports.list = function(req, res){
 
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
-  var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo", "direccion", "celular", "ocupacion","motivoConsulta"];
+  var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }
@@ -141,11 +141,26 @@ exports.editPaciente = function(req, res){
   });
 };
 
-exports.deletePaciente = function(req, res){
+exports.desactivarPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Paciente.findByIdAndUpdate(pacienteId, {
     $set: {
       borrado: true
+    }
+  }, function(err, paciente) {
+        if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        } else {
+            res.status(204).json(paciente);
+        }
+    });
+};
+
+exports.activarPaciente = function(req, res){
+  var pacienteId = req.params.pacienteId;
+  Paciente.findByIdAndUpdate(pacienteId, {
+    $set: {
+      borrado: false
     }
   }, function(err, paciente) {
         if (err) {

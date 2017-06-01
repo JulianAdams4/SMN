@@ -38,7 +38,7 @@ exports.datosControlById = function(req, res, next, id){
 información del paciente con populate*/
 exports.datosControlByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  DatosControl.find({idPaciente:pacienteId, borrado:false}).populate('idPaciente')
+  DatosControl.find({idPaciente:pacienteId}).populate('idPaciente')
     .exec(function (err, datosControl) {
         if (err) {
           return res.status(400).send({
@@ -64,7 +64,7 @@ exports.list = function(req, res){
 
 exports.createDatosControl = function(req, res){
   var datosControl = new DatosControl(req.body);
-  var campos = ["idPaciente", "datos"];
+  var campos = ["idPaciente"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }

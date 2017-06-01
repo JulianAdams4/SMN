@@ -11,8 +11,6 @@ angular.module('administrador').config(['$routeProvider',
       templateUrl: 'app_Angular/Administrador/views/crear_paciente.view.html'
     }).when('/pacientes/edit/:idPaciente', {
       templateUrl: 'app_Angular/Administrador/views/editar_paciente.view.html'
-    }).when('/pacientes/delete/:idPaciente', {
-      templateUrl: 'app_Angular/Administrador/views/list_pacientes.view.html'
     }).when('/pacientes/listDatosControl/:idPaciente', {
       templateUrl: 'app_Angular/Administrador/views/list_datosControlPaciente.view.html'
     }).when('/pacientes/listDatosControl/:idPaciente/create', {

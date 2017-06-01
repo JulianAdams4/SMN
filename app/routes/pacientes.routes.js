@@ -9,7 +9,6 @@ module.exports = function(app) {
   //Autor: Stalyn Gonzabay
   app.route('/api/pacientes/:pacienteId')
     .get(pacientes.read)
-    .delete(pacientes.deletePaciente)
     .put(pacientes.editPaciente);
   //Sprint 1 : Crear el controlador para consultar un paciente
   //Funcion que sirve para que cada vez que se realiza
@@ -21,4 +20,10 @@ module.exports = function(app) {
   app.route('/api/pacientes')
     .get(pacientes.list)
     .post(pacientes.createPaciente);
+
+  app.route('/api/desactivarPaciente/:pacienteId')
+    .put(pacientes.desactivarPaciente);
+
+  app.route('/api/activarPaciente/:pacienteId')
+    .put(pacientes.activarPaciente);
 };

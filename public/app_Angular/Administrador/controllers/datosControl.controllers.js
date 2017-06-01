@@ -2,13 +2,14 @@
 
 angular.module('administrador').controller('DatosController',['$scope','$http','$routeParams','$location','$window',
   function($scope, $http, $routeParams, $location, $window) {
+    $scope.isReady = false;
     $scope.idPaciente = '';
     $scope.datosControlForm = {};
     $scope.listaDatos = [
       {
-        'nombreDato': "", 
-        'valorDato': "", 
-        'unidadDato': "%" 
+        'nombreDato': "",
+        'valorDato': "",
+        'unidadDato': "%"
       }
     ];
     $scope.datosControl = [];
@@ -22,6 +23,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         url: 'api/datosControlPaciente/' + $scope.idPaciente
       }).then(function(response){
         $scope.datosControl = response.data;
+        $scope.isReady = true;
       }, function(errorResponse){
         console.log(errorResponse.data.message);
       })
@@ -39,7 +41,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       if ( lastElement && lastElement.nombreDato != '' ){
         $scope.nuevoDato = {
           'nombreDato': "",
-          'valorDato': "", 
+          'valorDato': "",
           'unidadDato': "%"
         };
         $scope.listaDatos.push($scope.nuevoDato);
@@ -47,7 +49,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       if ($scope.listaDatos.length == 0){
         $scope.nuevoDato = {
           'nombreDato': "",
-          'valorDato': "", 
+          'valorDato': "",
           'unidadDato': "%"
         };
         $scope.listaDatos.push($scope.nuevoDato);
@@ -68,29 +70,29 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         observaciones: $scope.datosControlForm.observaciones,
         datos: $scope.listaDatos
       }
-      
+
       $http({
         method: 'POST',
         url: 'api/datosControlPaciente/' + $routeParams.idPaciente,
         data: data
       }).then(function(response){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> ¡Dato de control creado <b>exitosamente</b>! </h5>', 
-            'success', 
-            'ti-check', 
+            'top',
+            'right',
+            '<h5> ¡Dato de control creado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
             3000
           );
         $location.path('/pacientes/listDatosControl/' + $routeParams.idPaciente);
       }, function(errorResponse){
         //console.log(errorResponse.data.message);
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Ocurrio un <b>error</b> al guardar la informacion </h5>', 
-            'danger', 
-            'ti-close', 
+            'top',
+            'right',
+            '<h5> Ocurrio un <b>error</b> al guardar la informacion </h5>',
+            'danger',
+            'ti-close',
             3000
           );
       });
@@ -107,15 +109,15 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           $scope.datoControlEdit.fechaDato = new Date(response.data.fechaDato);
           $scope.datoControlEdit.observaciones = response.data.observaciones;
           $scope.datoControlEdit.datos = response.data.datos;
-        }, 
+        },
         function(errorResponse){
           console.log(errorResponse.data.message);
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del dato de control </h5>', 
-            'danger', 
-            'ti-close', 
+            'top',
+            'right',
+            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del dato de control </h5>',
+            'danger',
+            'ti-close',
             3000
           );
         }
@@ -127,7 +129,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       if ( lastElement && lastElement.nombreDato != '' ){
         $scope.nuevoDato = {
           'nombreDato': "",
-          'valorDato': "", 
+          'valorDato': "",
           'unidadDato': "%"
         };
         $scope.datoControlEdit.datos.push($scope.nuevoDato);
@@ -135,7 +137,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       if ($scope.datoControlEdit.datos.length == 0){
         $scope.nuevoDato = {
           'nombreDato': "",
-          'valorDato': "", 
+          'valorDato': "",
           'unidadDato': "%"
         };
         $scope.datoControlEdit.datos.push($scope.nuevoDato);
@@ -160,22 +162,22 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
      .then(
         function(response){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Dato de Control editado <b>exitosamente</b>! </h5>', 
-            'success', 
-            'ti-check', 
+            'top',
+            'right',
+            '<h5> Dato de Control editado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
             3000
           );
           $location.path('/pacientes/listDatosControl/' + $routeParams.idPaciente);
-        }, 
+        },
         function(errorResponse){
           demo.showCustomNotification(
-            'top', 
-            'right', 
-            '<h5> Ocurrio un <b>error</b> al editar el dato de control </h5>', 
-            'danger', 
-            'ti-close', 
+            'top',
+            'right',
+            '<h5> Ocurrio un <b>error</b> al editar el dato de control </h5>',
+            'danger',
+            'ti-close',
             3000
           );
         }

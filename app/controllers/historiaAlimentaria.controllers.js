@@ -19,7 +19,7 @@ var getErrorMessage = function(err){
 información del paciente con populate*/
 exports.historiaAlimentariaByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  HistoriaAlimentaria.find({idPaciente: pacienteId, borrado: false}).populate('idPaciente')
+  HistoriaAlimentaria.find({idPaciente: pacienteId}).populate('idPaciente')
     .exec(function (err, historiaAlimentaria) {
         if (err) {
           return res.status(404).send({
@@ -31,7 +31,7 @@ exports.historiaAlimentariaByPaciente = function(req, res){
 };
 
 exports.list = function(req, res){
-  HistoriaAlimentaria.find({borrado: false}, function(err, historiaAlimentaria){
+  HistoriaAlimentaria.find({}, function(err, historiaAlimentaria){
     if(err){
       return res.status(500).send({
         message: 'Ocurrió un error en el servidor'
@@ -44,9 +44,9 @@ exports.list = function(req, res){
 
 exports.createHistoriaAlimentaria = function(req, res){
   var historiaAlimentaria = new HistoriaAlimentaria(req.body);
-  var campos = ["idPaciente", "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
+  var campos = ["idPaciente"/*, "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
   "comeEntreComidas", "queCome", "aguaAlDia","cafeAlDia","cigarrosAlDia","alcoholALaSemana",
-  "grupoAlimentos"];
+  "grupoAlimentos"*/];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }
