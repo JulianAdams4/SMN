@@ -1,5 +1,5 @@
 'use strict';
-
+var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var DatosControl = mongoose.model('DatosControl');
 var getErrorMessage = function(err){
@@ -64,6 +64,10 @@ exports.list = function(req, res){
 
 exports.createDatosControl = function(req, res){
   var datosControl = new DatosControl(req.body);
+  var campos = ["idPaciente", "datos"];
+  if(!validador.camposSonValidos(campos,req)){
+    return res.status(500).json({ message: 'Faltan campos'});
+  }
   datosControl.save( function(err){
     if (err) {
       return res.status(500).send({
@@ -71,7 +75,7 @@ exports.createDatosControl = function(req, res){
       })
     }
     else {
-      return res.json(datosControl);
+      return res.status(200).json(datosControl);
     }
   });
 };
@@ -112,8 +116,8 @@ exports.editDatosControl = function(req, res){
 exports.borrarDatosControlByPaciente = function (req, res) {
   var _idPaciente = req.params.pacienteId;
   DatosControl.update(
-    { idPaciente: _idPaciente }, 
-    { $set:{ borrado: true } }, 
+    { idPaciente: _idPaciente },
+    { $set:{ borrado: true } },
     function (err, datos) {
       if (err) {
         res.status(500).send({

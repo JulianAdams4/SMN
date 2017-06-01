@@ -1,5 +1,6 @@
 'use strict';
 
+var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var Paciente = mongoose.model('Paciente');
 
@@ -79,14 +80,21 @@ exports.list = function(req, res){
 
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
+  var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo", "direccion", "celular", "ocupacion","motivoConsulta"];
+  if(!validador.camposSonValidos(campos,req)){
+    return res.status(500).json({ message: 'Faltan campos'});
+  }
+  if (!validador.cedulaEsValida(paciente.cedula)){
+    return res.status(500).json({ message: 'Cédula no válida'});
+  }
   paciente.save(function(err){
     if (err) {
-      return res.status(400).send({
+      return res.status(500).send({
         message: getErrorMessage(err),
         type: "danger"
       })
     } else {
-      res.json(paciente);
+      return res.status(201).json(paciente);
     }
   });
 };
@@ -143,7 +151,7 @@ exports.deletePaciente = function(req, res){
         if (err) {
             res.status(500).send({ message: 'Ocurrió un error en el servidor' });
         } else {
-            res.status(200).json(paciente);
+            res.status(204).json(paciente);
         }
     });
 };
