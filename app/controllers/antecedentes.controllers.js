@@ -17,7 +17,7 @@ var getErrorMessage = function(err){
 
 exports.antecedentesByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  Antecedentes.find({idPaciente:pacienteId, borrado: false}).populate('idPaciente')
+  Antecedentes.find({idPaciente:pacienteId}).populate('idPaciente')
     .exec(function (err, antecedentes) {
         if (err) {
           return res.status(404).send({
@@ -29,7 +29,7 @@ exports.antecedentesByPaciente = function(req, res){
 };
 
 exports.list = function(req, res){
-  Antecedentes.find({borrado:false}, function(err, antecedentes){
+  Antecedentes.find({}, function(err, antecedentes){
     if(err){
       return res.status(500).send({
         message: 'Ocurrió un error en el servidor'
@@ -42,9 +42,9 @@ exports.list = function(req, res){
 
 exports.createAntecedente = function(req, res){
   var antecedentes = new Antecedentes(req.body);
-  var campos = ["idPaciente", "alteracionApetito", "nausea","vomito","estrenimiento",
+  var campos = ["idPaciente"/*, "alteracionApetito", "nausea","vomito","estrenimiento",
   "diarrea","flatulencia","acidez","gastritis","problemasMasticacion","cambioSaborComidas"
-  ,"alergia","suplementoVitaminicos","medicamento","ojos","cabello","uñas","piel"];
+  ,"alergia","suplementoVitaminicos","medicamento","ojos","cabello","uñas","piel"*/];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }

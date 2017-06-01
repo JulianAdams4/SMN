@@ -21,7 +21,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           url: '/api/antecedentes',
           data: $scope.antecedente
         }).then(function(response){
-
         }, function(errorResponse){
           demo.mostrarNotificacion('danger',errorResponse.data.message);
         })
@@ -31,7 +30,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       });
     };
 
-    $scope.find = function(){
+    var find = function(){
       $http({
         method: 'GET',
         url: '/api/pacientes'
@@ -41,7 +40,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })
     }
-
+    find();
     $scope.initEdit = function () {
       $scope.idPacienteEdit = $routeParams.idPaciente;
       $http({
@@ -108,30 +107,30 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       );
     }
 
-    $scope.delete = function (idPaciente) {
+    $scope.desactivarPaciente = function (idPaciente) {
       var idPacienteDelete = idPaciente;
       console.log($scope.idPacienteDelete);
      $http({
-        method: 'DELETE',
-        url: '/api/pacientes/' + idPacienteDelete
+        method: 'PUT',
+        url: '/api/desactivarPaciente/' + idPacienteDelete
       })
      .then(
         function(response){
           demo.showCustomNotification(
             'top',
             'right',
-            '<h5> ¡Paciente eliminado <b>exitosamente</b>! </h5>',
+            '<h5> ¡Paciente desactivado <b>exitosamente</b>! </h5>',
             'success',
             'ti-check',
             3000
           );
-          $location.path("/pacientes")
+          find();
         },
         function(errorResponse){
           demo.showCustomNotification(
             'top',
             'right',
-            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>',
+            '<h5> Ocurrio un <b>error</b> al desactivar el paciente </h5>',
             'danger',
             'ti-close',
             3000
@@ -140,4 +139,35 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       );
     }
 
+    $scope.activarPaciente = function (idPaciente) {
+      var idPacienteDelete = idPaciente;
+      console.log($scope.idPacienteDelete);
+     $http({
+        method: 'PUT',
+        url: '/api/activarpaciente/' + idPacienteDelete
+      })
+     .then(
+        function(response){
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> ¡Paciente activado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
+          find();
+        },
+        function(errorResponse){
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> Ocurrio un <b>error</b> al activar el paciente </h5>',
+            'danger',
+            'ti-close',
+            3000
+          );
+        }
+      );
+    }
   }]);

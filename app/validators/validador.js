@@ -16,7 +16,7 @@ module.exports = {
   camposSonValidos: function(campos,req) {
     for (var i=0; i<campos.length ; i++){
       var field = campos[i];
-      if ( req.body[field] == null || req.body[field] == undefined) {
+      if ( req.body[field] == null || req.body[field] == undefined || req.body[field] == "") {
         return false;
       }
     }
