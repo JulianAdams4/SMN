@@ -14,7 +14,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         url: '/api/pacientes',
         data: $scope.paciente
       }).then(function(response){
-        console.log(response.data._id);
         $scope.antecedente.idPaciente = response.data._id;
         $http({
           method: 'POST',

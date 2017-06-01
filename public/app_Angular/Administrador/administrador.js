@@ -1,6 +1,4 @@
-var mainAplicationModuleName = 'administrador';
-
-var mainAplicationModule = angular.module(mainAplicationModuleName, ['ngRoute','administrador']);
+var mainAplicationModule = angular.module('administrador', ['ngRoute', 'datatables']);
 
 mainAplicationModule.config(['$locationProvider',
   function($locationProvider){
@@ -9,5 +7,5 @@ mainAplicationModule.config(['$locationProvider',
 ]);
 
 angular.element(document).ready(function() {
-  angular.bootstrap(document, [mainAplicationModuleName]);
+  angular.bootstrap(document, ['administrador']);
 });
