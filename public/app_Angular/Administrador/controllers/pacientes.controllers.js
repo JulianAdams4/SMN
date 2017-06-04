@@ -64,7 +64,26 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       })
       .then(
         function(response){
-          $scope.pacienteEdit.cedula = response.data.cedula;
+          $scope.paciente = response.data;
+          $scope.paciente.cedula = Number(response.data.cedula);
+          $scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
+          $http({
+            method: 'GET',
+            url: '/api/historiaAlimentariaPaciente/' + $scope.idPacienteEdit
+          }).then(
+            function(response){
+              $scope.historiaAlimentaria = response.data;
+            }
+          );
+          $http({
+            method: 'GET',
+            url: '/api/antecedentesPaciente/' + $scope.idPacienteEdit
+          }).then(
+            function(response){
+              $scope.antecedente = response.data;
+            }
+          );
+          /*$scope.pacienteEdit.cedula = response.data.cedula;
           $scope.pacienteEdit.nombres = response.data.nombres;
           $scope.pacienteEdit.apellidos = response.data.apellidos;
           $scope.pacienteEdit.sexo = response.data.sexo;
@@ -72,7 +91,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           $scope.pacienteEdit.celular = response.data.celular;
           $scope.pacienteEdit.ocupacion = response.data.ocupacion;
           $scope.pacienteEdit.direccion = response.data.direccion;
-          $scope.pacienteEdit.motivoConsulta = response.data.motivoConsulta;
+          $scope.pacienteEdit.motivoConsulta = response.data.motivoConsulta;*/
         },
         function(errorResponse){
           console.log(errorResponse.data.message);

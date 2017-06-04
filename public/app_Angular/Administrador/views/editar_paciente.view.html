@@ -5,7 +5,7 @@
     <div class="content">
         <form name="editPacForm" data-ng-submit="edit()">
 
-          <section ng-include="'app_Angular/Administrador/views/form_editarpaciente.view.html'">
+          <section ng-include="'app_Angular/Administrador/views/form_paciente.view.html'">
           </section>
 
           <div class="text-center">
@@ -16,11 +16,11 @@
                   Cancelar
                 </a>
 
-                <button type="submit" 
-                        class="btn btn-info btn-fill btn-wd" 
+                <button type="submit"
+                        class="btn btn-info btn-fill btn-wd"
                         ng-disabled="!editPacForm.$valid||editPacForm.$pristine">
                   Guardar
-                </button> 
+                </button>
 
               <!-- <div class="col-lg-6 col-md-6 col-xs-6 pull-left">
               </div> -->

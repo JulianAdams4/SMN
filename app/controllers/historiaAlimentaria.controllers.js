@@ -19,7 +19,7 @@ var getErrorMessage = function(err){
 información del paciente con populate*/
 exports.historiaAlimentariaByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  HistoriaAlimentaria.find({idPaciente: pacienteId}).populate('idPaciente')
+  HistoriaAlimentaria.findOne({idPaciente: pacienteId}).populate('idPaciente')
     .exec(function (err, historiaAlimentaria) {
         if (err) {
           return res.status(404).send({

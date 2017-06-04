@@ -17,7 +17,7 @@ var getErrorMessage = function(err){
 
 exports.antecedentesByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  Antecedentes.find({idPaciente:pacienteId}).populate('idPaciente')
+  Antecedentes.findOne({idPaciente:pacienteId}).populate('idPaciente')
     .exec(function (err, antecedentes) {
         if (err) {
           return res.status(404).send({
