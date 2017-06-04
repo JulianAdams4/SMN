@@ -267,13 +267,13 @@
     </div>
   </div>
   <!-- HISTORIA ALIMENTARIA -->
-  <div class="tab-pane" id="HistoriaAlimentaria" role="tabpanel">
+  <div class="tab-pane" id="HistoriaAlimentaria" role="tabpanel" ng-init="showAgregar = false;">
     <div class="row">
       <div class="col-md-6 col-sm-6">
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Comidas al día:</label>
           <div class="col-sm-8">
-            <input type="texto" class="form-control border-input" placeholder="Comidas al día">
+            <input type="number" class="form-control border-input" placeholder="Comidas al día" data-ng-model="historiaAlimentaria.comidasAlDia">
           </div>
         </div>
       </div>
@@ -281,7 +281,7 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Preparada por:</label>
           <div class="col-sm-8">
-            <input type="texto" class="form-control border-input" placeholder="Preparadas por">
+            <input type="texto" class="form-control border-input" placeholder="Preparadas por" data-ng-model="historiaAlimentaria.preparadoPor">
           </div>
         </div>
       </div>
@@ -291,7 +291,7 @@
         <div class="form-group">
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input">
+              <input type="checkbox" class="form-check-input" data-ng-model="historiaAlimentaria.modificaFinesDeSemana">
               Modifica fines de semana
             </label>
           </div>
@@ -301,7 +301,7 @@
         <div class="form-group">
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input">
+              <input type="checkbox" class="form-check-input" data-ng-model="historiaAlimentaria.comeEntreComidas">
               Comida entre comidas
             </label>
           </div>
@@ -309,18 +309,72 @@
       </div>
     </div>
     <div class="row">
-      <table class="table">
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Grupos de Alimentos</th>
             <th>Frecuencia</th>
             <th>Alimentos que le agradan</th>
             <th>Alimentos que no le agradan</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
+          <tr data-ng-repeat="grupo in historiaAlimentaria.grupoAlimentos">
+            <td data-ng-bind="grupo.descripcion"></td>
+            <td data-ng-bind="grupo.frecuencia"></td>
+            <td data-ng-bind="grupo.alimentosAgradan"></td>
+            <td data-ng-bind="grupo.alimentosDesagradan"></td>
+            <td>
+              <div class="btn-group">
+                  <a class="btn btn-xs btn-danger" ng-click="removeGrupoAlimentos(grupo)"><i class="fa fa-trash-o"></i></a>
+                </div>
+            </td>
+          </tr>
         </tbody>
       </table>
+    </div>
+    <div class="row" ng-show="!showAgregar">
+        <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = true;">Agregar</button>
+    </div>
+    <div ng-show="showAgregar">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+              <label><small>Grupo de Alimento</small></label>
+              <select class="form-control border-input" data-ng-model="newGrupo.descripcion">
+                <option value="Lácteos">Lácteos</option>
+                <option value="Vegetales">Vegetales</option>
+                <option value="Frutas">Frutas</option>
+                <option value="Granos">Granos</option>
+                <option value="Panes, Arroz y Derivados">Panes, Arroz y Derivados</option>
+                <option value="Carnes">Carnes</option>
+                <option value="Grasas">Grasas</option>
+              </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+              <label><small>Frecuencia</small></label>
+              <input type="number" class="form-control border-input" placeholder="Frecuencia" data-ng-model="newGrupo.frecuencia">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+              <label><small>Alimentos que le agradan</small></label>
+              <input type="text" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+              <label><small>Alimentos que no le agradan</small></label>
+              <input type="text" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = false; putGrupoAlimentos();">Agregar a la Tabla</button>
+      </div>
     </div>
   </div>
 </div>

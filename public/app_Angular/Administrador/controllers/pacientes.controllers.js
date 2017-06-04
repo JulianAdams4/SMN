@@ -7,8 +7,12 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.pacienteEdit = {};
     $scope.idPacienteDelete = '';
     $scope.antecedente = {};
+    $scope.historiaAlimentaria = {};
+    $scope.historiaAlimentaria.grupoAlimentos = [];
+    $scope.newGrupo = {};
 
     $scope.create = function() {
+
       $http({
         method: 'POST',
         url: '/api/pacientes',
@@ -22,7 +26,19 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         }).then(function(response){
         }, function(errorResponse){
           demo.mostrarNotificacion('danger',errorResponse.data.message);
-        })
+        });
+
+        $scope.historiaAlimentaria.idPaciente = response.data._id;
+        $http({
+          method: 'POST',
+          url: '/api/historiaAlimentaria',
+          data: $scope.historiaAlimentaria
+        }).then(function(response){
+        }, function(errorResponse){
+          console.log(errorResponse);
+          demo.mostrarNotificacion('danger',errorResponse.data.message);
+        });
+
         $location.path('pacientes');
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
@@ -190,5 +206,19 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           }
         }
       });
+    };
+
+    $scope.putGrupoAlimentos = function(){
+      $scope.historiaAlimentaria.grupoAlimentos.push({descripcion: $scope.newGrupo.descripcion, frecuencia: $scope.newGrupo.frecuencia, alimentosAgradan: $scope.newGrupo.alimentosAgradan, alimentosDesagradan: $scope.newGrupo.alimentosDesagradan});
+      $scope.newGrupo = {};
     }
+
+    $scope.removeGrupoAlimentos = function(grupo){
+      for (var i in $scope.historiaAlimentaria.grupoAlimentos) {
+            if ($scope.historiaAlimentaria.grupoAlimentos[i] === grupo) {
+              $scope.historiaAlimentaria.grupoAlimentos.splice(i, 1);
+            }
+          }
+    }
+
   }]);

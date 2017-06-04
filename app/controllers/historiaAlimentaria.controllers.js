@@ -44,12 +44,12 @@ exports.list = function(req, res){
 
 exports.createHistoriaAlimentaria = function(req, res){
   var historiaAlimentaria = new HistoriaAlimentaria(req.body);
-  var campos = ["idPaciente"/*, "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
-  "comeEntreComidas", "queCome", "aguaAlDia","cafeAlDia","cigarrosAlDia","alcoholALaSemana",
-  "grupoAlimentos"*/];
-  if(!validador.camposSonValidos(campos,req)){
+  //var campos = ["idPaciente"/*, "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
+  //"comeEntreComidas", "queCome", "aguaAlDia","cafeAlDia","cigarrosAlDia","alcoholALaSemana",
+  //"grupoAlimentos"*/];
+  /*if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
-  }
+  }*/
   historiaAlimentaria.save(function(err){
     if (err) {
       return res.status(500).send({
