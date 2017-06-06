@@ -1,7 +1,7 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#DatosGenerales" role="tab">Datos Generales</a>
+  <li class="nav-item active">
+    <a class="nav-link" data-toggle="tab" href="#DatosGenerales" role="tab">Datos Generales</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#AnamesisAlimentaria" role="tab">Anámesis Alimentaria</a>
@@ -17,21 +17,45 @@
   <div class="tab-pane active" id="DatosGenerales" role="tabpanel">
     <div class="row">
         <div class="col-md-3 col-sm-3">
-          <div class="form-group">
+          <div  class="form-group"
+                ng-class="{'has-error': paciente.cedula.$invalid && !paciente.cedula.$pristine }">
               <label>Cédula</label>
-              <input type="number" class="form-control border-input" placeholder="Cédula" data-ng-model="paciente.cedula">
+              <input  type="text"
+                      class="form-control border-input"
+                      placeholder="Cédula"
+                      minlength="10"
+                      maxlength="10"
+                      onkeypress="return event.charCode>47 && event.charCode<58"
+                      data-ng-model="paciente.cedula"
+                      required>
           </div>
         </div>
         <div class="col-md-4 col-sm-4">
-          <div class="form-group">
+          <div  class="form-group"
+                ng-class="{'has-error': editPacForm.nombres.$invalid && !editPacForm.nombres.$pristine }">
               <label>Nombres</label>
-              <input type="text" class="form-control border-input" placeholder="Nombres" data-ng-model="paciente.nombres">
+              <input  type="text"
+                      class="form-control border-input"
+                      placeholder="Nombres"
+                      minlength="2"
+                      maxlength="50"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      data-ng-model="paciente.nombres"
+                      required>
           </div>
         </div>
         <div class="col-md-5 col-sm-5">
-          <div class="form-group">
+          <div  class="form-group"
+                ng-class="{'has-error': editPacForm.apellidos.$invalid && !editPacForm.apellidos.$pristine }">
               <label>Apellidos</label>
-              <input type="text" class="form-control border-input" placeholder="Apellidos" data-ng-model="paciente.apellidos">
+              <input  type="text"
+                      class="form-control border-input"
+                      minlength="2"
+                      maxlength="50"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      placeholder="Apellidos"
+                      data-ng-model="paciente.apellidos"
+                      required>
           </div>
         </div>
     </div>
@@ -39,22 +63,33 @@
         <div class="col-md-3 col-sm-3">
           <div class="form-group">
             <label>Sexo:</label>
-            <select class="form-control border-input" data-ng-model="paciente.sexo">
+            <select class="form-control border-input" data-ng-model="paciente.sexo" required>
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
             </select>
           </div>
         </div>
         <div class="col-md-4 col-sm-4">
-          <div class="form-group">
+          <div class="form-group"
+               ng-class="{'has-error': editPacForm.nacimiento.$invalid && !editPacForm.nacimiento.$pristine }">
             <label>Fecha de Nacimiento</label>
-            <input type="Date" class="form-control border-input" data-ng-model="paciente.fechaNacimiento">
+            <input type="Date"
+                   class="form-control border-input"
+                   data-ng-model="paciente.fechaNacimiento" required>
           </div>
         </div>
         <div class="col-md-5 col-sm-5">
-          <div class="form-group">
+          <div class="form-group"
+               ng-class="{'has-error': editPacForm.celular.$invalid && !editPacForm.celular.$pristine }">
             <label>Celular</label>
-            <input type="text" class="form-control border-input" placeholder="Celular" data-ng-model="paciente.celular">
+            <input type="text"
+                   class="form-control border-input"
+                   minlength="10"
+                   maxlength="10"
+                   onkeypress="return event.charCode>47 && event.charCode<58"
+                   placeholder="Celular"
+                   data-ng-model="paciente.celular"
+                   required>
           </div>
         </div>
     </div>
@@ -62,21 +97,38 @@
         <div class="col-md-4 col-sm-4">
             <div class="form-group">
                 <label>Ocupación</label>
-                <input type="text" class="form-control border-input" placeholder="Ocupación" data-ng-model="paciente.ocupacion">
+                <input type="text"
+                       class="form-control border-input"
+                       maxlength="50"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       placeholder="Ocupación"
+                       data-ng-model="paciente.ocupacion">
             </div>
         </div>
         <div class="col-md-8 col-sm-8">
             <div class="form-group">
                 <label>Dirección</label>
-                <input type="text" class="form-control border-input" placeholder="Dirección" data-ng-model="paciente.direccion">
+                <input type="text"
+                       class="form-control border-input"
+                       maxlength="200"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       placeholder="Dirección"
+                       data-ng-model="paciente.direccion">
             </div>
         </div>
     </div>
     <div class="row">
       <div class="col-md-12 col-sm-12">
-        <div class="form-group">
+        <div class="form-group"
+             ng-class="{'has-error': editPacForm.motivo.$invalid && !editPacForm.motivo.$pristine }">
             <label>Motivo de la Consulta</label>
-            <input type="text" class="form-control border-input" data-ng-model="paciente.motivoConsulta">
+            <input type="text"
+                   class="form-control border-input"
+                   minlength="5"
+                   maxlength="300"
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   data-ng-model="paciente.motivoConsulta"
+                   required>
         </div>
       </div>
     </div>
@@ -273,7 +325,12 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Comidas al día:</label>
           <div class="col-sm-8">
-            <input type="number" class="form-control border-input" placeholder="Comidas al día" data-ng-model="historiaAlimentaria.comidasAlDia">
+            <input placeholder="Comidas al día"
+                   type="text"
+                   class="form-control border-input"
+                   maxlength="2"
+                   onkeypress="return event.charCode>47 && event.charCode<58"
+                   data-ng-model="historiaAlimentaria.comidasAlDia">
           </div>
         </div>
       </div>
@@ -281,7 +338,13 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Preparada por:</label>
           <div class="col-sm-8">
-            <input type="texto" class="form-control border-input" placeholder="Preparadas por" data-ng-model="historiaAlimentaria.preparadoPor">
+            <input  type="text"
+                    class="form-control border-input"
+                    minlength="2"
+                    maxlength="50"
+                    onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                    placeholder="Preparadas por"
+                    data-ng-model="historiaAlimentaria.preparadoPor">
           </div>
         </div>
       </div>
@@ -356,19 +419,33 @@
         <div class="col-md-3">
           <div class="form-group">
               <label><small>Frecuencia</small></label>
-              <input type="number" class="form-control border-input" placeholder="Frecuencia" data-ng-model="newGrupo.frecuencia">
+              <input  type="text"
+                      class="form-control border-input"
+                      maxlength="2"
+                      onkeypress="return event.charCode>47 && event.charCode<58"
+                      class="form-control border-input" placeholder="Frecuencia" data-ng-model="newGrupo.frecuencia">
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
               <label><small>Alimentos que le agradan</small></label>
-              <input type="text" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
+              <input type="text"
+                      class="form-control border-input"
+                      placeholder="Nombres"
+                      minlength="2"
+                      maxlength="50"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
               <label><small>Alimentos que no le agradan</small></label>
-              <input type="text" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
+              <input type="text"
+                      class="form-control border-input"
+                      placeholder="Nombres"
+                      minlength="2"
+                      maxlength="50"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
           </div>
         </div>
       </div>
