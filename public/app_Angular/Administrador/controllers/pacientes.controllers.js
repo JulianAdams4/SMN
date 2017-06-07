@@ -110,7 +110,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
 
     $scope.edit = function () {
       var idToEdit = $scope.idPacienteEdit;
-      var dataFormEdit = $scope.pacienteEdit
+      var dataFormEdit = $scope.paciente
      $http({
         method: 'PUT',
         url: '/api/pacientes/' + idToEdit,
@@ -152,7 +152,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           $scope.paciente = response.data;
           console.log($scope.paciente);
           $scope.paciente.cedula = Number(response.data.cedula);
-          $scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);  
+          $scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
           BootstrapDialog.show({
               title: 'Información de Paciente',
               data: {
@@ -168,9 +168,9 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
                                '<label>Ocupación: </label>'
                                '<label>Dirección: </label>'
                                '<label>Motivo de consulta:</label>';
-                               
+
                                 //$('<label></label>').text($scope.paciente.cedula);
-        
+
                 return $message;
             }
           });
