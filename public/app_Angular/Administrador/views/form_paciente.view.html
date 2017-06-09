@@ -75,7 +75,10 @@
             <label>Fecha de Nacimiento</label>
             <input type="Date"
                    class="form-control border-input"
-                   data-ng-model="paciente.fechaNacimiento" required>
+                   data-ng-model="paciente.fechaNacimiento"
+                   min="1917-01-01"
+                   max="2013-12-31"
+                   required>
           </div>
         </div>
         <div class="col-md-5 col-sm-5">

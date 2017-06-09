@@ -65,7 +65,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       .then(
         function(response){
           $scope.paciente = response.data;
-          //$scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
+          $scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
           $http({
             method: 'GET',
             url: '/api/historiaAlimentariaPaciente/' + $scope.idPacienteEdit
@@ -149,7 +149,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       .then(
         function(response){
           $scope.paciente = response.data;
-          //$scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
+          $scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
           BootstrapDialog.show({
               title: 'Información de Paciente',
               data: {
