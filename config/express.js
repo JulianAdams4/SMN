@@ -28,6 +28,7 @@ module.exports = function() {
   require('../app/routes/datosControl.routes')(app);
   require('../app/routes/antecedentes.routes')(app);
   require('../app/routes/historiaAlimentaria.routes')(app);
+  require('../app/routes/planNutricional.routes')(app);
 
   app.use(express.static('./public'));
 

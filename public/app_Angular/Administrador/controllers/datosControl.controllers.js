@@ -2,7 +2,6 @@
 
 angular.module('administrador').controller('DatosController',['$scope','$http','$routeParams','$location','$window',
   function($scope, $http, $routeParams, $location, $window) {
-    $scope.isReady = false;
     $scope.idPaciente = '';
     $scope.idDatoControlEdit = ''
     $scope.datosControl = {};
@@ -16,7 +15,6 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         url: 'api/datosControlPaciente/' + $scope.idPaciente
       }).then(function(response){
         $scope.datosControl = response.data;
-        $scope.isReady = true;
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })

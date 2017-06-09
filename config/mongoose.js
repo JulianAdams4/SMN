@@ -13,5 +13,6 @@ module.exports = function(){
   require('../app/models/datosControl.model');
   require('../app/models/antecedentes.model');
   require('../app/models/historiaAlimentaria.model');
+  require('../app/models/planNutricional.model');
   return db;
 }
