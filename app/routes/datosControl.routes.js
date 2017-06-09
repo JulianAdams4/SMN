@@ -5,12 +5,12 @@ var datosControl = require('../controllers/datosControl.controllers');
 module.exports = function(app) {
   app.route('/api/datosControl/:datosControlId')
     .get(datosControl.read)
-    .put(datosControl.editDatosControl);
+    .put(datosControl.editDatosControl)
+    .delete(datosControl.borrarDatoControlById);
 
   app.route('/api/datosControlPaciente/:pacienteId')
     .get(datosControl.datosControlByPaciente)
-    .post(datosControl.createDatosControl)
-    .delete(datosControl.borrarDatosControlByPaciente);
+    .post(datosControl.createDatosControl);
 
   app.param('datosControlId', datosControl.datosControlById);
 

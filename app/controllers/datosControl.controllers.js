@@ -113,10 +113,10 @@ exports.editDatosControl = function(req, res){
   });
 };
 
-exports.borrarDatosControlByPaciente = function (req, res) {
-  var _idPaciente = req.params.pacienteId;
+exports.borrarDatoControlById = function (req, res) {
+  var id = req.params.datosControlId;
   DatosControl.update(
-    { idPaciente: _idPaciente },
+    { _id: id },
     { $set:{ borrado: true } },
     function (err, datos) {
       if (err) {
