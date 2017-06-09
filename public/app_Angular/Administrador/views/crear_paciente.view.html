@@ -3,7 +3,7 @@
         <h4 class="title">Ingresar Paciente</h4>
     </div>
     <div class="content">
-        <form data-ng-submit="create()">
+        <form name="pacienteForm" data-ng-submit="create()" novalidate>
 
           <section ng-include="'app_Angular/Administrador/views/form_paciente.view.html'"></section>
 
