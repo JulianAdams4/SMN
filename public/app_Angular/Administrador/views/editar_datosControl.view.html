@@ -3,9 +3,9 @@
         <h4 class="title">Editar Datos de Control</h4>
     </div>
     <div class="content">
-        <form name="editPacForm" data-ng-submit="edit()">
+        <form name="datoControlForm" data-ng-submit="edit()">
 
-          <section ng-include="'app_Angular/Administrador/views/form_editarDatosControlPaciente.view.html'">
+          <section ng-include="'app_Angular/Administrador/views/form_datosControlPaciente.view.html'">
           </section>
 
           <div class="text-center">
@@ -18,7 +18,7 @@
 
                 <button type="submit" 
                         class="btn btn-info btn-fill btn-wd" 
-                        ng-disabled="!editPacForm.$valid||editPacForm.$pristine">
+                        >
                   Guardar
                 </button> 
 

@@ -3,9 +3,9 @@
         <h4 class="title">Ingresar Dato de control</h4>
     </div>
     <div class="content">
-        <form name="createControlD" data-ng-submit="create()">
+        <form name="datoControlForm" data-ng-submit="create()">
 
-          <section ng-include="'app_Angular/Administrador/views/form_crearDatosControlPaciente.view.html'">
+          <section ng-include="'app_Angular/Administrador/views/form_datosControlPaciente.view.html'">
           </section>
 
           <div class="text-center">
@@ -16,9 +16,7 @@
                   Cancelar
                 </a>
 
-                <button type="submit" 
-                        class="btn btn-info btn-fill btn-wd" 
-                        ng-disabled="!createControlD.$valid||createControlD.$pristine">
+                <button type="submit" class="btn btn-info btn-fill btn-wd">
                   Guardar
                 </button> 
 

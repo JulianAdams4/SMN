@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-md-2 col-sm-2"></div>
+    <div class="col-md-8 col-sm-8">
+      <div class="form-group" 
+           ng-class="{'has-error': datoControlForm.fechaDato.$invalid && datoControlForm.fechaDato.$pristine }">
+        <label>Fecha</label>
+        <input type="Date" 
+               class="form-control border-input" 
+               name="fechaDato" 
+               data-ng-model="datosControl.fechaDato"
+               required>
+      </div>
+    </div>
+    <div class="col-md-2 col-sm-2"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-2 col-sm-2"></div>
+  <div class="col-md-8 col-sm-8">
+    <div class="form-group" 
+         ng-class="{'has-error': datoControlForm.observaciones.$invalid && !datoControlForm.observaciones.$pristine }">
+      <label>Observaciones:</label>
+      <input type="text" 
+             class="form-control border-input" 
+             name="observaciones"  
+             minlength="2" 
+             maxlength="50" 
+             onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
+             data-ng-model="datosControl.observaciones" 
+             placeholder="Observaciones" 
+             required>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2"></div>
+</div>
+
+<div class="row">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nombre del Dato</th>
+        <th>Valor</th>
+        <th>Unidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-repeat="parametro in datosControl.datos">
+        <td data-ng-bind="parametro.nombreDato"></td>
+        <td data-ng-bind="parametro.valorDato"></td>
+        <td data-ng-bind="parametro.unidadDato"></td>
+        <td>
+          <div class="btn-group">
+              <a class="btn btn-xs btn-danger" ng-click="removeParametro(parametro)"><i class="fa fa-trash-o"></i></a>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row" ng-show="!showAgregar">
+    <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = true;">Agregar</button>
+</div>
+<div ng-show="showAgregar">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+          <label><small>Nombre del Dato</small></label>
+          <input  type="text"
+                  class="form-control border-input"
+                  minlength="2"
+                  maxlength="30"
+                  onkeypress="return return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                  class="form-control border-input" placeholder="Nombre" data-ng-model="newParametro.nombreDato">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+          <label><small>Valor</small></label>
+          <input type="text"
+                  class="form-control border-input"
+                  placeholder="Valor"
+                  minlength="2"
+                  maxlength="4"
+                  onkeypress="return event.charCode>47 && event.charCode<58" class="form-control border-input" placeholder="Valor" data-ng-model="newParametro.valorDato">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+          <label><small>Unidad</small></label>
+          <select class="form-control border-input" data-ng-model="newParametro.unidadDato">
+            <option value="%">%</option>
+            <option value="mg/L">mg/L</option>
+            <option value="cm">cm</option>
+            <option value="lbs">lbs</option>
+          </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = false; putParametro();">Agregar a la Tabla</button>
+  </div>
+</div>

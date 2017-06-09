@@ -4,17 +4,10 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
   function($scope, $http, $routeParams, $location, $window) {
     $scope.isReady = false;
     $scope.idPaciente = '';
-    $scope.datosControlForm = {};
-    $scope.listaDatos = [
-      {
-        'nombreDato': "",
-        'valorDato': "",
-        'unidadDato': "%"
-      }
-    ];
-    $scope.datosControl = [];
-    $scope.idDatoControlEdit = '';
-    $scope.datoControlEdit = {};
+    $scope.idDatoControlEdit = ''
+    $scope.datosControl = {};
+    $scope.datosControl.datos = [];
+    $scope.newParametro = {};
 
     $scope.find = function(){
       $scope.idPaciente = $routeParams.idPaciente;
@@ -25,52 +18,37 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         $scope.datosControl = response.data;
         $scope.isReady = true;
       }, function(errorResponse){
-        console.log(errorResponse.data.message);
+        demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })
     }
 
     // ==============================================
 
     $scope.initCreate = function () {
-      $scope.datosControlForm.fechaDato = new Date();
+      $scope.datosControl.fechaDato = new Date();
     }
 
 
-    $scope.agregarDato = function () {
-      var lastElement = $scope.listaDatos[$scope.listaDatos.length-1];
-      if ( lastElement && lastElement.nombreDato != '' ){
-        $scope.nuevoDato = {
-          'nombreDato': "",
-          'valorDato': "",
-          'unidadDato': "%"
-        };
-        $scope.listaDatos.push($scope.nuevoDato);
-      }
-      if ($scope.listaDatos.length == 0){
-        $scope.nuevoDato = {
-          'nombreDato': "",
-          'valorDato': "",
-          'unidadDato': "%"
-        };
-        $scope.listaDatos.push($scope.nuevoDato);
-      }
+    $scope.putParametro = function(){
+      $scope.datosControl.datos.push({nombreDato: $scope.newParametro.nombreDato, valorDato: $scope.newParametro.valorDato, unidadDato: $scope.newParametro.unidadDato});
+      $scope.newParametro = {};
     }
 
-
-    $scope.removerDato = function($index){
-      if ( $scope.listaDatos.length>1 ){
-        $scope.listaDatos.splice($index, 1);
-      }
+    $scope.removeParametro = function(parametro){
+      for (var i in $scope.datosControl.datos) {
+            if ($scope.datosControl.datos[i] === parametro) {
+              $scope.datosControl.datos.splice(i, 1);
+            }
+          }
     }
 
     $scope.create = function() {
       var data  = {
         idPaciente: $routeParams.idPaciente,
-        fechaDato: $scope.datosControlForm.fechaDato,
-        observaciones: $scope.datosControlForm.observaciones,
-        datos: $scope.listaDatos
+        fechaDato: $scope.datosControl.fechaDato,
+        observaciones: $scope.datosControl.observaciones,
+        datos: $scope.datosControl.datos
       }
-
       $http({
         method: 'POST',
         url: 'api/datosControlPaciente/' + $routeParams.idPaciente,
@@ -106,9 +84,9 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       })
       .then(
         function(response){
-          $scope.datoControlEdit.fechaDato = new Date(response.data.fechaDato);
-          $scope.datoControlEdit.observaciones = response.data.observaciones;
-          $scope.datoControlEdit.datos = response.data.datos;
+          $scope.datosControl.fechaDato = new Date(response.data.fechaDato);
+          $scope.datosControl.observaciones = response.data.observaciones;
+          $scope.datosControl.datos = response.data.datos;
         },
         function(errorResponse){
           console.log(errorResponse.data.message);
@@ -124,36 +102,9 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       );
     }
 
-    $scope.agregarDatoEdit = function () {
-      var lastElement = $scope.datoControlEdit.datos[$scope.datoControlEdit.datos.length-1];
-      if ( lastElement && lastElement.nombreDato != '' ){
-        $scope.nuevoDato = {
-          'nombreDato': "",
-          'valorDato': "",
-          'unidadDato': "%"
-        };
-        $scope.datoControlEdit.datos.push($scope.nuevoDato);
-      }
-      if ($scope.datoControlEdit.datos.length == 0){
-        $scope.nuevoDato = {
-          'nombreDato': "",
-          'valorDato': "",
-          'unidadDato': "%"
-        };
-        $scope.datoControlEdit.datos.push($scope.nuevoDato);
-      }
-    }
-
-
-    $scope.removerDatoEdit = function($index){
-      if ( $scope.datoControlEdit.datos.length>1 ){
-        $scope.datoControlEdit.datos.splice($index, 1);
-      }
-    }
-
     $scope.edit = function () {
       var idToEdit = $scope.idDatoControlEdit;
-      var dataFormEdit = $scope.datoControlEdit
+      var dataFormEdit = $scope.datosControl
      $http({
         method: 'PUT',
         url: '/api/datosControl/' + idToEdit,
