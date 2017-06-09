@@ -12,6 +12,8 @@ module.exports = function(app) {
     .post(planNutricional.createPlanNutricional);
 
   app.route('/api/planesNutricionales/:planNutricionalId')
+    .get(planNutricional.read)
     .put(planNutricional.editPlanNutricional);
 
+  app.param('planNutricionalId', planNutricional.planNutricionalById);
 };

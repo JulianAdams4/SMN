@@ -1,13 +1,14 @@
 <div class="row">
     <div class="col-md-2 col-sm-2"></div>
     <div class="col-md-8 col-sm-8">
-      <div class="form-group" 
+      <div class="form-group"
            ng-class="{'has-error': datoControlForm.fechaDato.$invalid && datoControlForm.fechaDato.$pristine }">
         <label>Fecha</label>
-        <input type="Date" 
-               class="form-control border-input" 
-               name="fechaDato" 
+        <input type="Date"
+               class="form-control border-input"
+               name="fechaDato"
                data-ng-model="datosControl.fechaDato"
+               min="2000-01-01"
                required>
       </div>
     </div>
@@ -17,17 +18,17 @@
 <div class="row">
   <div class="col-md-2 col-sm-2"></div>
   <div class="col-md-8 col-sm-8">
-    <div class="form-group" 
+    <div class="form-group"
          ng-class="{'has-error': datoControlForm.observaciones.$invalid && !datoControlForm.observaciones.$pristine }">
       <label>Observaciones:</label>
-      <input type="text" 
-             class="form-control border-input" 
-             name="observaciones"  
-             minlength="2" 
-             maxlength="50" 
-             onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" 
-             data-ng-model="datosControl.observaciones" 
-             placeholder="Observaciones" 
+      <input type="text"
+             class="form-control border-input"
+             name="observaciones"
+             minlength="2"
+             maxlength="50"
+             onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+             data-ng-model="datosControl.observaciones"
+             placeholder="Observaciones"
              required>
     </div>
   </div>

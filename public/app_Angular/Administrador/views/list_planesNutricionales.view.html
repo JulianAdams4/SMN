@@ -1,6 +1,6 @@
 <div class="row" data-ng-controller="PlanesController" data-ng-init="find()">
     <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
-      <a type="button" class="btn btn-success" data-ng-href="#!">
+      <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listPlanesNutricionales/{{planesNutricionales[0].idPaciente._id}}/create">
         <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
         Registrar plan nutricional
       </a>
@@ -39,11 +39,11 @@
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
                                 </a>
                                 &nbsp;
-                                <a title="Editar plan" data-ng-href="#!">
+                                <a title="Editar plan" data-ng-href="#!/pacientes/listPlanesNutricionales/{{planesNutricionales[0].idPaciente._id}}/edit/{{plan._id}}">
                                     <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" style="color:green"></i>
                                 </a>
                                 &nbsp;
-                                <a title="Eliminar plan" data-ng-href="#!" ng-click="">
+                                <a title="Eliminar plan" ng-click="">
                                     <i class="fa fa-lg fa-trash-o" aria-hidden="true" style="color:red"></i>
                                 </a>
                             </td>

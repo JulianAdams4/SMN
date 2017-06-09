@@ -21,6 +21,10 @@ var getErrorMessage = function(err) {
   return message;
 };
 
+exports.read = function(req, res){
+  res.json(req.planNutricional);
+};
+
 exports.createPlanNutricional = function(req, res){
   var planNutricional = new PlanNutricional(req.body);
   var campos = ["documento"];
@@ -52,6 +56,26 @@ exports.planNutricionalByPaciente = function(req, res){
         }
         return res.status(200).json(planesNutricionales);
     });
+};
+
+/*Permite obtener la información de un plan nutricional por id */
+exports.planNutricionalById = function(req, res, next, id){
+  PlanNutricional.findById(id, function(err, planNutricional){
+    if(err){
+      return res.status(500).send({
+        message: getErrorMessage(err),
+        type: 'danger'
+      })
+    }
+    if(!planNutricional){
+      return res.status(404).send({
+        message: '<i class="fa ti-alert"></i>No existe el plan nutricional',
+        type: 'danger'
+      })
+    }
+    req.planNutricional = planNutricional;
+    next();
+  });
 };
 
 exports.editPlanNutricional = function(req, res){
