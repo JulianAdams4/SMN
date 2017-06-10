@@ -38,7 +38,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           console.log(errorResponse);
           demo.mostrarNotificacion('danger',errorResponse.data.message);
         });
-
+        demo.mostrarNotificacion("success", "Paciente creado exitosamente!");
         $location.path('pacientes');
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);

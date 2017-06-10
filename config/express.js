@@ -3,8 +3,8 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var config = require('./config');
 var methodOverride = require('method-override');
-
 module.exports = function() {
+
   var app = express();
 
   if(process.env.NODE_ENV === 'development'){
@@ -16,8 +16,8 @@ module.exports = function() {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-  app.use(bodyParser.json());
 
+  app.use(bodyParser.json({limit: '50mb'}));
   app.use(methodOverride());
 
   app.set('view engine', 'hbs');
