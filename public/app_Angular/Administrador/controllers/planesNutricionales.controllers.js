@@ -102,6 +102,6 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     }
     // ==============================================
     $scope.backToList = function() {
-      $window.history.back();
+      $location.path('/pacientes/listPlanesNutricionales/'+$routeParams.idPaciente);
     };
   }]);

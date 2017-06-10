@@ -1,18 +1,17 @@
-<div class="card" data-ng-controller='PacientesController' ng-init="initEdit()">
+<div class="card" data-ng-controller='DatosController' ng-init="initEdit()">
     <div class="header">
-        <h4 class="title">Editar Paciente</h4>
+        <h4 class="title">Consultar Datos de Control</h4>
     </div>
     <div class="content">
-        <form name="paciente" data-ng-submit="goEditView()">
-            <fieldset disabled>
-              <section ng-include="'app_Angular/Administrador/views/form_paciente.view.html'">
-              </section>
-            </fieldset>
-
+        <form name="datoControlForm" data-ng-submit="goEditView()">
+          <fieldset disabled>
+            <section ng-include="'app_Angular/Administrador/views/form_datosControlPaciente.view.html'">
+            </section>
+          </fieldset>
           <div class="text-center">
               <!-- <div class="col-lg-6 col-md-6 col-xs-6 pull-right">
               </div> -->
-                <a type="button" class="btn btn-info btn-fill btn-wd" data-ng-href="#!/pacientes">
+                <a type="button" class="btn btn-info btn-fill btn-wd" ng-click="backToList()">
                   <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i> &nbsp;
                   Cancelar
                 </a>

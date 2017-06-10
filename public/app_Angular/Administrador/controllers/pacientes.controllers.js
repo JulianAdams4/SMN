@@ -140,63 +140,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       );
     }
 
-    $scope.verPaciente = function (idPaciente){
-      $scope.idPacienteVer = idPaciente;
-      $http({
-        method: 'GET',
-        url: '/api/pacientes/' + $scope.idPacienteVer
-      })
-      .then(
-        function(response){
-          $scope.paciente = response.data;
-          $scope.paciente.fechaNacimiento = new Date(response.data.fechaNacimiento);
-          BootstrapDialog.show({
-              title: 'Información de Paciente',
-              data: {
-                'data1': $scope.paciente.cedula
-            },
-              message: function(dialog) {
-                var $message = '<label>Cedula:</label>'
-                               '<label>Nombres:</label>'
-                               '<label>Apellidos: </label>'
-                               '<label>Sexo:</label>'
-                               '<label>Fecha de nacimiento: </label>'
-                               '<label>Celular:</label>'
-                               '<label>Ocupación: </label>'
-                               '<label>Dirección: </label>'
-                               '<label>Motivo de consulta:</label>';
-
-                                //$('<label></label>').text($scope.paciente.cedula);
-
-                return $message;
-            }
-          });
-          /*$scope.pacienteEdit.cedula = response.data.cedula;
-          $scope.pacienteEdit.nombres = response.data.nombres;
-          $scope.pacienteEdit.apellidos = response.data.apellidos;
-          $scope.pacienteEdit.sexo = response.data.sexo;
-          $scope.pacienteEdit.fechaNacimiento = new Date(response.data.fechaNacimiento);
-          $scope.pacienteEdit.celular = response.data.celular;
-          $scope.pacienteEdit.ocupacion = response.data.ocupacion;
-          $scope.pacienteEdit.direccion = response.data.direccion;
-          $scope.pacienteEdit.motivoConsulta = response.data.motivoConsulta;*/
-        },
-        function(errorResponse){
-          console.log(errorResponse.data.message);
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
-          /*demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del paciente </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );*/
-        }
-      );
-
-    }
-
     $scope.desactivarPaciente = function (idPaciente) {
       var idPacienteDelete = idPaciente;
       BootstrapDialog.confirm({
@@ -214,24 +157,10 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
               method: 'PUT',
               url: '/api/desactivarPaciente/' + idPacienteDelete
             }).then(function(response){
-              demo.showCustomNotification(
-                'top',
-                'right',
-                '<h5> ¡Paciente desactivado <b>exitosamente</b>! </h5>',
-                'success',
-                'ti-check',
-                3000
-              );
+              demo.mostrarNotificacion("success", "Paciente desactivado exitosamente");
               find();
             },function(errorResponse){
-              demo.showCustomNotification(
-                'top',
-                'right',
-                '<h5> Ocurrio un <b>error</b> al desactivar el paciente </h5>',
-                'danger',
-                'ti-close',
-                3000
-              );
+              demo.mostrarNotificacion("danger", "Ocurrió un problema al desactivar al paciente");
             });
           }
         }
@@ -257,25 +186,11 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
              })
             .then(
                function(response){
-                 demo.showCustomNotification(
-                   'top',
-                   'right',
-                   '<h5> ¡Paciente activado <b>exitosamente</b>! </h5>',
-                   'success',
-                   'ti-check',
-                   3000
-                 );
+                 demo.mostrarNotificacion("success", "Paciente activado exitosamente");
                  find();
                },
                function(errorResponse){
-                 demo.showCustomNotification(
-                   'top',
-                   'right',
-                   '<h5> Ocurrio un <b>error</b> al activar el paciente </h5>',
-                   'danger',
-                   'ti-close',
-                   3000
-                 );
+                 demo.mostrarNotificacion("danger", "Ocuurrió un problema al activar el paciente");
                }
              );
           }
@@ -295,5 +210,8 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
             }
           }
     }
-
+    // ==============================================
+    $scope.goEditView = function(){
+      $location.path('/pacientes/edit/'+$routeParams.idPaciente);
+    }
   }]);

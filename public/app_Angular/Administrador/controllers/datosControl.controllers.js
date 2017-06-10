@@ -75,6 +75,8 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       })
       .then(
         function(response){
+          $scope.datosControl=response.data;
+          console.log(response.data);
           $scope.datosControl.fechaDato = new Date(response.data.fechaDato);
           $scope.datosControl.observaciones = response.data.observaciones;
           $scope.datosControl.datos = response.data.datos;
@@ -115,7 +117,11 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     // ==============================================
 
     $scope.backToList = function() {
-      $window.history.back();
+      $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente);
     };
+    // ==============================================
+    $scope.goEditView = function(){
+      $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente+'/edit/'+$routeParams.datosControlId);
+    }
 
   }]);

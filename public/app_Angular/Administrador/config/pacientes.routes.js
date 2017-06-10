@@ -25,6 +25,8 @@ angular.module('administrador').config(['$routeProvider',
       templateUrl: 'app_Angular/Administrador/views/crear_planNutricional.view.html'
     }).when('/pacientes/listPlanesNutricionales/:idPaciente/edit/:planNutricionalId', {
       templateUrl: 'app_Angular/Administrador/views/editar_planNutricional.view.html'
+    }).when('/pacientes/listDatosControl/:idPaciente/ver/:datosControlId', {
+      templateUrl: 'app_Angular/Administrador/views/ver_datosControl.view.html'
     });
   }
 ]);

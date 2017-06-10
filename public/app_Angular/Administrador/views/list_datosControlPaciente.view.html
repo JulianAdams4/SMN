@@ -35,7 +35,7 @@
                         	<td>{{$index + 1}}</td>
                         	<td data-ng-bind="dato.fechaDato | date:'dd/MM/yyyy'"></td>
                             <td>
-                                <a title="Ver informacion">
+                                <a title="Ver informacion" data-ng-href="#!/pacientes/listDatosControl/{{datosControl[0].idPaciente._id}}/ver/{{dato._id}}">
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
                                 </a>
                                 &nbsp;
