@@ -67,6 +67,8 @@ exports.createDatosControl = function(req, res){
   var campos = ["idPaciente"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
+  }else if(datosControl.datos.length==0){
+    return res.status(500).json({ message: 'Falta ingresar parámetros de control.'});
   }
   datosControl.save( function(err){
     if (err) {
@@ -86,20 +88,22 @@ exports.editDatosControl = function(req, res){
   DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+      res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
     }
 
     // Paciente no encontrado
     if (!datosControl) {
-      res.status(404).send({ message: 'Datos de Control no encontrados' });
+      res.status(404).send({ message: 'Datos de Control no encontrados.' });
     }
-
     // Si existe el campo en el body, se reemplaza
     // caso contrario se deja el valor que estaba
     datosControl.fechaDato = req.body.fechaDato ? req.body.fechaDato : datosControl.fechaDato;
     datosControl.observaciones = req.body.observaciones ? req.body.observaciones : datosControl.observaciones;
     datosControl.datos = req.body.datos ? req.body.datos : datosControl.datos;
-
+    
+    if(datosControl.datos.length==0){
+      return res.status(500).json({ message: 'Falta ingresar parámetros de control.'});
+    }
     // Guardamos los cambios
     datosControl.save( function(err) {
       // Error del servidor

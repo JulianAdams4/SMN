@@ -63,14 +63,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         $location.path('/pacientes/listDatosControl/' + $routeParams.idPaciente);
       }, function(errorResponse){
         //console.log(errorResponse.data.message);
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ocurrio un <b>error</b> al guardar la informacion </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );
+          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       });
     };
 
@@ -88,14 +81,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         },
         function(errorResponse){
           console.log(errorResponse.data.message);
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del dato de control </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );
+          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         }
       );
     }
@@ -121,14 +107,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           $location.path('/pacientes/listDatosControl/' + $routeParams.idPaciente);
         },
         function(errorResponse){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ocurrio un <b>error</b> al editar el dato de control </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );
+          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         }
       );
     }
