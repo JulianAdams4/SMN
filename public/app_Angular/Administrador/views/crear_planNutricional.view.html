@@ -2,8 +2,8 @@
     <div class="header">
         <h4 class="title">Ingresar Plan Nutricional</h4>
     </div>
-    <div class="content">
-        <form name="planForm" data-ng-submit="create()" novalidate>
+    <div class="content imageupload panel panel-default portfolio-filters wow fadeInUp">
+        <form name="planForm" id="planForm" data-ng-submit="create()" novalidate>
 
           <section ng-include="'app_Angular/Administrador/views/form_planNutricional.view.html'"></section>
 
@@ -17,8 +17,7 @@
                   Cancelar
                 </a>
 
-                <button type="submit" class="btn btn-info btn-fill btn-wd"
-                    ng-disabled="!planForm.$valid||planForm.$pristine">
+                <button type="submit" class="btn btn-info btn-fill btn-wd">
                   Guardar
                 </button>
 

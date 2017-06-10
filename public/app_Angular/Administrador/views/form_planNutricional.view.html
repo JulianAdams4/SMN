@@ -17,17 +17,22 @@
 
 <div class="row">
   <div class="col-md-2 col-sm-2"></div>
-  <div class="col-md-8 col-sm-8">
-    <div class="form-group"
-         ng-class="{'has-error': planForm.documento.$invalid && !planForm.documento.$pristine }">
+  <div class="col-md-2 col-sm-2">
+    <div class="form-group" ng-class="{'has-error': planForm.documento.$invalid && !planForm.documento.$pristine }">
       <label>Documento:</label>
-      <input type="text"
+      <!-- The file is stored here. -->
+      <input id="file"
              class="form-control border-input"
              name="documento"
+             onchange="angular.element(this).scope().selectFile()"
+             type="file"
              data-ng-model="planNutricional.documento"
-             placeholder="Observaciones"
-             required>
+             required
+             style="padding-left:5%;">
     </div>
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <iframe ng-src="{{planNutricional.documento}}" id="preview" height="300" width="100%" frameborder="0" scrolling="auto" style="border: 1px solid black">
   </div>
   <div class="col-md-2 col-sm-2"></div>
 </div>

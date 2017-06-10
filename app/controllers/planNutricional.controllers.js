@@ -3,7 +3,19 @@
 var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var PlanNutricional = mongoose.model('PlanNutricional');
+var cloudinary = require('cloudinary');
 
+var cloudinaryCredentials = {
+  cloud_name: 'dsqpicprf',
+  api_key:    '259691129854149',
+  api_secret: 'jNwDkTwnkXaCzkbdwy6WrqOS8ik'
+};
+
+cloudinary.config({
+  cloud_name: cloudinaryCredentials.cloud_name,
+  api_key:    cloudinaryCredentials.api_key,
+  api_secret: cloudinaryCredentials.api_secret
+});
 var getErrorMessage = function(err) {
   var message = '';
   if (err.code) {
@@ -26,21 +38,26 @@ exports.read = function(req, res){
 };
 
 exports.createPlanNutricional = function(req, res){
-  var planNutricional = new PlanNutricional(req.body);
   var campos = ["documento"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }
-  planNutricional.save(function(err){
-    if (err) {
-      return res.status(500).send({
-        message: getErrorMessage(err),
-        type: "danger"
-      })
-    } else {
-      return res.status(201).json(planNutricional);
+  cloudinary.uploader.upload(req.body.documento, function(result){
+    if (result.url) {
+      PlanNutricional.create({
+        idPaciente:req.body.idPaciente,
+        documento: result.url
+      },function(err, planNutricional) {
+        if(err){
+          return res.status(500).send({
+            message: getErrorMessage(err),
+            type: "danger"
+          })
+        }
+        return res.status(201).json(planNutricional);
+      });
     }
-  });
+  })
 };
 
 /*Permite obtener los planes nutricionales por id del paciente y se incluye la
