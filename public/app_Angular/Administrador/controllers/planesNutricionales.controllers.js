@@ -89,16 +89,32 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           $scope.planNutricional.documento=$sce.trustAsResourceUrl(response.data.documento);
         },
         function(errorResponse){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ha ocurrido un <b>error</b> al obtener la informacion del plan nutricional </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );
+          demo.mostrarNotificacion("danger", "Ha ocurrido al obtener la información del plan nutricional");
         }
       );
+    }
+    // ==============================================
+    $scope.edit = function () {
+      var ruta = document.getElementById("preview").src;
+      var data = {
+        documento: ruta,
+        idPaciente:$scope.idPaciente
+      };
+      if(esArchivoValido){
+        $http({
+          method: 'PUT',
+          url: '/api/planesNutricionales/'+$routeParams.planNutricionalId,
+          data: data
+        }).then(function(response){
+          demo.mostrarNotificacion("success", "¡Plan nutricional editado exitosamente!");
+          $scope.backToList();
+        }, function(errorResponse){
+          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+        });
+      }
+      else{
+        demo.mostrarNotificacion("danger", "No se escogió ningún archivo");
+      }
     }
     // ==============================================
     $scope.backToList = function() {

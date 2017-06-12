@@ -112,16 +112,20 @@ exports.editPlanNutricional = function(req, res){
     }
     // Si existe el campo en el body, se reemplaza
     // caso contrario se deja el valor que estaba
-    planNutricional.documento = req.body.documento ? req.body.documento : planNutricional.documento;
-    // Guardamos los cambios
-    planNutricional.save( function(err) {
-      // Error del servidor
-      if (err) {
-        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+    cloudinary.uploader.upload(req.body.documento, function(result){
+      if (result.url) {
+        planNutricional.save( function(err) {
+          // Error del servidor
+          planNutricional.documento = result.url;
+          planNutricional.idPaciente = req.body.idPaciente;
+          if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+          }
+          // Editado con exito
+          res.status(200).json(planNutricional);
+        });
       }
-      // Editado con exito
-      res.status(200).json(planNutricional);
-    });
-
+    })
+    // Guardamos los cambios
   });
 };
