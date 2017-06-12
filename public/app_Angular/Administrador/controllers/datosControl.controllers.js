@@ -124,4 +124,45 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente+'/edit/'+$routeParams.datosControlId);
     }
 
+    $scope.eliminar = function(datoControl){
+
+      BootstrapDialog.confirm({
+        title: 'ADVERTENCIA',
+        message: 'Desea eliminar este dato de control?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: 'No',
+        btnOKLabel: 'Sí',
+        btnOKClass: 'btn-warning',
+        callback: function(result) {
+          if(result) {
+            $http({
+              method: 'DELETE',
+              url: '/api/datosControl/'+datoControl._id
+            }).then(function(response){
+              demo.showCustomNotification(
+                'top',
+                'right',
+                '<h5> Dato de Control eliminado <b>exitosamente</b>! </h5>',
+                'success',
+                'ti-check',
+                3000
+              );
+              for (var i in $scope.datosControl) {
+                    if ($scope.datosControl[i] === datoControl) {
+                      $scope.datosControl.splice(i, 1);
+                    }
+                  };
+            },
+            function(errorResponse){
+              demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+            });
+          }
+        }
+      });
+
+
+    }
+
   }]);
