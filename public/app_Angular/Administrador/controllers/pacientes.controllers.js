@@ -108,14 +108,20 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     }
 
     $scope.edit = function () {
+      // Necesario para la ruta
       var idToEdit = $scope.idPacienteEdit;
-      var dataFormEdit = $scope.paciente
-     $http({
+      // Se envian las 3 tabs
+      var dataFormEdit = {
+        paciente: $scope.paciente,
+        antecedente: $scope.antecedente,
+        historia: $scope.historiaAlimentaria
+      };
+      $http({
         method: 'PUT',
         url: '/api/pacientes/' + idToEdit,
         data: dataFormEdit
       })
-     .then(
+      .then(
         function(response){
           demo.showCustomNotification(
             'top',

@@ -3,6 +3,8 @@
 var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var Paciente = mongoose.model('Paciente');
+var Antecedentes = mongoose.model('Antecedentes');
+var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
@@ -102,6 +104,12 @@ exports.createPaciente = function(req, res){
 exports.editPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
 
+  // Extraemos la data de las tabs
+  var datosPaciente = req.body.paciente;
+  var datosAntecedente = req.body.antecedente;
+  var datosHistoria = req.body.historia;
+
+  // Editamos el paciente
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
     if (err) {
@@ -118,24 +126,77 @@ exports.editPaciente = function(req, res){
 
     // Si existe el campo en el body, se reemplaza
     // caso contrario se deja el valor que estaba
-    paciente.cedula = req.body.cedula ? req.body.cedula : paciente.cedula;
-    paciente.nombres = req.body.nombres ? req.body.nombres : paciente.nombres;
-    paciente.apellidos = req.body.apellidos ? req.body.apellidos : paciente.apellidos;
-    paciente.fechaNacimiento = req.body.fechaNacimiento ? req.body.fechaNacimiento : paciente.fechaNacimiento;
-    paciente.sexo = req.body.sexo ? req.body.sexo : paciente.sexo;
-    paciente.direccion = req.body.direccion ? req.body.direccion : paciente.direccion;
-    paciente.celular = req.body.celular ? req.body.celular : paciente.celular;
-    paciente.ocupacion = req.body.ocupacion ? req.body.ocupacion : paciente.ocupacion;
-    paciente.motivoConsulta = req.body.motivoConsulta ? req.body.motivoConsulta : paciente.motivoConsulta;
+console.log(datosPaciente);
+    paciente.cedula          = datosPaciente.cedula ? datosPaciente.cedula : paciente.cedula;
+    paciente.nombres         = datosPaciente.nombres ? datosPaciente.nombres : paciente.nombres;
+    paciente.apellidos       = datosPaciente.apellidos ? datosPaciente.apellidos : paciente.apellidos;
+    paciente.fechaNacimiento = datosPaciente.fechaNacimiento ? datosPaciente.fechaNacimiento : paciente.fechaNacimiento;
+    paciente.sexo            = datosPaciente.sexo ? datosPaciente.sexo : paciente.sexo;
+    paciente.direccion       = datosPaciente.direccion ? datosPaciente.direccion : paciente.direccion;
+    paciente.celular         = datosPaciente.celular ? datosPaciente.celular : paciente.celular;
+    paciente.ocupacion       = datosPaciente.ocupacion ? datosPaciente.ocupacion : paciente.ocupacion;
+    paciente.motivoConsulta  = datosPaciente.motivoConsulta ? datosPaciente.motivoConsulta : paciente.motivoConsulta;
 
-    // Guardamos los cambios
+    // Guardamos los cambios del paciente
     paciente.save( function(err) {
       // Error del servidor
       if (err) {
         res.status(500).send({ message: 'Ocurrió un error en el servidor' });
       }
-      // Editado con exito
-      res.status(200).json(paciente);
+      
+      // Paciente editado con exito
+
+      // Editamos el antecedente
+      Antecedentes.findById( datosAntecedente._id, function (err, antecedente) {
+        // Error del servidor
+        if (err) {
+          res.status(500).send({
+            message:  getErrorMessage(err), type: 'danger'
+          });
+        }
+
+        // Paciente no encontrado
+        if (!antecedente) {
+          res.status(404).send({ message: 'Antecedente no encontrado', type: 'danger' });
+        }
+
+console.log(datosAntecedente);
+        antecedente.alteracionApetito = datosAntecedente.alteracionApetito ? datosAntecedente.alteracionApetito : antecedente.alteracionApetito;
+        antecedente.nausea = datosAntecedente.nausea ? datosAntecedente.nausea : antecedente.nausea;
+        antecedente.vomito = datosAntecedente.vomito ? datosAntecedente.vomito : antecedente.vomito;
+        antecedente.estrenimiento = datosAntecedente.estrenimiento ? datosAntecedente.estrenimiento : antecedente.estrenimiento;
+        antecedente.diarrea = datosAntecedente.diarrea ? datosAntecedente.diarrea : antecedente.diarrea;
+        antecedente.flatulencia = datosAntecedente.flatulencia ? datosAntecedente.flatulencia : antecedente.flatulencia;
+        antecedente.acidez = datosAntecedente.acidez ? datosAntecedente.acidez : antecedente.acidez;
+        antecedente.gastritis = datosAntecedente.gastritis ? datosAntecedente.gastritis : antecedente.gastritis;
+        antecedente.problemasMasticacion = datosAntecedente.problemasMasticacion ? datosAntecedente.problemasMasticacion : antecedente.problemasMasticacion;
+        antecedente.cambioSaborComidas = datosAntecedente.cambioSaborComidas ? datosAntecedente.cambioSaborComidas : antecedente.cambioSaborComidas;
+        antecedente.alergia = datosAntecedente.alergia ? datosAntecedente.alergia : antecedente.alergia;
+        antecedente.suplementoVitaminicos = datosAntecedente.suplementoVitaminicos ? datosAntecedente.suplementoVitaminicos : antecedente.suplementoVitaminicos;
+        antecedente.medicamento = datosAntecedente.medicamento ? datosAntecedente.medicamento : antecedente.medicamento;
+        antecedente.ojos = datosAntecedente.ojos ? datosAntecedente.ojos : antecedente.ojos;
+        antecedente.cabello = datosAntecedente.cabello ? datosAntecedente.cabello : antecedente.cabello;
+        antecedente.unias = datosAntecedente.unias ? datosAntecedente.unias : antecedente.unias;
+        antecedente.piel = datosAntecedente.piel ? datosAntecedente.piel : antecedente.piel;
+
+        // Guardamos los cambios del antecedente
+        antecedente.save( function(err) {
+          // Error del servidor
+          if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+          }
+
+          // Antecedente editado con exito
+          //
+          //
+          //
+          //
+
+        });
+
+      });
+
+
     });
 
   });
