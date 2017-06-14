@@ -6,6 +6,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     $scope.planesNutricionales = {};
     $scope.planNutricional = {};
     var esArchivoValido=true;
+    var cambioArchivo=false;
     // ==============================================
     var find = function(){
       $scope.idPaciente = $routeParams.idPaciente;
@@ -48,6 +49,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     }
     // ==============================================
     $scope.selectFile = function (){
+      cambioArchivo = true;//si se da click en seleccionar archivo es por que se cambió el archivo
       var formatosPermitidos= ["pdf"];
       var archivo = document.getElementById("file").files[0];
       if(archivo!=undefined){
@@ -95,11 +97,19 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     }
     // ==============================================
     $scope.edit = function () {
-      var ruta = document.getElementById("preview").src;
-      var data = {
-        documento: ruta,
-        idPaciente:$scope.idPaciente
-      };
+      var data = {};
+      if(cambioArchivo){//si se cambió el archivo entonces se obtiene la nueva ruta
+        var ruta = document.getElementById("preview").src;
+        data = {
+         documento: ruta,
+         fechaDato:$scope.planNutricional.fechaDato
+       };
+      }
+      else{//si no se cambió el archivo se envian todos los campos excepto el canpo documento
+        data = {
+         fechaDato:$scope.planNutricional.fechaDato
+       };
+      }
       if(esArchivoValido){
         $http({
           method: 'PUT',
@@ -107,13 +117,13 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           data: data
         }).then(function(response){
           demo.mostrarNotificacion("success", "¡Plan nutricional editado exitosamente!");
-          $scope.backToList();
+          //$scope.backToList();
         }, function(errorResponse){
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }
       else{
-        demo.mostrarNotificacion("danger", "No se escogió ningún archivo");
+        demo.mostrarNotificacion("danger", "No se escogió ningún documento");
       }
     }
     // ==============================================
