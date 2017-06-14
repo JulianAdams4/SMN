@@ -117,7 +117,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           data: data
         }).then(function(response){
           demo.mostrarNotificacion("success", "¡Plan nutricional editado exitosamente!");
-          //$scope.backToList();
+          $scope.backToList();
         }, function(errorResponse){
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
