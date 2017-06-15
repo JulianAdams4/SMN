@@ -1,0 +1,31 @@
+<div class="card" data-ng-controller='CentroController'>
+    <div class="header">
+        <h4 class="title">Editar Información General del Centro</h4>
+    </div>
+    <div class="content">
+        <form name="centroForm" data-ng-submit="create()" novalidate>
+
+          <section ng-include="'app_Angular/Administrador/views/form_centro.view.html'">
+          </section>
+
+          <div class="text-center">
+              <!-- <div class="col-lg-6 col-md-6 col-xs-6 pull-right">
+              </div> -->
+                <a type="button" class="btn btn-info btn-fill btn-wd" data-ng-href="#!/centro">
+                  <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i> &nbsp;
+                  Cancelar
+                </a>
+
+                <button type="submit" class="btn btn-info btn-fill btn-wd"
+                ng-disabled="!centroForm.$valid||centroForm.$pristine">
+                  Guardar
+                </button> 
+
+              <!-- <div class="col-lg-6 col-md-6 col-xs-6 pull-left">
+              </div> -->
+          </div>
+          <div class="clearfix"></div>
+
+        </form>
+    </div>
+</div>

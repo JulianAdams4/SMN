@@ -77,7 +77,7 @@ exports.createDatosControl = function(req, res){
       })
     }
     else {
-      return res.status(200).json(datosControl);
+      return res.status(201).json(datosControl);
     }
   });
 };

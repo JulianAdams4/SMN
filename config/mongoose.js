@@ -14,5 +14,6 @@ module.exports = function(){
   require('../app/models/antecedentes.model');
   require('../app/models/historiaAlimentaria.model');
   require('../app/models/planNutricional.model');
+  require('../app/models/centro.model');
   return db;
 }

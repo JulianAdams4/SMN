@@ -48,7 +48,7 @@ describe('/POST datosControl', () => {
                   {
                     nombreDato:'Peso',
                     valorDato: 150.00,
-                    unidadDato: 'lbs'
+                    unidadDato: 'kg'
                   },
                   {
                     nombreDato:'Altura',
@@ -61,7 +61,7 @@ describe('/POST datosControl', () => {
                 .post('/api/datosControlPaciente/'+patId)
                 .send(datosControl)
                 .end((err, res) => {
-                  res.should.have.status(200);
+                  res.should.have.status(201);
                   res.body.should.have.property('idPaciente').eql(patId);
                   done();
             });
@@ -77,7 +77,7 @@ describe('/POST datosControl', () => {
     		  {
     		    nombreDato:'Peso',
     		    valorDato: 150.00,
-    		    unidadDato: 'lbs'
+    		    unidadDato: 'kg'
     		  },
     		  {
     		    nombreDato:'Altura',
@@ -103,7 +103,7 @@ describe('/POST datosControl', () => {
     		  {
     		    nombreDato:'Peso',
     		    valorDato: 150.00,
-    		    unidadDato: 'lbs'
+    		    unidadDato: 'kg'
     		  },
     		  {
     		    nombreDato:'Altura',
@@ -116,7 +116,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
   });
@@ -128,7 +128,7 @@ describe('/POST datosControl', () => {
           {
             nombreDato:'Peso',
             valorDato: 150.00,
-            unidadDato: 'lbs'
+            unidadDato: 'kg'
           }
         ]
     }
@@ -136,7 +136,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           done();
         });
   });
@@ -164,7 +164,7 @@ describe('/POST datosControl', () => {
         datos:[
           {
             valorDato: ''+150.00,
-            unidadDato: 'lbs'
+            unidadDato: 'kg'
           }
         ]
     }
@@ -185,7 +185,7 @@ describe('/POST datosControl', () => {
         datos:[
           {
             nombre: 'Peso',
-            unidadDato: 'lbs'
+            unidadDato: 'kg'
           }
         ]
     }
@@ -203,8 +203,8 @@ describe('/POST datosControl', () => {
         idPaciente: patId,
         datos:[
           {
-            nombreDato:'Complexión',
-            valorDato: 'Pálida',
+            nombreDato:'Peso',
+            valorDato: '150',
           }
         ]
     }
@@ -212,7 +212,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(500);
           done();
         });
   });

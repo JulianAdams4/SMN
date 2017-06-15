@@ -1,0 +1,235 @@
+<h5>Datos Generales Centro</h5>
+<div class="row">
+    <div class="row">
+        <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-8 col-sm-8">
+          <div class="form-group"
+               ng-class="{'has-error': centroForm.direccion.$invalid && !centroForm.direccion.$pristine }">
+            <label>Dirección</label>
+            <input type="text"
+                 class="form-control border-input"
+                 name="direccion"
+                 minlength="2"
+                 maxlength="100"
+                 onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                 data-ng-model="centro.direccion"
+                 placeholder="Dirección"
+                 required>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-2"></div>
+      <div class="col-md-2 col-sm-2">
+        <div class="form-group"
+                   ng-class="{'has-error': centroForm.telefono.$invalid && !centroForm.telefono.$pristine }">
+                <label>Teléfono</label>
+                <input type="text"
+                       class="form-control border-input"
+                       minlength="10"
+                       maxlength="10"
+                       name="telefono"
+                       onkeypress="return event.charCode>47 && event.charCode<58"
+                       placeholder="Teléfono"
+                       data-ng-model="centro.telefono"
+                       required>
+              </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-group"
+                   ng-class="{'has-error': centroForm.horariosAtencion.$invalid && !centroForm.horariosAtencion.$pristine }">
+                <label>Horarios de Atención</label>
+                <input type="text"
+                       class="form-control border-input"
+                       minlength="5"
+                       maxlength="30"
+                       name="horariosAtencion"
+                       placeholder="Horarios de Atención"
+                       data-ng-model="centro.horariosAtencion"
+                       required>
+              </div>
+      </div>
+      <div class="col-md-2 col-sm-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-8 col-sm-8">
+          <div class="form-group"
+               ng-class="{'has-error': centroForm.servicios.$invalid && !centroForm.servicios.$pristine }">
+            <label>Servicios</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      placeholder="Servicios"
+                      maxlength="50"
+                      name='servicios'
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      data-ng-model="centro.servicios"
+                      >
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2"></div>
+    </div>
+</div>
+<h5>Datos Nutricionista a Cargo</h5>
+<div class="row">
+    <div class="row">
+        <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group"
+               ng-class="{'has-error': centroForm.nutricionista.nombres.$invalid && !centroForm.nutricionista.nombres.$pristine }">
+            <label>Nombres</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      placeholder="Nombres"
+                      minlength="2"
+                      maxlength="50"
+                      name='nombres'
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      data-ng-model="centro.nutricionista.nombres"
+                      required>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group"
+               ng-class="{'has-error': centroForm.nutricionista.apellidos.$invalid && !centroForm.nutricionista.apellidos.$pristine }">
+            <label>Apellidos</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      minlength="2"
+                      maxlength="50"
+                      name="apellidos"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      placeholder="Apellidos"
+                      data-ng-model="centro.nutricionista.apellidos"
+                      required>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-4 col-sm-4">
+        <div class="form-group"
+                   ng-class="{'has-error': centroForm.nutricionista.cedula.$invalid && !centroForm.nutricionista.cedula.$pristine }">
+                <label>Cédula</label>
+                <input type="text"
+                       class="form-control border-input"
+                       minlength="10"
+                       maxlength="10"
+                       name="cedula"
+                       onkeypress="return event.charCode>47 && event.charCode<58"
+                       placeholder="Cédula"
+                       data-ng-model="centro.nutricionista.cedula"
+                       >
+              </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <div class="form-group"
+                   ng-class="{'has-error': centroForm.nutricionista.telefono.$invalid && !centroForm.nutricionista.telefono.$pristine }">
+                <label>Teléfono</label>
+                <input type="text"
+                       class="form-control border-input"
+                       minlength="10"
+                       maxlength="10"
+                       name="telefono"
+                       onkeypress="return event.charCode>47 && event.charCode<58"
+                       placeholder="Teléfono"
+                       data-ng-model="centro.nutricionista.telefono"
+                       >
+              </div>
+      </div>
+      <div class="col-md-2 col-sm-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-8 col-sm-8">
+          <div class="form-group"
+               ng-class="{'has-error': centroForm.nutricionista.estudios.$invalid && !centroForm.nutricionista.estudios.$pristine }">
+            <label>Estudios</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      minlength="2"
+                      maxlength="50"
+                      name="estudios"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      placeholder="Estudios"
+                      data-ng-model="centro.nutricionista.estudios"
+                      >
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-8 col-sm-8">
+          <div class="form-group"
+               ng-class="{'has-error': centroForm.nutricionista.especializaciones.$invalid && !centroForm.nutricionista.especializaciones.$pristine }">
+            <label>Especializaciones</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      minlength="2"
+                      maxlength="50"
+                      name="especializaciones"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      placeholder="Especializaciones"
+                      data-ng-model="centro.nutricionista.especializaciones"
+                      >
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2"></div>
+    </div>
+</div>
+<h5>Redes Sociales</h5>
+<div class="row">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Red Social</th>
+        <th>URL</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-repeat="redSocial in centro.redesSociales">
+        <td data-ng-bind="redSocial.nombre"></td>
+        <td data-ng-bind="redSocial.link"></td>
+        <td>
+          <div class="btn-group">
+              <a class="btn btn-xs btn-danger" ng-click="removeRed(redSocial)"><i class="fa fa-trash-o"></i></a>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row" ng-show="!showAgregar">
+    <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = true;"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i>Agregar</button>
+</div>
+<div ng-show="showAgregar">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+          <label><small>Red Social</small></label>
+          <select class="form-control border-input" data-ng-model="newRed.nombre">
+            <option value="Facebook">Facebook</option>
+            <option value="Twitter">Twitter</option>
+            <option value="Instagram">Instagram</option>
+          </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+          <label><small>URL</small></label>
+          <input  type="text"
+                  class="form-control border-input"
+                  minlength="2"
+                  maxlength="150"
+                  class="form-control border-input" placeholder="URL" data-ng-model="newRed.link">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = false; putRed();"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i>Agregar a la Tabla</button>
+  </div>
+</div>

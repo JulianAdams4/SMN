@@ -1,0 +1,51 @@
+<div class="row" data-ng-controller="CentroController" data-ng-init="find()">
+  <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
+    <a data-ng-href="#!/centro/create" ng-hide="centros.length!=0">
+       <button type="button" class="btn btn-success">
+        <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
+        Registrar Centro
+      </button>
+     </a>
+  </ul>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Centros</h4>
+                <p class="category">Lista de centros registrados</p>
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table datatable="ng" class="table table-striped">
+                    <thead>
+                      <th>#</th>
+                    	<th>Dirección</th>
+                    	<th>Teléfono</th>
+                        <th>Horarios de Atención</th>
+                    	<th>Servicios</th>
+                      <th>Acciones</th>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="centro in centros">
+                        	<td>{{$index + 1}}</td>
+                        	<td data-ng-bind="centro.direccion"></td>
+                            <td data-ng-bind="centro.telefono"></td>
+                            <td data-ng-bind="centro.horariosAtencion"></td>
+                            <td data-ng-bind="centro.servicios"></td>
+                            <td>
+                                <a title="Ver informacion" data-ng-href="#!/centro/ver/{{centro._id}}">
+                                    <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Editar centro" data-ng-href="#!/centro/edit/{{centro._id}}">
+                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" style="color:green"></i>
+                                </a>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
