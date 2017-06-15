@@ -54,14 +54,17 @@ var antecedenteSchema = new Schema({
     type: Boolean,
     default: false
   },
+  descripcionAlergias:String,
   suplementoVitaminicos: {
     type: Boolean,
     default: false
   },
+  descripcionSuplementos:String,
   medicamento: {
     type: Boolean,
     default: false
   },
+  descripcionMedicamentos:String,
   ojos: {
     type: Boolean,
     default: false
@@ -77,7 +80,9 @@ var antecedenteSchema = new Schema({
   piel: {
     type: Boolean,
     default: false
-  }
+  },
+  antecedentesPersonales:String,
+  antecedentesFamiliares:String,
 });
 
 mongoose.model('Antecedentes', antecedenteSchema);

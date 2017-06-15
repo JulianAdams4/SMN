@@ -130,6 +130,33 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group"
+                  ng-class="{'has-error': pacienteForm.ejercicios.$invalid && !pacienteForm.ejercicios.$pristine }">
+                <label>Ejecicios que realiza</label>
+                <input type="text"
+                       class="form-control border-input"
+                       name="ejercicios"
+                       maxlength="50"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       placeholder="Ejercicios"
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group"
+                  ng-class="{'has-error': pacienteForm.frecuenciaEjecicios.$invalid && !pacienteForm.frecuenciaEjecicios.$pristine }">
+                <label>Frecuencia ejercicios</label>
+                <input type="text"
+                       class="form-control border-input"
+                       name="frecuenciaEjecicios"
+                       maxlength="200"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       placeholder="Frecuencia Ejercicios"
+                       data-ng-model="paciente.frecuenciaEjecicios">
+            </div>
+        </div>
+    </div>
+    <div class="row">
       <div class="col-md-12 col-sm-12">
         <div class="form-group"
              ng-class="{'has-error': pacienteForm.motivo.$invalid && !pacienteForm.motivo.$pristine }">
@@ -249,20 +276,20 @@
         <div class="form-group">
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" data-ng-model="antecedente.cambioSaborComidas">
-              Cambio en sabor en la comida
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="form-group">
-          <div class="form-check">
-            <label class="form-check-label">
               <input type="checkbox" class="form-check-input" data-ng-model="antecedente.alergia">
               Alergia
             </label>
           </div>
+          <div class="form-group">
+             <input type="text"
+                       class="form-control border-input"
+                       maxlength="50"
+                       name="descripcionAlergias"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       placeholder="Alergias"
+                       data-ng-model="antecedente.descripcionAlergias"
+                       ng-show="antecedente.alergia">
+              </div>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -273,6 +300,36 @@
               Suplemento Vitamínico
             </label>
           </div>
+          <div class="form-group">
+             <input type="text"
+                       class="form-control border-input"
+                       maxlength="50"
+                       name="descripcionSuplementos"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       placeholder="Suplementos"
+                       data-ng-model="antecedente.descripcionSuplementos"
+                       ng-show="antecedente.suplementoVitaminicos">
+              </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" data-ng-model="antecedente.medicamento">
+              Medicamento
+            </label>
+          </div>
+          <div class="form-group">
+             <input type="text"
+                       class="form-control border-input"
+                       maxlength="50"
+                       name="descripcionMedicamentos"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       placeholder="Medicamentos"
+                       data-ng-model="antecedente.descripcionMedicamentos"
+                       ng-show="antecedente.medicamento">
+              </div>
         </div>
       </div>
     </div>
@@ -281,8 +338,8 @@
         <div class="form-group">
           <div class="form-check">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" data-ng-model="antecedente.medicamento">
-              Medicamento
+              <input type="checkbox" class="form-check-input" data-ng-model="antecedente.cambioSaborComidas">
+              Cambio en sabor en la comida
             </label>
           </div>
         </div>
@@ -330,6 +387,34 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+            <label>Antecedentes Personales</label>
+            <input type="text"
+                   class="form-control border-input"
+                   name="antecedentesPersonales"
+                   maxlength="300"
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   data-ng-model="antecedente.antecedentesPersonales"
+                   required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+            <label>Antecedentes Familiares</label>
+            <input type="text"
+                   class="form-control border-input"
+                   name="antecedentesFamiliares"
+                   maxlength="300"
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   data-ng-model="antecedente.antecedentesFamiliares"
+                   required>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- HISTORIA ALIMENTARIA -->
   <div class="tab-pane" id="HistoriaAlimentaria" role="tabpanel" ng-init="showAgregar = false;">
@@ -372,15 +457,35 @@
             </label>
           </div>
         </div>
+        <div class="form-group">
+             <input type="text"
+                       class="form-control border-input"
+                       maxlength="50"
+                       name="comidaFinesdeSemana"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       placeholder="Descripción Comidas"
+                       data-ng-model="historiaAlimentaria.comidaFinesdeSemana"
+                       ng-show="historiaAlimentaria.modificaFinesDeSemana">
+              </div>
       </div>
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="form-group">
           <div class="form-check">
             <label class="form-check-label">
               <input type="checkbox" class="form-check-input" data-ng-model="historiaAlimentaria.comeEntreComidas">
-              Comida entre comidas
+              Snack entre comidas
             </label>
           </div>
+          <div class="form-group">
+             <input type="text"
+                       class="form-control border-input"
+                       maxlength="50"
+                       name="snacksEntreComidas"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       placeholder="Descripción Snacks"
+                       data-ng-model="historiaAlimentaria.snacksEntreComidas"
+                       ng-show="historiaAlimentaria.comeEntreComidas">
+              </div>
         </div>
       </div>
     </div>
