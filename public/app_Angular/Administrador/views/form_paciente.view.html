@@ -140,6 +140,7 @@
                        maxlength="50"
                        onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
                        placeholder="Ejercicios"
+                       data-ng-model="paciente.ejercicios">
             </div>
         </div>
         <div class="col-md-6 col-sm-6">
@@ -456,8 +457,7 @@
               Modifica fines de semana
             </label>
           </div>
-        </div>
-        <div class="form-group">
+          <div class="form-group">
              <input type="text"
                        class="form-control border-input"
                        maxlength="50"
@@ -467,6 +467,7 @@
                        data-ng-model="historiaAlimentaria.comidaFinesdeSemana"
                        ng-show="historiaAlimentaria.modificaFinesDeSemana">
               </div>
+        </div>
       </div>
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="form-group">
