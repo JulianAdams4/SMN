@@ -130,4 +130,8 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     $scope.backToList = function() {
       $location.path('/pacientes/listPlanesNutricionales/'+$routeParams.idPaciente);
     };
+    // ==============================================
+    $scope.goEditView = function(){
+      $location.path('/pacientes/listPlanesNutricionales/'+$routeParams.idPaciente+'/edit/'+$routeParams.planNutricionalId);
+    }
   }]);
