@@ -187,6 +187,42 @@ console.log(datosAntecedente);
           }
 
           // Antecedente editado con exito
+
+          HistoriaAlimentaria.findById( datosHistoria._id, function (err, historia) {      
+              // Error del servidor
+              if (err) {
+                res.status(500).send({
+                  message:  getErrorMessage(err), type: 'danger'
+                });
+              }
+
+              // Historia no encontrado
+              if (!historia) {
+                res.status(404).send({ message: 'Historia alimentaria no encontrada', type: 'danger' });
+              }
+
+              historia.comidasAlDia = datosHistoria.comidasAlDia ? datosHistoria.comidasAlDia : historia.comidasAlDia
+              historia.preparadoPor = datosHistoria.preparadoPor ? datosHistoria.preparadoPor : historia.preparadoPor
+              historia.modificaFinesDeSemana = datosHistoria.modificaFinesDeSemana ? datosHistoria.modificaFinesDeSemana : historia.modificaFinesDeSemana
+              historia.comeEntreComidas = datosHistoria.comeEntreComidas ? datosHistoria.comeEntreComidas : historia.comeEntreComidas
+              historia.queCome = datosHistoria.queCome ? datosHistoria.queCome : historia.queCome
+              historia.aguaAlDia = datosHistoria.aguaAlDia ? datosHistoria.aguaAlDia : historia.aguaAlDia
+              historia.cafeAlDia = datosHistoria.cafeAlDia ? datosHistoria.cafeAlDia : historia.cafeAlDia
+              historia.cigarrosAlDia = datosHistoria.cigarrosAlDia ? datosHistoria.cigarrosAlDia : historia.cigarrosAlDia
+              historia.alcoholALaSemana = datosHistoria.alcoholALaSemana ? datosHistoria.alcoholALaSemana : historia.alcoholALaSemana
+              historia.grupoAlimentos = datosHistoria.grupoAlimentos ? datosHistoria.grupoAlimentos : historia.grupoAlimentos
+
+              historia.save( function(err) {
+                  // Error del servidor
+                  if (err) {
+                    res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+                  }
+
+                  res.status(200).send({ message: 'Paciente editado exitosamente' });
+
+              });
+
+          });
           //
           //
           //
