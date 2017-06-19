@@ -123,6 +123,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       })
       .then(
         function(response){
+console.log(response);
           demo.showCustomNotification(
             'top',
             'right',
@@ -134,6 +135,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           $location.path("/pacientes")
         },
         function(errorResponse){
+console.log(errorResponse);
           demo.showCustomNotification(
             'top',
             'right',

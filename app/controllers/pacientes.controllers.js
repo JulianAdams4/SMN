@@ -113,10 +113,7 @@ exports.editPaciente = function(req, res){
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
     if (err) {
-      res.status(500).send({
-        message:  getErrorMessage(err),
-        type: 'danger'
-      });
+      res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
     }
 
     // Paciente no encontrado
@@ -124,18 +121,19 @@ exports.editPaciente = function(req, res){
       res.status(404).send({ message: 'Paciente no encontrado', type: 'danger' });
     }
 
-    // Si existe el campo en el body, se reemplaza
-    // caso contrario se deja el valor que estaba
-console.log(datosPaciente);
-    paciente.cedula          = datosPaciente.cedula ? datosPaciente.cedula : paciente.cedula;
-    paciente.nombres         = datosPaciente.nombres ? datosPaciente.nombres : paciente.nombres;
-    paciente.apellidos       = datosPaciente.apellidos ? datosPaciente.apellidos : paciente.apellidos;
-    paciente.fechaNacimiento = datosPaciente.fechaNacimiento ? datosPaciente.fechaNacimiento : paciente.fechaNacimiento;
-    paciente.sexo            = datosPaciente.sexo ? datosPaciente.sexo : paciente.sexo;
-    paciente.direccion       = datosPaciente.direccion ? datosPaciente.direccion : paciente.direccion;
-    paciente.celular         = datosPaciente.celular ? datosPaciente.celular : paciente.celular;
-    paciente.ocupacion       = datosPaciente.ocupacion ? datosPaciente.ocupacion : paciente.ocupacion;
-    paciente.motivoConsulta  = datosPaciente.motivoConsulta ? datosPaciente.motivoConsulta : paciente.motivoConsulta;
+    // paciente (de la Bdd), datosPaciente (desde el front)
+    paciente.cedula               = datosPaciente.cedula;
+    paciente.nombres              = datosPaciente.nombres;
+    paciente.apellidos            = datosPaciente.apellidos;
+    paciente.fechaNacimiento      = datosPaciente.fechaNacimiento;
+    paciente.sexo                 = datosPaciente.sexo;
+    paciente.direccion            = datosPaciente.direccion;
+    paciente.celular              = datosPaciente.celular;
+    paciente.ocupacion            = datosPaciente.ocupacion;
+    paciente.motivoConsulta       = datosPaciente.motivoConsulta;
+    paciente.ejercicios           = datosPaciente.ejercicios;
+    paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;
+  
 
     // Guardamos los cambios del paciente
     paciente.save( function(err) {
@@ -150,9 +148,7 @@ console.log(datosPaciente);
       Antecedentes.findById( datosAntecedente._id, function (err, antecedente) {
         // Error del servidor
         if (err) {
-          res.status(500).send({
-            message:  getErrorMessage(err), type: 'danger'
-          });
+          res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
         }
 
         // Paciente no encontrado
@@ -161,28 +157,29 @@ console.log(datosPaciente);
         }
 
 console.log(datosAntecedente);
-        antecedente.alteracionApetito = datosAntecedente.alteracionApetito ? datosAntecedente.alteracionApetito : antecedente.alteracionApetito;
-        antecedente.nausea = datosAntecedente.nausea ? datosAntecedente.nausea : antecedente.nausea;
-        antecedente.vomito = datosAntecedente.vomito ? datosAntecedente.vomito : antecedente.vomito;
-        antecedente.estrenimiento = datosAntecedente.estrenimiento ? datosAntecedente.estrenimiento : antecedente.estrenimiento;
-        antecedente.diarrea = datosAntecedente.diarrea ? datosAntecedente.diarrea : antecedente.diarrea;
-        antecedente.flatulencia = datosAntecedente.flatulencia ? datosAntecedente.flatulencia : antecedente.flatulencia;
-        antecedente.acidez = datosAntecedente.acidez ? datosAntecedente.acidez : antecedente.acidez;
-        antecedente.gastritis = datosAntecedente.gastritis ? datosAntecedente.gastritis : antecedente.gastritis;
-        antecedente.problemasMasticacion = datosAntecedente.problemasMasticacion ? datosAntecedente.problemasMasticacion : antecedente.problemasMasticacion;
-        antecedente.cambioSaborComidas = datosAntecedente.cambioSaborComidas ? datosAntecedente.cambioSaborComidas : antecedente.cambioSaborComidas;
-        antecedente.alergia = datosAntecedente.alergia ? datosAntecedente.alergia : antecedente.alergia;
-        antecedente.descripcionAlergias = datosAntecedente.descripcionAlergias ? datosAntecedente.descripcionAlergias : antecedente.descripcionAlergias;
-        antecedente.suplementoVitaminicos = datosAntecedente.suplementoVitaminicos ? datosAntecedente.suplementoVitaminicos : antecedente.suplementoVitaminicos;
-        antecedente.descripcionSuplementos = datosAntecedente.descripcionSuplementos ? datosAntecedente.descripcionSuplementos : antecedente.descripcionSuplementos;
-        antecedente.medicamento = datosAntecedente.medicamento ? datosAntecedente.medicamento : antecedente.medicamento;
-        antecedente.descripcionMedicamentos = datosAntecedente.descripcionMedicamentos ? datosAntecedente.descripcionMedicamentos : antecedente.descripcionMedicamentos;
-        antecedente.ojos = datosAntecedente.ojos ? datosAntecedente.ojos : antecedente.ojos;
-        antecedente.cabello = datosAntecedente.cabello ? datosAntecedente.cabello : antecedente.cabello;
-        antecedente.unias = datosAntecedente.unias ? datosAntecedente.unias : antecedente.unias;
-        antecedente.piel = datosAntecedente.piel ? datosAntecedente.piel : antecedente.piel;
-        antecedente.antecedentesPersonales = datosAntecedente.antecedentesPersonales ? datosAntecedente.antecedentesPersonales : antecedente.antecedentesPersonales;
-        antecedente.antecedentesFamiliares = datosAntecedente.antecedentesFamiliares ? datosAntecedente.antecedentesFamiliares : antecedente.antecedentesFamiliares;
+        // antecedente (de la Bdd), datosAntecedente (desde el front)
+        antecedente.alteracionApetito       = datosAntecedente.alteracionApetito;
+        antecedente.nausea                  = datosAntecedente.nausea;
+        antecedente.vomito                  = datosAntecedente.vomito;
+        antecedente.estrenimiento           = datosAntecedente.estrenimiento;
+        antecedente.diarrea                 = datosAntecedente.diarrea;
+        antecedente.flatulencia             = datosAntecedente.flatulencia;
+        antecedente.acidez                  = datosAntecedente.acidez;
+        antecedente.gastritis               = datosAntecedente.gastritis;
+        antecedente.problemasMasticacion    = datosAntecedente.problemasMasticacion;
+        antecedente.cambioSaborComidas      = datosAntecedente.cambioSaborComidas;
+        antecedente.alergia                 = datosAntecedente.alergia;
+        antecedente.descripcionAlergias     = datosAntecedente.descripcionAlergias;
+        antecedente.suplementoVitaminicos   = datosAntecedente.suplementoVitaminicos;
+        antecedente.descripcionSuplementos  = datosAntecedente.descripcionSuplementos;
+        antecedente.medicamento             = datosAntecedente.medicamento;
+        antecedente.descripcionMedicamentos = datosAntecedente.descripcionMedicamentos;
+        antecedente.ojos                    = datosAntecedente.ojos;
+        antecedente.cabello                 = datosAntecedente.cabello;
+        antecedente.unias                   = datosAntecedente.unias;
+        antecedente.piel                    = datosAntecedente.piel;
+        antecedente.antecedentesPersonales  = datosAntecedente.antecedentesPersonales;
+        antecedente.antecedentesFamiliares  = datosAntecedente.antecedentesFamiliares;
 
         // Guardamos los cambios del antecedente
         antecedente.save( function(err) {
@@ -206,18 +203,20 @@ console.log(datosAntecedente);
                 res.status(404).send({ message: 'Historia alimentaria no encontrada', type: 'danger' });
               }
 
-              historia.comidasAlDia = datosHistoria.comidasAlDia ? datosHistoria.comidasAlDia : historia.comidasAlDia;
-              historia.preparadoPor = datosHistoria.preparadoPor ? datosHistoria.preparadoPor : historia.preparadoPor;
-              historia.modificaFinesDeSemana = datosHistoria.modificaFinesDeSemana ? datosHistoria.modificaFinesDeSemana : historia.modificaFinesDeSemana;
-              historia.comidaFinesdeSemana = datosHistoria.comidaFinesdeSemana ? datosHistoria.comidaFinesdeSemana : historia.comidaFinesdeSemana;
-              historia.comeEntreComidas = datosHistoria.comeEntreComidas ? datosHistoria.comeEntreComidas : historia.comeEntreComidas;
-              historia.snacksEntreComidas = datosHistoria.snacksEntreComidas ? datosHistoria.snacksEntreComidas : historia.snacksEntreComidas;
-              historia.queCome = datosHistoria.queCome ? datosHistoria.queCome : historia.queCome;
-              historia.aguaAlDia = datosHistoria.aguaAlDia ? datosHistoria.aguaAlDia : historia.aguaAlDia;
-              historia.cafeAlDia = datosHistoria.cafeAlDia ? datosHistoria.cafeAlDia : historia.cafeAlDia;
-              historia.cigarrosAlDia = datosHistoria.cigarrosAlDia ? datosHistoria.cigarrosAlDia : historia.cigarrosAlDia;
-              historia.alcoholALaSemana = datosHistoria.alcoholALaSemana ? datosHistoria.alcoholALaSemana : historia.alcoholALaSemana;
-              historia.grupoAlimentos = datosHistoria.grupoAlimentos ? datosHistoria.grupoAlimentos : historia.grupoAlimentos;
+console.log(datosHistoria);
+              // historia (de la Bdd), datosHistoria (desde el front)
+              historia.comidasAlDia           = datosHistoria.comidasAlDia;
+              historia.preparadoPor           = datosHistoria.preparadoPor;
+              historia.modificaFinesDeSemana  = datosHistoria.modificaFinesDeSemana;
+              historia.comidaFinesdeSemana    = datosHistoria.comidaFinesdeSemana;
+              historia.comeEntreComidas       = datosHistoria.comeEntreComidas;
+              historia.snacksEntreComidas     = datosHistoria.snacksEntreComidas;
+              historia.queCome                = datosHistoria.queCome;
+              historia.aguaAlDia              = datosHistoria.aguaAlDia;
+              historia.cafeAlDia              = datosHistoria.cafeAlDia;
+              historia.cigarrosAlDia          = datosHistoria.cigarrosAlDia;
+              historia.alcoholALaSemana       = datosHistoria.alcoholALaSemana;
+              historia.grupoAlimentos         = datosHistoria.grupoAlimentos;
 
               historia.save( function(err) {
                   // Error del servidor
@@ -225,7 +224,7 @@ console.log(datosAntecedente);
                     res.status(500).send({ message: 'Ocurrió un error en el servidor' });
                   }
 
-                  res.status(200).send({ message: 'Paciente editado exitosamente' });
+                  res.status(200).send({ message: 'Paciente editado exitosamente papuh' });
 
               });
 
