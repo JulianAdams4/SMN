@@ -147,3 +147,17 @@ exports.editPlanNutricional = function(req, res){
     updateFile(cloudinary,req,planNutricionalId,res)
   }
 };
+
+
+exports.deletePlanNutricional = function(req, res){
+  var planNutricionalId = req.params.planNutricionalId;
+  console.log(planNutricionalId);
+  PlanNutricional.findByIdAndRemove(planNutricionalId, 
+    function(err, planNutricional) {
+        if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        } else {
+            res.status(204).json(planNutricional);
+        }
+    });
+};

@@ -13,7 +13,8 @@ module.exports = function(app) {
 
   app.route('/api/planesNutricionales/:planNutricionalId')
     .get(planNutricional.read)
-    .put(planNutricional.editPlanNutricional);
+    .put(planNutricional.editPlanNutricional)
+    .delete(planNutricional.deletePlanNutricional);
 
   app.param('planNutricionalId', planNutricional.planNutricionalById);
 };
