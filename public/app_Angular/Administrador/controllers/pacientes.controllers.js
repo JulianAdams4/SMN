@@ -123,7 +123,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       })
       .then(
         function(response){
-console.log(response);
           demo.showCustomNotification(
             'top',
             'right',
