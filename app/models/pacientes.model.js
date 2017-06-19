@@ -34,6 +34,8 @@ var pacienteSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  ejercicios:String,
+  frecuenciaEjecicios:String,
   borrado: {
     type: Boolean,
     default: false

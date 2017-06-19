@@ -1,6 +1,6 @@
 <div class="row" data-ng-controller="PlanesController" data-ng-init="find()">
     <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
-      <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listPlanesNutricionales/{{planesNutricionales[0].idPaciente._id}}/create">
+      <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listPlanesNutricionales/{{idPaciente}}/create">
         <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
         Registrar plan nutricional
       </a>
@@ -35,7 +35,7 @@
                         	<td>{{$index + 1}}</td>
                         	<td data-ng-bind="plan.fechaDato | date:'dd/MM/yyyy'"></td>
                             <td>
-                                <a title="Ver informacion">
+                                <a title="Ver informacion" data-ng-href="#!/pacientes/listPlanesNutricionales/{{planesNutricionales[0].idPaciente._id}}/ver/{{plan._id}}">
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
                                 </a>
                                 &nbsp;

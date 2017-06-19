@@ -28,7 +28,8 @@ var datosControlSchema = new Schema({
       },
       unidadDato: {
         type: String,
-        enum: ['%','mg/L','cm','lbs']
+        enum: ['%','mg/L','cm','kg'],
+        required: 'La unidad del dato es obligatorio.'
       }
     }
   ],
