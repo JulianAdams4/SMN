@@ -119,7 +119,13 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       }
       if ($scope.antecedente.medicamento==false) {
           $scope.antecedente.descripcionMedicamentos = "";
-      }      
+      }  
+      if ($scope.historiaAlimentaria.modificaFinesDeSemana==false) {
+          $scope.antecedente.comidaFinesdeSemana = "";
+      }
+      if ($scope.historiaAlimentaria.comeEntreComidas==false) {
+          $scope.antecedente.snacksEntreComidas = "";
+      }  
       // Se envian las 3 tabs
       var dataFormEdit = {
         paciente: $scope.paciente,

@@ -112,14 +112,21 @@ exports.editPaciente = function(req, res){
     }
   }
   // Validacion de checks marcados pero sin data
-  if ( req.body.antecedente.alergia == true && req.body.antecedente.descripcionAlergias=="" ) {
+  if ( req.body.antecedente.alergia==true && req.body.antecedente.descripcionAlergias=="" ) {
     return res.status(500).json({ message: 'Falta especificar las alergias'});
   }
-  if ( req.body.antecedente.suplementoVitaminicos == true && req.body.antecedente.descripcionSuplementos=="" ) {
+  if ( req.body.antecedente.suplementoVitaminicos==true && req.body.antecedente.descripcionSuplementos=="" ) {
     return res.status(500).json({ message: 'Falta especificar los suplementos'});
   }
-  if ( req.body.antecedente.medicamento == true && req.body.antecedente.descripcionMedicamentos=="" ) {
+  if ( req.body.antecedente.medicamento==true && req.body.antecedente.descripcionMedicamentos=="" ) {
     return res.status(500).json({ message: 'Falta especificar los medicamentos'});
+  }
+
+  if ( req.body.historia.comeEntreComidas==true && req.body.historia.snacksEntreComidas=="" ) {
+    return res.status(500).json({ message: 'Falta especificar los snacks'});
+  }
+  if ( req.body.historia.modificaFinesDeSemana==true && req.body.historia.comidaFinesdeSemana=="" ) {
+    return res.status(500).json({ message: 'Falta especificar las comidas'});
   }
 
   // Extraemos la data de las tabs
