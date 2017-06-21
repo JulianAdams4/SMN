@@ -266,7 +266,7 @@ describe('Paciente', () => {
 		  	});
 	    });
 	  //--------------------------------------------------
-		it('Actualiza los datos de un paciente que no existe', function(done){
+		it('No actualiza los datos de un paciente que no existe', function(done){
 		  	var paciente = new Paciente({
 		  		cedula: "0911111111",
 		  		nombres: "Nombre Prueba",
@@ -345,10 +345,475 @@ describe('Paciente', () => {
 		  	});
 		});
 		//--------------------------------------------------
+		it('No actualiza los datos de un paciente si falta su cedula', function(done){
+		  	var paciente = new Paciente({
+		  		cedula: "0911111111",
+		  		nombres: "Nombre Prueba",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err) => {
+		  		// Obtenemos el id
+		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
+		  			// Creamos antecedente
+			  		var antecedent = new Antecedente({
+			  			idPaciente: patient._id
+			  		});
+			  		antecedent.save((err) => {
+			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
+			  				// Creamos historia
+			  				var historiaAlim = new Historia({
+			  				  idPaciente: patient._id,
+							  comidasAlDia: 1,
+							  preparadoPor: "Cocinera",
+							  modificaFinesDeSemana: false,
+							  comidaFinesdeSemana: "",
+							  comeEntreComidas: false,
+							  snacksEntreComidas: "",
+							  queCome: "",
+							  aguaAlDia: 1,
+							  cafeAlDia: 1,
+							  cigarrosAlDia: 0,
+							  alcoholALaSemana: 0,
+							  grupoAlimentos:[
+							    {
+							      descripcion: "Lacteos",
+							      frecuencia: 1,
+							      alimentosAgradan: "Leche",
+							      alimentosDesagradan: "Queso"
+							    }
+							  ]
+			  				});
+			  				historiaAlim.save((err)=>{
+			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+			  						// IMPORTANTE
+			  						var cedulaFalsa = '';
+			  						// Chai test
+							        chai.request('http://localhost:3000')
+							            .put('/api/pacientes/' + patient._id)
+							            .send({
+							            	paciente: {
+							            		cedula: cedulaFalsa,
+							  					nombres: "Nombre Prueba", 
+							  					apellidos: "Apellido editado",
+							  					fechaNacimiento: "2000-01-01",
+							        			sexo: "Masculino",
+							        			direccion: "Direccion prueba",
+							        			celular: "0912345678",
+							        			motivoConsulta: "Motivo de prueba"
+							            	}, 
+							            	antecedente: ante,
+							            	historia: hist
+							            })
+							            .end(function(err, res){
+							     			res.should.have.status(500);
+							              	done();
+							            }); // end
 
+			  					});
+			  				})
+			  			})
+			  		});
+		  		}); // findOne
+		  	});
+		});
 		//--------------------------------------------------
+		it('No actualiza los datos de un paciente si falta el nombre', function(done){
+		  	var paciente = new Paciente({
+		  		cedula: "0911111111",
+		  		nombres: "Nombre Prueba",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err) => {
+		  		// Obtenemos el id
+		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
+		  			// Creamos antecedente
+			  		var antecedent = new Antecedente({
+			  			idPaciente: patient._id
+			  		});
+			  		antecedent.save((err) => {
+			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
+			  				// Creamos historia
+			  				var historiaAlim = new Historia({
+			  				  idPaciente: patient._id,
+							  comidasAlDia: 1,
+							  preparadoPor: "Cocinera",
+							  modificaFinesDeSemana: false,
+							  comidaFinesdeSemana: "",
+							  comeEntreComidas: false,
+							  snacksEntreComidas: "",
+							  queCome: "",
+							  aguaAlDia: 1,
+							  cafeAlDia: 1,
+							  cigarrosAlDia: 0,
+							  alcoholALaSemana: 0,
+							  grupoAlimentos:[
+							    {
+							      descripcion: "Lacteos",
+							      frecuencia: 1,
+							      alimentosAgradan: "Leche",
+							      alimentosDesagradan: "Queso"
+							    }
+							  ]
+			  				});
+			  				historiaAlim.save((err)=>{
+			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+			  						// IMPORTANTE
+			  						var datoFalso = '';
+			  						// Chai test
+							        chai.request('http://localhost:3000')
+							            .put('/api/pacientes/' + patient._id)
+							            .send({
+							            	paciente: {
+							            		cedula: "0911111111",
+							  					nombres: datoFalso, 
+							  					apellidos: "Apellido editado",
+							  					fechaNacimiento: "2000-01-01",
+							        			sexo: "Masculino",
+							        			direccion: "Direccion prueba",
+							        			celular: "0912345678",
+							        			motivoConsulta: "Motivo de prueba"
+							            	}, 
+							            	antecedente: ante,
+							            	historia: hist
+							            })
+							            .end(function(err, res){
+							     			res.should.have.status(500);
+							              	done();
+							            }); // end
 
+			  					});
+			  				})
+			  			})
+			  		});
+		  		}); // findOne
+		  	});
+		});
 		//--------------------------------------------------
+		it('No actualiza los datos de un paciente si falta el apellido', function(done){
+		  	var paciente = new Paciente({
+		  		cedula: "0911111111",
+		  		nombres: "Nombre Prueba",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err) => {
+		  		// Obtenemos el id
+		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
+		  			// Creamos antecedente
+			  		var antecedent = new Antecedente({
+			  			idPaciente: patient._id
+			  		});
+			  		antecedent.save((err) => {
+			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
+			  				// Creamos historia
+			  				var historiaAlim = new Historia({
+			  				  idPaciente: patient._id,
+							  comidasAlDia: 1,
+							  preparadoPor: "Cocinera",
+							  modificaFinesDeSemana: false,
+							  comidaFinesdeSemana: "",
+							  comeEntreComidas: false,
+							  snacksEntreComidas: "",
+							  queCome: "",
+							  aguaAlDia: 1,
+							  cafeAlDia: 1,
+							  cigarrosAlDia: 0,
+							  alcoholALaSemana: 0,
+							  grupoAlimentos:[
+							    {
+							      descripcion: "Lacteos",
+							      frecuencia: 1,
+							      alimentosAgradan: "Leche",
+							      alimentosDesagradan: "Queso"
+							    }
+							  ]
+			  				});
+			  				historiaAlim.save((err)=>{
+			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+			  						// IMPORTANTE
+			  						var datoFalso = '';
+			  						// Chai test
+							        chai.request('http://localhost:3000')
+							            .put('/api/pacientes/' + patient._id)
+							            .send({
+							            	paciente: {
+							            		cedula: "0911111111",
+							  					nombres: "Nombre Prueba", 
+							  					apellidos: datoFalso,
+							  					fechaNacimiento: "2000-01-01",
+							        			sexo: "Masculino",
+							        			direccion: "Direccion prueba",
+							        			celular: "0912345678",
+							        			motivoConsulta: "Motivo de prueba"
+							            	}, 
+							            	antecedente: ante,
+							            	historia: hist
+							            })
+							            .end(function(err, res){
+							     			res.should.have.status(500);
+							              	done();
+							            }); // end
+
+			  					});
+			  				})
+			  			})
+			  		});
+		  		}); // findOne
+		  	});
+		});
+		//--------------------------------------------------
+		it('No actualiza los datos de un paciente si falta la fecha de nacimiento', function(done){
+		  	var paciente = new Paciente({
+		  		cedula: "0911111111",
+		  		nombres: "Nombre Prueba",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err) => {
+		  		// Obtenemos el id
+		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
+		  			// Creamos antecedente
+			  		var antecedent = new Antecedente({
+			  			idPaciente: patient._id
+			  		});
+			  		antecedent.save((err) => {
+			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
+			  				// Creamos historia
+			  				var historiaAlim = new Historia({
+			  				  idPaciente: patient._id,
+							  comidasAlDia: 1,
+							  preparadoPor: "Cocinera",
+							  modificaFinesDeSemana: false,
+							  comidaFinesdeSemana: "",
+							  comeEntreComidas: false,
+							  snacksEntreComidas: "",
+							  queCome: "",
+							  aguaAlDia: 1,
+							  cafeAlDia: 1,
+							  cigarrosAlDia: 0,
+							  alcoholALaSemana: 0,
+							  grupoAlimentos:[
+							    {
+							      descripcion: "Lacteos",
+							      frecuencia: 1,
+							      alimentosAgradan: "Leche",
+							      alimentosDesagradan: "Queso"
+							    }
+							  ]
+			  				});
+			  				historiaAlim.save((err)=>{
+			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+			  						// IMPORTANTE
+			  						var datoFalso = '';
+			  						// Chai test
+							        chai.request('http://localhost:3000')
+							            .put('/api/pacientes/' + patient._id)
+							            .send({
+							            	paciente: {
+							            		cedula: "0911111111",
+							  					nombres: "Nombre Prueba", 
+							  					apellidos: "Apellido editado",
+							  					fechaNacimiento: datoFalso,
+							        			sexo: "Masculino",
+							        			direccion: "Direccion prueba",
+							        			celular: "0912345678",
+							        			motivoConsulta: "Motivo de prueba"
+							            	}, 
+							            	antecedente: ante,
+							            	historia: hist
+							            })
+							            .end(function(err, res){
+							     			res.should.have.status(500);
+							              	done();
+							            }); // end
+
+			  					});
+			  				})
+			  			})
+			  		});
+		  		}); // findOne
+		  	});
+		});
+		//--------------------------------------------------
+		it('No actualiza los datos de un paciente si falta el sexo', function(done){
+		  	var paciente = new Paciente({
+		  		cedula: "0911111111",
+		  		nombres: "Nombre Prueba",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err) => {
+		  		// Obtenemos el id
+		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
+		  			// Creamos antecedente
+			  		var antecedent = new Antecedente({
+			  			idPaciente: patient._id
+			  		});
+			  		antecedent.save((err) => {
+			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
+			  				// Creamos historia
+			  				var historiaAlim = new Historia({
+			  				  idPaciente: patient._id,
+							  comidasAlDia: 1,
+							  preparadoPor: "Cocinera",
+							  modificaFinesDeSemana: false,
+							  comidaFinesdeSemana: "",
+							  comeEntreComidas: false,
+							  snacksEntreComidas: "",
+							  queCome: "",
+							  aguaAlDia: 1,
+							  cafeAlDia: 1,
+							  cigarrosAlDia: 0,
+							  alcoholALaSemana: 0,
+							  grupoAlimentos:[
+							    {
+							      descripcion: "Lacteos",
+							      frecuencia: 1,
+							      alimentosAgradan: "Leche",
+							      alimentosDesagradan: "Queso"
+							    }
+							  ]
+			  				});
+			  				historiaAlim.save((err)=>{
+			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+			  						// IMPORTANTE
+			  						var datoFalso = '';
+			  						// Chai test
+							        chai.request('http://localhost:3000')
+							            .put('/api/pacientes/' + patient._id)
+							            .send({
+							            	paciente: {
+							            		cedula: "0911111111",
+							  					nombres: "Nombre Prueba", 
+							  					apellidos: "Apellido editado",
+							  					fechaNacimiento: "2000-01-01",
+							        			sexo: datoFalso,
+							        			direccion: "Direccion prueba",
+							        			celular: "0912345678",
+							        			motivoConsulta: "Motivo de prueba"
+							            	}, 
+							            	antecedente: ante,
+							            	historia: hist
+							            })
+							            .end(function(err, res){
+							     			res.should.have.status(500);
+							              	done();
+							            }); // end
+
+			  					});
+			  				})
+			  			})
+			  		});
+		  		}); // findOne
+		  	});
+		});
+		//--------------------------------------------------
+		it('No actualiza los datos de un paciente si falta el motivo', function(done){
+		  	var paciente = new Paciente({
+		  		cedula: "0911111111",
+		  		nombres: "Nombre Prueba",
+		  		apellidos: "Adams",
+		  		fechaNacimiento: "2000-01-01",
+		        sexo: "Masculino",
+		        direccion: "Direccion prueba",
+		        celular: "0912345678",
+		        ocupacion: "Estudiante",
+		        motivoConsulta: "Motivo de prueba"
+		  	});
+		  	paciente.save((err) => {
+		  		// Obtenemos el id
+		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
+		  			// Creamos antecedente
+			  		var antecedent = new Antecedente({
+			  			idPaciente: patient._id
+			  		});
+			  		antecedent.save((err) => {
+			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
+			  				// Creamos historia
+			  				var historiaAlim = new Historia({
+			  				  idPaciente: patient._id,
+							  comidasAlDia: 1,
+							  preparadoPor: "Cocinera",
+							  modificaFinesDeSemana: false,
+							  comidaFinesdeSemana: "",
+							  comeEntreComidas: false,
+							  snacksEntreComidas: "",
+							  queCome: "",
+							  aguaAlDia: 1,
+							  cafeAlDia: 1,
+							  cigarrosAlDia: 0,
+							  alcoholALaSemana: 0,
+							  grupoAlimentos:[
+							    {
+							      descripcion: "Lacteos",
+							      frecuencia: 1,
+							      alimentosAgradan: "Leche",
+							      alimentosDesagradan: "Queso"
+							    }
+							  ]
+			  				});
+			  				historiaAlim.save((err)=>{
+			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+			  						// IMPORTANTE
+			  						var datoFalso = '';
+			  						// Chai test
+							        chai.request('http://localhost:3000')
+							            .put('/api/pacientes/' + patient._id)
+							            .send({
+							            	paciente: {
+							            		cedula: "0911111111",
+							  					nombres: "Nombre Prueba", 
+							  					apellidos: "Apellido editado",
+							  					fechaNacimiento: "2000-01-01",
+							        			sexo: "Masculino",
+							        			direccion: "Direccion prueba",
+							        			celular: "0912345678",
+							        			motivoConsulta: datoFalso
+							            	}, 
+							            	antecedente: ante,
+							            	historia: hist
+							            })
+							            .end(function(err, res){
+							     			res.should.have.status(500);
+							              	done();
+							            }); // end
+
+			  					});
+			  				})
+			  			})
+			  		});
+		  		}); // findOne
+		  	});
+		});
+
+
 	}); // describe
 
 });
