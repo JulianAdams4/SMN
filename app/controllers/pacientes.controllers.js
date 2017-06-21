@@ -3,6 +3,8 @@
 var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var Paciente = mongoose.model('Paciente');
+var Antecedentes = mongoose.model('Antecedentes');
+var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
@@ -65,6 +67,9 @@ exports.pacienteById = function(req, res, next, id){
   });
 };
 
+/*
+* Función que retorna un json con la información de todos los pacientes almacenados en el sistema.
+*/
 exports.list = function(req, res){
   Paciente.find({}, function(err, pacientes){
     if(err){
@@ -78,6 +83,10 @@ exports.list = function(req, res){
   });
 };
 
+/*
+* Función que almacena en la base de datos un nuevo paciente con su respectiva cédula, nombres, apellidos, fecha de Nacimiento
+* sexo, celular, dirección, motivo de consulta
+*/
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
   var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
@@ -100,47 +109,158 @@ exports.createPaciente = function(req, res){
 };
 
 exports.editPaciente = function(req, res){
-  var pacienteId = req.params.pacienteId;
+  // Validaciones
+  // Es diferente a la del archivo validador
+  var obligatoriosPaciente = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
+  for (var i=0; i<obligatoriosPaciente.length ; i++){
+    var field = obligatoriosPaciente[i];
+    if ( req.body.paciente[field] == null || req.body.paciente[field] == undefined || req.body.paciente[field] == "") {
+      return res.status(500).json({ message: 'Faltan campos del paciente'});
+    }
+  }
+  // Validacion de checks marcados pero sin data
+  if ( req.body.antecedente.alergia==true && req.body.antecedente.descripcionAlergias=="" ) {
+    return res.status(500).json({ message: 'Falta especificar las alergias'});
+  }
+  if ( req.body.antecedente.suplementoVitaminicos==true && req.body.antecedente.descripcionSuplementos=="" ) {
+    return res.status(500).json({ message: 'Falta especificar los suplementos'});
+  }
+  if ( req.body.antecedente.medicamento==true && req.body.antecedente.descripcionMedicamentos=="" ) {
+    return res.status(500).json({ message: 'Falta especificar los medicamentos'});
+  }
 
+  if ( req.body.historia.comeEntreComidas==true && req.body.historia.snacksEntreComidas=="" ) {
+    return res.status(500).json({ message: 'Falta especificar los snacks'});
+  }
+  if ( req.body.historia.modificaFinesDeSemana==true && req.body.historia.comidaFinesdeSemana=="" ) {
+    return res.status(500).json({ message: 'Falta especificar las comidas'});
+  }
+
+  // Extraemos la data de las tabs
+  var pacienteId = req.params.pacienteId;
+  var datosPaciente = req.body.paciente;
+  var datosAntecedente = req.body.antecedente;
+  var datosHistoria = req.body.historia;
+
+  // Editamos el paciente
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
     if (err) {
-      res.status(500).send({
-        message:  getErrorMessage(err),
-        type: 'danger'
-      });
+      return res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
     }
 
     // Paciente no encontrado
     if (!paciente) {
-      res.status(404).send({ message: 'Paciente no encontrado', type: 'danger' });
+      return res.status(404).send({ message: 'Paciente no encontrado', type: 'danger' });
     }
 
-    // Si existe el campo en el body, se reemplaza
-    // caso contrario se deja el valor que estaba
-    paciente.cedula = req.body.cedula ? req.body.cedula : paciente.cedula;
-    paciente.nombres = req.body.nombres ? req.body.nombres : paciente.nombres;
-    paciente.apellidos = req.body.apellidos ? req.body.apellidos : paciente.apellidos;
-    paciente.fechaNacimiento = req.body.fechaNacimiento ? req.body.fechaNacimiento : paciente.fechaNacimiento;
-    paciente.sexo = req.body.sexo ? req.body.sexo : paciente.sexo;
-    paciente.direccion = req.body.direccion ? req.body.direccion : paciente.direccion;
-    paciente.celular = req.body.celular ? req.body.celular : paciente.celular;
-    paciente.ocupacion = req.body.ocupacion ? req.body.ocupacion : paciente.ocupacion;
-    paciente.motivoConsulta = req.body.motivoConsulta ? req.body.motivoConsulta : paciente.motivoConsulta;
+    // paciente (de la Bdd), datosPaciente (desde el front)
+    paciente.cedula               = datosPaciente.cedula;
+    paciente.nombres              = datosPaciente.nombres;
+    paciente.apellidos            = datosPaciente.apellidos;
+    paciente.fechaNacimiento      = datosPaciente.fechaNacimiento;
+    paciente.sexo                 = datosPaciente.sexo;
+    paciente.direccion            = datosPaciente.direccion;
+    paciente.celular              = datosPaciente.celular;
+    paciente.ocupacion            = datosPaciente.ocupacion;
+    paciente.motivoConsulta       = datosPaciente.motivoConsulta;
+    paciente.ejercicios           = datosPaciente.ejercicios;
+    paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;  
 
-    // Guardamos los cambios
+    // Guardamos los cambios del paciente
     paciente.save( function(err) {
       // Error del servidor
       if (err) {
-        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        return res.status(500).send({ message: 'Ocurrió un error al guardar el paciente' });
       }
-      // Editado con exito
-      res.status(200).json(paciente);
-    });
 
-  });
+      // Editamos el antecedente
+      Antecedentes.findById( datosAntecedente._id, function (err, antecedente) {
+        // Error del servidor
+        if (err) {
+          return res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
+        }
+
+        // Paciente no encontrado
+        if (!antecedente) {
+          return res.status(404).send({ message: 'Antecedente no encontrado', type: 'danger' });
+        }
+
+        // antecedente (de la Bdd), datosAntecedente (desde el front)
+        antecedente.alteracionApetito       = datosAntecedente.alteracionApetito;
+        antecedente.nausea                  = datosAntecedente.nausea;
+        antecedente.vomito                  = datosAntecedente.vomito;
+        antecedente.estrenimiento           = datosAntecedente.estrenimiento;
+        antecedente.diarrea                 = datosAntecedente.diarrea;
+        antecedente.flatulencia             = datosAntecedente.flatulencia;
+        antecedente.acidez                  = datosAntecedente.acidez;
+        antecedente.gastritis               = datosAntecedente.gastritis;
+        antecedente.problemasMasticacion    = datosAntecedente.problemasMasticacion;
+        antecedente.cambioSaborComidas      = datosAntecedente.cambioSaborComidas;
+        antecedente.alergia                 = datosAntecedente.alergia;
+        antecedente.descripcionAlergias     = datosAntecedente.descripcionAlergias;
+        antecedente.suplementoVitaminicos   = datosAntecedente.suplementoVitaminicos;
+        antecedente.descripcionSuplementos  = datosAntecedente.descripcionSuplementos;
+        antecedente.medicamento             = datosAntecedente.medicamento;
+        antecedente.descripcionMedicamentos = datosAntecedente.descripcionMedicamentos;
+        antecedente.ojos                    = datosAntecedente.ojos;
+        antecedente.cabello                 = datosAntecedente.cabello;
+        antecedente.unias                   = datosAntecedente.unias;
+        antecedente.piel                    = datosAntecedente.piel;
+        antecedente.antecedentesPersonales  = datosAntecedente.antecedentesPersonales;
+        antecedente.antecedentesFamiliares  = datosAntecedente.antecedentesFamiliares;
+
+        // Guardamos los cambios del antecedente
+        antecedente.save( function(err) {
+          // Error del servidor
+          if (err) {
+            return res.status(500).send({ message: 'Ocurrió un error al guardar el antecedente' });
+          }
+
+          HistoriaAlimentaria.findById( datosHistoria._id, function (err, historia) {      
+            // Error del servidor
+            if (err) {
+              return res.status(500).send({ message:  getErrorMessage(err), type: 'danger'});
+            }
+
+            // Historia no encontrado
+            if (!historia) {
+              return res.status(404).send({ message: 'Historia alimentaria no encontrada', type: 'danger' });
+            }
+
+            // historia (de la Bdd), datosHistoria (desde el front)
+            historia.comidasAlDia           = datosHistoria.comidasAlDia;
+            historia.preparadoPor           = datosHistoria.preparadoPor;
+            historia.modificaFinesDeSemana  = datosHistoria.modificaFinesDeSemana;
+            historia.comidaFinesdeSemana    = datosHistoria.comidaFinesdeSemana;
+            historia.comeEntreComidas       = datosHistoria.comeEntreComidas;
+            historia.snacksEntreComidas     = datosHistoria.snacksEntreComidas;
+            historia.queCome                = datosHistoria.queCome;
+            historia.aguaAlDia              = datosHistoria.aguaAlDia;
+            historia.cafeAlDia              = datosHistoria.cafeAlDia;
+            historia.cigarrosAlDia          = datosHistoria.cigarrosAlDia;
+            historia.alcoholALaSemana       = datosHistoria.alcoholALaSemana;
+            historia.grupoAlimentos         = datosHistoria.grupoAlimentos;
+
+            historia.save( function(err) {
+              // Error del servidor
+              if (err) {
+                return res.status(500).send({ message: 'Ocurrió un error al guardar la historia' });
+              }
+              /* Paciente, Antecedente e Historia editados con exito */
+              return res.status(200).send({ message: 'Paciente editado exitosamente' });
+
+            }); // save historia
+          }); // HistoriaAlimentaria.findById
+
+        }); // save antecedente
+      }); // Antecedentes.findById
+
+    }); // save paciente
+  }); // Paciente.findById
 };
 
+//Función que desactiva a determinado paciente del sistema, mediante la modificación del campo borrado a true.
 exports.desactivarPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Paciente.findByIdAndUpdate(pacienteId, {
@@ -156,6 +276,7 @@ exports.desactivarPaciente = function(req, res){
     });
 };
 
+//Función que activa a determinado paciente del sistema, mediante la modificación del campo borrado a false.
 exports.activarPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Paciente.findByIdAndUpdate(pacienteId, {

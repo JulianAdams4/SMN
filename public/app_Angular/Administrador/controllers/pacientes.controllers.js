@@ -108,34 +108,44 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     }
 
     $scope.edit = function () {
+      // Necesario para la ruta
       var idToEdit = $scope.idPacienteEdit;
-      var dataFormEdit = $scope.paciente
-     $http({
+      // Los checks con inputs se limpian si no estan marcados
+      if ($scope.antecedente.alergia==false) {
+          $scope.antecedente.descripcionAlergias = "";
+      }
+      if ($scope.antecedente.suplementoVitaminicos==false) {
+          $scope.antecedente.descripcionSuplementos = "";
+      }
+      if ($scope.antecedente.medicamento==false) {
+          $scope.antecedente.descripcionMedicamentos = "";
+      }  
+      if ($scope.historiaAlimentaria.modificaFinesDeSemana==false) {
+          $scope.antecedente.comidaFinesdeSemana = "";
+      }
+      if ($scope.historiaAlimentaria.comeEntreComidas==false) {
+          $scope.antecedente.snacksEntreComidas = "";
+      }  
+      // Se envian las 3 tabs
+      var dataFormEdit = {
+        paciente: $scope.paciente,
+        antecedente: $scope.antecedente,
+        historia: $scope.historiaAlimentaria
+      };
+      $http({
         method: 'PUT',
         url: '/api/pacientes/' + idToEdit,
         data: dataFormEdit
       })
-     .then(
+      .then(
         function(response){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>',
-            'success',
-            'ti-check',
-            3000
-          );
+          var msj = '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'success', 'ti-check', 3000);
           $location.path("/pacientes")
         },
         function(errorResponse){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>',
-            'danger',
-            'ti-close',
-            3000
-          );
+          var msj = errorResponse.data.message ? '<h5> '+errorResponse.data.message+' </h5>' : '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         }
       );
     }

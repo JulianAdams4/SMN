@@ -30,6 +30,7 @@ exports.historiaAlimentariaByPaciente = function(req, res){
     });
 };
 
+//Función que retorna un json con la información de todas las historias alimentarias almacenadas en la base de datos.
 exports.list = function(req, res){
   HistoriaAlimentaria.find({}, function(err, historiaAlimentaria){
     if(err){
@@ -42,6 +43,7 @@ exports.list = function(req, res){
   });
 };
 
+//Función que almacena en la base de datos una nueva historia alimentaria.
 exports.createHistoriaAlimentaria = function(req, res){
   var historiaAlimentaria = new HistoriaAlimentaria(req.body);
   //var campos = ["idPaciente"/*, "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
@@ -61,6 +63,7 @@ exports.createHistoriaAlimentaria = function(req, res){
   });
 };
 
+//Función que remueve de la base de datos una determinada historia alimentaria mediante su id.
 exports.deleteHistoria = function(req, res){
   var historiaAlimentariaId = req.params.historiaAlimentariaId;
   console.log(historiaAlimentariaId);

@@ -134,4 +134,48 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     $scope.goEditView = function(){
       $location.path('/pacientes/listPlanesNutricionales/'+$routeParams.idPaciente+'/edit/'+$routeParams.planNutricionalId);
     }
+
+    // ==============================================
+    $scope.remove = function(planNutricional){
+      //Modal de confirmar eliminación
+      BootstrapDialog.confirm({
+        title: 'ADVERTENCIA',
+        message: 'Desea eliminar este Plan Nutricional?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: 'No',
+        btnOKLabel: 'Sí',
+        btnOKClass: 'btn-warning',
+        callback: function(result) {
+          if(result) {
+            $http({
+              method: 'DELETE',
+              url: '/api/planesNutricionales/'+planNutricional._id
+            }).then(function(response){
+              //Mensaje de éxito al eliminar plan nutricional
+              demo.showCustomNotification(
+                'top',
+                'right',
+                '<h5> Plan Nutricional eliminado <b>exitosamente</b>! </h5>',
+                'success',
+                'ti-check',
+                3000
+              );
+              for (var i in $scope.planesNutricionales) {
+                    if ($scope.planesNutricionales[i] === planNutricional) {
+                      $scope.planesNutricionales.splice(i, 1);
+                    }
+                  };
+            },
+            function(errorResponse){
+              demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+            });
+          }
+        }
+      });
+
+
+    }
+
   }]);

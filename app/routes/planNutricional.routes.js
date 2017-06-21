@@ -4,7 +4,8 @@ var planNutricional = require('../controllers/planNutricional.controllers');
 
 module.exports = function(app) {
 
-  //Sprint 2 : Crud Plan nutricional
+  /*Sprint 2 : Crud Plan nutricional
+    Autores: Joyce Benitez - Iván Mosquera*/
   app.route('/api/planesNutricionalesPaciente/:pacienteId')
     .get(planNutricional.planNutricionalByPaciente);
 

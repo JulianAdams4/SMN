@@ -3,7 +3,7 @@
         <h4 class="title">Editar Paciente</h4>
     </div>
     <div class="content">
-        <form name="pacienteForm" data-ng-submit="edit()" novalidate>
+        <form name="pacienteForm" data-ng-submit="edit()" autocomplete="off" novalidate>
 
           <section ng-include="'app_Angular/Administrador/views/form_paciente.view.html'">
           </section>
@@ -19,7 +19,6 @@
                 <button type="submit" class="btn btn-info btn-fill btn-wd">
                   Guardar
                 </button>
-
               <!-- <div class="col-lg-6 col-md-6 col-xs-6 pull-left">
               </div> -->
           </div>
