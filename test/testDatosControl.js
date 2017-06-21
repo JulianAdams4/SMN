@@ -228,7 +228,7 @@ describe('/GET datosControl', () => {
               done();
             });
       });
-  });
+//  });
 
       it('No debe retornar ningún dato de control ya que no existe el paciente', function(done){
         chai.request('http://localhost:3000')
