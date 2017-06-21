@@ -135,9 +135,9 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
       $location.path('/pacientes/listPlanesNutricionales/'+$routeParams.idPaciente+'/edit/'+$routeParams.planNutricionalId);
     }
 
-
+    // ==============================================
     $scope.remove = function(planNutricional){
-
+      //Modal de confirmar eliminación
       BootstrapDialog.confirm({
         title: 'ADVERTENCIA',
         message: 'Desea eliminar este Plan Nutricional?',
@@ -153,6 +153,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
               method: 'DELETE',
               url: '/api/planesNutricionales/'+planNutricional._id
             }).then(function(response){
+              //Mensaje de éxito al eliminar plan nutricional
               demo.showCustomNotification(
                 'top',
                 'right',
