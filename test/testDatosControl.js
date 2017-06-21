@@ -14,12 +14,12 @@ chai.use(chaiHttp);
 
 describe('datosControl', () => {
     beforeEach((done) => {
-        DatosControl.remove({}, (err) => { 
+        DatosControl.remove({}, (err) => {
           done();
-          });   
+          });
         Paciente.remove({}, (err) => {
           done();
-         });           
+         });
     });
 });
 

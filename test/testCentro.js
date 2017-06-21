@@ -42,7 +42,7 @@ describe('/POST Centro', () => {
 
 describe('/PUT /centro/:centroId', () => {
     it('Actualiza los datos de un centro', function(done){
-        let centro = new Centro({
+        var centro = new Centro({
             direccion: "Direccion prueba2",
             telefono: "0912345578",
             nutricionista: {
@@ -64,5 +64,3 @@ describe('/PUT /centro/:centroId', () => {
   });
 });
 });
-
-
