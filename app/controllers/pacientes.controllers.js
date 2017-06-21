@@ -102,9 +102,18 @@ exports.createPaciente = function(req, res){
 };
 
 exports.editPaciente = function(req, res){
-  var pacienteId = req.params.pacienteId;
+  // Validaciones
+  // Es diferente a la del archivo validador
+  var obligatoriosPaciente = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
+  for (var i=0; i<obligatoriosPaciente.length ; i++){
+    var field = obligatoriosPaciente[i];
+    if ( req.body.paciente[field] == null || req.body.paciente[field] == undefined || req.body.paciente[field] == "") {
+      return res.status(500).json({ message: 'Faltan campos del paciente'});
+    }
+  }
 
   // Extraemos la data de las tabs
+  var pacienteId = req.params.pacienteId;
   var datosPaciente = req.body.paciente;
   var datosAntecedente = req.body.antecedente;
   var datosHistoria = req.body.historia;
@@ -113,12 +122,12 @@ exports.editPaciente = function(req, res){
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
+      return res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
     }
 
     // Paciente no encontrado
     if (!paciente) {
-      res.status(404).send({ message: 'Paciente no encontrado', type: 'danger' });
+      return res.status(404).send({ message: 'Paciente no encontrado', type: 'danger' });
     }
 
     // paciente (de la Bdd), datosPaciente (desde el front)
@@ -132,31 +141,27 @@ exports.editPaciente = function(req, res){
     paciente.ocupacion            = datosPaciente.ocupacion;
     paciente.motivoConsulta       = datosPaciente.motivoConsulta;
     paciente.ejercicios           = datosPaciente.ejercicios;
-    paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;
-  
+    paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;  
 
     // Guardamos los cambios del paciente
     paciente.save( function(err) {
       // Error del servidor
       if (err) {
-        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        return res.status(500).send({ message: 'Ocurrió un error al guardar el paciente' });
       }
-      
-      // Paciente editado con exito
 
       // Editamos el antecedente
       Antecedentes.findById( datosAntecedente._id, function (err, antecedente) {
         // Error del servidor
         if (err) {
-          res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
+          return res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
         }
 
         // Paciente no encontrado
         if (!antecedente) {
-          res.status(404).send({ message: 'Antecedente no encontrado', type: 'danger' });
+          return res.status(404).send({ message: 'Antecedente no encontrado', type: 'danger' });
         }
 
-console.log(datosAntecedente);
         // antecedente (de la Bdd), datosAntecedente (desde el front)
         antecedente.alteracionApetito       = datosAntecedente.alteracionApetito;
         antecedente.nausea                  = datosAntecedente.nausea;
@@ -185,60 +190,50 @@ console.log(datosAntecedente);
         antecedente.save( function(err) {
           // Error del servidor
           if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            return res.status(500).send({ message: 'Ocurrió un error al guardar el antecedente' });
           }
 
-          // Antecedente editado con exito
-
           HistoriaAlimentaria.findById( datosHistoria._id, function (err, historia) {      
+            // Error del servidor
+            if (err) {
+              return res.status(500).send({ message:  getErrorMessage(err), type: 'danger'});
+            }
+
+            // Historia no encontrado
+            if (!historia) {
+              return res.status(404).send({ message: 'Historia alimentaria no encontrada', type: 'danger' });
+            }
+
+            // historia (de la Bdd), datosHistoria (desde el front)
+            historia.comidasAlDia           = datosHistoria.comidasAlDia;
+            historia.preparadoPor           = datosHistoria.preparadoPor;
+            historia.modificaFinesDeSemana  = datosHistoria.modificaFinesDeSemana;
+            historia.comidaFinesdeSemana    = datosHistoria.comidaFinesdeSemana;
+            historia.comeEntreComidas       = datosHistoria.comeEntreComidas;
+            historia.snacksEntreComidas     = datosHistoria.snacksEntreComidas;
+            historia.queCome                = datosHistoria.queCome;
+            historia.aguaAlDia              = datosHistoria.aguaAlDia;
+            historia.cafeAlDia              = datosHistoria.cafeAlDia;
+            historia.cigarrosAlDia          = datosHistoria.cigarrosAlDia;
+            historia.alcoholALaSemana       = datosHistoria.alcoholALaSemana;
+            historia.grupoAlimentos         = datosHistoria.grupoAlimentos;
+
+            historia.save( function(err) {
               // Error del servidor
               if (err) {
-                res.status(500).send({
-                  message:  getErrorMessage(err), type: 'danger'
-                });
+                return res.status(500).send({ message: 'Ocurrió un error al guardar la historia' });
               }
+              /* Paciente, Antecedente e Historia editados con exito */
+              return res.status(200).send({ message: 'Paciente editado exitosamente' });
 
-              // Historia no encontrado
-              if (!historia) {
-                res.status(404).send({ message: 'Historia alimentaria no encontrada', type: 'danger' });
-              }
+            }); // save historia
+          }); // HistoriaAlimentaria.findById
 
-console.log(datosHistoria);
-              // historia (de la Bdd), datosHistoria (desde el front)
-              historia.comidasAlDia           = datosHistoria.comidasAlDia;
-              historia.preparadoPor           = datosHistoria.preparadoPor;
-              historia.modificaFinesDeSemana  = datosHistoria.modificaFinesDeSemana;
-              historia.comidaFinesdeSemana    = datosHistoria.comidaFinesdeSemana;
-              historia.comeEntreComidas       = datosHistoria.comeEntreComidas;
-              historia.snacksEntreComidas     = datosHistoria.snacksEntreComidas;
-              historia.queCome                = datosHistoria.queCome;
-              historia.aguaAlDia              = datosHistoria.aguaAlDia;
-              historia.cafeAlDia              = datosHistoria.cafeAlDia;
-              historia.cigarrosAlDia          = datosHistoria.cigarrosAlDia;
-              historia.alcoholALaSemana       = datosHistoria.alcoholALaSemana;
-              historia.grupoAlimentos         = datosHistoria.grupoAlimentos;
+        }); // save antecedente
+      }); // Antecedentes.findById
 
-              historia.save( function(err) {
-                  // Error del servidor
-                  if (err) {
-                    res.status(500).send({ message: 'Ocurrió un error en el servidor' });
-                  }
-
-                  res.status(200).send({ message: 'Paciente editado exitosamente papuh' });
-
-              });
-
-          });
-          //
-
-        });
-
-      });
-
-
-    });
-
-  });
+    }); // save paciente
+  }); // Paciente.findById
 };
 
 exports.desactivarPaciente = function(req, res){

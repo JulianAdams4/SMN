@@ -123,10 +123,11 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       })
       .then(
         function(response){
+          var msj = response.data.message || '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>';
           demo.showCustomNotification(
             'top',
             'right',
-            '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>',
+            msj,
             'success',
             'ti-check',
             3000
@@ -135,10 +136,11 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         },
         function(errorResponse){
 console.log(errorResponse);
+          var msj = errorResponse.data.message || '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>';
           demo.showCustomNotification(
             'top',
             'right',
-            '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>',
+            msj,
             'danger',
             'ti-close',
             3000
