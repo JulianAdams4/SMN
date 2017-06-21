@@ -111,6 +111,16 @@ exports.editPaciente = function(req, res){
       return res.status(500).json({ message: 'Faltan campos del paciente'});
     }
   }
+  // Validacion de checks marcados pero sin data
+  if ( req.body.antecedente.alergia == true && req.body.antecedente.descripcionAlergias=="" ) {
+    return res.status(500).json({ message: 'Falta especificar las alergias'});
+  }
+  if ( req.body.antecedente.suplementoVitaminicos == true && req.body.antecedente.descripcionSuplementos=="" ) {
+    return res.status(500).json({ message: 'Falta especificar los suplementos'});
+  }
+  if ( req.body.antecedente.medicamento == true && req.body.antecedente.descripcionMedicamentos=="" ) {
+    return res.status(500).json({ message: 'Falta especificar los medicamentos'});
+  }
 
   // Extraemos la data de las tabs
   var pacienteId = req.params.pacienteId;

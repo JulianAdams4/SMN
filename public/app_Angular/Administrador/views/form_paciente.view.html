@@ -19,7 +19,7 @@
         <div class="col-md-3 col-sm-3">
           <div  class="form-group"
                 ng-class="{'has-error': pacienteForm.cedula.$invalid && !pacienteForm.cedula.$pristine }">
-              <label>Cédula</label>
+              <label>Cédula*</label>
               <input  type="text"
                       class="form-control border-input"
                       placeholder="Cédula"
@@ -34,7 +34,7 @@
         <div class="col-md-4 col-sm-4">
           <div  class="form-group"
                 ng-class="{'has-error': pacienteForm.nombres.$invalid && !pacienteForm.nombres.$pristine }">
-              <label>Nombres</label>
+              <label>Nombres*</label>
               <input  type="text"
                       class="form-control border-input"
                       placeholder="Nombres"
@@ -49,7 +49,7 @@
         <div class="col-md-5 col-sm-5">
           <div  class="form-group"
                 ng-class="{'has-error': pacienteForm.apellidos.$invalid && !pacienteForm.apellidos.$pristine }">
-              <label>Apellidos</label>
+              <label>Apellidos*</label>
               <input  type="text"
                       class="form-control border-input"
                       minlength="2"
@@ -65,7 +65,7 @@
     <div class="row">
         <div class="col-md-3 col-sm-3">
           <div class="form-group">
-            <label>Sexo:</label>
+            <label>Sexo*</label>
             <select class="form-control border-input" data-ng-model="paciente.sexo" required>
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
@@ -75,7 +75,7 @@
         <div class="col-md-4 col-sm-4">
           <div class="form-group"
                ng-class="{'has-error': pacienteForm.nacimiento.$invalid && !pacienteForm.nacimiento.$pristine }">
-            <label>Fecha de Nacimiento</label>
+            <label>Fecha de Nacimiento*</label>
             <input type="Date"
                    class="form-control border-input"
                    name="nacimiento"
@@ -96,8 +96,7 @@
                    name="celular"
                    onkeypress="return event.charCode>47 && event.charCode<58"
                    placeholder="Celular"
-                   data-ng-model="paciente.celular"
-                   required>
+                   data-ng-model="paciente.celular">
           </div>
         </div>
     </div>
@@ -161,7 +160,7 @@
       <div class="col-md-12 col-sm-12">
         <div class="form-group"
              ng-class="{'has-error': pacienteForm.motivo.$invalid && !pacienteForm.motivo.$pristine }">
-            <label>Motivo de la Consulta</label>
+            <label>Motivo de la Consulta*</label>
             <input type="text"
                    class="form-control border-input"
                    name="motivo"

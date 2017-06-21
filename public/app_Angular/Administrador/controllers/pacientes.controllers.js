@@ -110,6 +110,16 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.edit = function () {
       // Necesario para la ruta
       var idToEdit = $scope.idPacienteEdit;
+      // Los checks con inputs se limpian si no estan marcados
+      if ($scope.antecedente.alergia==false) {
+          $scope.antecedente.descripcionAlergias = "";
+      }
+      if ($scope.antecedente.suplementoVitaminicos==false) {
+          $scope.antecedente.descripcionSuplementos = "";
+      }
+      if ($scope.antecedente.medicamento==false) {
+          $scope.antecedente.descripcionMedicamentos = "";
+      }      
       // Se envian las 3 tabs
       var dataFormEdit = {
         paciente: $scope.paciente,
@@ -123,28 +133,13 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       })
       .then(
         function(response){
-          var msj = response.data.message || '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>';
-          demo.showCustomNotification(
-            'top',
-            'right',
-            msj,
-            'success',
-            'ti-check',
-            3000
-          );
+          var msj = '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'success', 'ti-check', 3000);
           $location.path("/pacientes")
         },
         function(errorResponse){
-console.log(errorResponse);
-          var msj = errorResponse.data.message || '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>';
-          demo.showCustomNotification(
-            'top',
-            'right',
-            msj,
-            'danger',
-            'ti-close',
-            3000
-          );
+          var msj = errorResponse.data.message ? '<h5> '+errorResponse.data.message+' </h5>' : '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         }
       );
     }
