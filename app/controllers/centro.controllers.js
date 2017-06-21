@@ -21,6 +21,7 @@ exports.read = function(req, res){
   res.json(req.centro);
 };
 
+/*Permite obtener todos los centros de la bd*/
 exports.list = function(req, res){
   Centro.find({}, function(err, centros){
     if(err){
@@ -34,6 +35,7 @@ exports.list = function(req, res){
   });
 };
 
+/*Permite obtener un centro por su respectivo id y se muestra su información*/
 exports.centroById = function(req, res, next, id){
   Centro.findById(id, function(err, centro){
     if(err){
@@ -53,6 +55,7 @@ exports.centroById = function(req, res, next, id){
   });
 };
 
+//Función que permite almacenar en la base de datos un nuevo centro con su respectivo nutricionista a cargo.
 exports.createCentro = function(req, res){
   var centro = new Centro(req.body);
   centro.save( function(err){
@@ -67,6 +70,7 @@ exports.createCentro = function(req, res){
   });
 };
 
+//Función que permite editar los campos en la base de datos un determinado centro.
 exports.editCentro = function(req, res){
   Centro.findOne( {}, function (err, centro) {
     // Error del servidor
@@ -104,6 +108,7 @@ exports.editCentro = function(req, res){
   });
 };
 
+//Función que modifica en la bd el parámetro borrado a true de un determinado centro mediante su id.
 exports.borrarCentroById = function (req, res) {
   var id = req.params.centroId;
   Centro.update(

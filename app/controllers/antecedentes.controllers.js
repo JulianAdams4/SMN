@@ -15,6 +15,8 @@ var getErrorMessage = function(err){
   }
 };
 
+/*Permite obtener los antecedentes por id del paciente y se incluye la
+información del paciente con populate*/
 exports.antecedentesByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Antecedentes.findOne({idPaciente:pacienteId}).populate('idPaciente')
@@ -28,6 +30,7 @@ exports.antecedentesByPaciente = function(req, res){
     });
 };
 
+//Permite obtener todos los antecedentes de la bd y se retornan en un json
 exports.list = function(req, res){
   Antecedentes.find({}, function(err, antecedentes){
     if(err){
@@ -40,6 +43,7 @@ exports.list = function(req, res){
   });
 };
 
+//Función que permite almacenar en la base de datos un nuevo antecedente a un determinado paciente.
 exports.createAntecedente = function(req, res){
   var antecedentes = new Antecedentes(req.body);
   var campos = ["idPaciente"/*, "alteracionApetito", "nausea","vomito","estrenimiento",
@@ -59,6 +63,7 @@ exports.createAntecedente = function(req, res){
   });
 };
 
+//Función que modifica en la bd el parámetro borrado a true de un antecedente mediante su id.
 exports.deleteAntecedente = function(req, res){
   var antecedenteId = req.params.antecedenteId;
   Antecedentes.findByIdAndUpdate(antecedenteId, {
