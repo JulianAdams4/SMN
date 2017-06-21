@@ -119,20 +119,20 @@ exports.editPaciente = function(req, res){
     }
   }
   // Validacion de checks marcados pero sin data
-  if ( req.body.antecedente.alergia==true && req.body.antecedente.descripcionAlergias=="" ) {
+  if ( req.body.antecedente && req.body.antecedente.alergia==true && req.body.antecedente.descripcionAlergias=="" ) {
     return res.status(500).json({ message: 'Falta especificar las alergias'});
   }
-  if ( req.body.antecedente.suplementoVitaminicos==true && req.body.antecedente.descripcionSuplementos=="" ) {
+  if ( req.body.antecedente && req.body.antecedente.suplementoVitaminicos==true && req.body.antecedente.descripcionSuplementos=="" ) {
     return res.status(500).json({ message: 'Falta especificar los suplementos'});
   }
-  if ( req.body.antecedente.medicamento==true && req.body.antecedente.descripcionMedicamentos=="" ) {
+  if ( req.body.antecedente && req.body.antecedente.medicamento==true && req.body.antecedente.descripcionMedicamentos=="" ) {
     return res.status(500).json({ message: 'Falta especificar los medicamentos'});
   }
 
-  if ( req.body.historia.comeEntreComidas==true && req.body.historia.snacksEntreComidas=="" ) {
+  if ( req.body.historia && req.body.historia.comeEntreComidas==true && req.body.historia.snacksEntreComidas=="" ) {
     return res.status(500).json({ message: 'Falta especificar los snacks'});
   }
-  if ( req.body.historia.modificaFinesDeSemana==true && req.body.historia.comidaFinesdeSemana=="" ) {
+  if ( req.body.historia && req.body.historia.modificaFinesDeSemana==true && req.body.historia.comidaFinesdeSemana=="" ) {
     return res.status(500).json({ message: 'Falta especificar las comidas'});
   }
 
@@ -181,7 +181,7 @@ exports.editPaciente = function(req, res){
           return res.status(500).send({ message:  getErrorMessage(err), type: 'danger' });
         }
 
-        // Paciente no encontrado
+        // Antecedente no encontrado
         if (!antecedente) {
           return res.status(404).send({ message: 'Antecedente no encontrado', type: 'danger' });
         }
@@ -248,7 +248,11 @@ exports.editPaciente = function(req, res){
                 return res.status(500).send({ message: 'Ocurrió un error al guardar la historia' });
               }
               /* Paciente, Antecedente e Historia editados con exito */
-              return res.status(200).send({ message: 'Paciente editado exitosamente' });
+              return res.status(200).send({
+                paciente: paciente,
+                antecedente: antecedente,
+                historia: historia
+              });
 
             }); // save historia
           }); // HistoriaAlimentaria.findById
