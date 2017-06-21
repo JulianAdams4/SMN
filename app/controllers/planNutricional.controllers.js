@@ -37,6 +37,7 @@ exports.read = function(req, res){
   res.json(req.planNutricional);
 };
 
+//Función que permite almacenar en la base de datos un nuevo plan nutricional que contiene idPaciente, fecha de creación y documento en pdf a almacenar.
 exports.createPlanNutricional = function(req, res){
   var campos = ["documento"];
   if(!validador.camposSonValidos(campos,req)){

@@ -62,6 +62,7 @@ exports.list = function(req, res){
     });
 };
 
+//Función que permite almacenar en la base de datos un nuevo dato de control a un determinado paciente.
 exports.createDatosControl = function(req, res){
   var datosControl = new DatosControl(req.body);
   var campos = ["idPaciente"];
@@ -117,6 +118,7 @@ exports.editDatosControl = function(req, res){
   });
 };
 
+//Función que remueve de la base de datos a un dato de control mediante su id.
 exports.borrarDatoControlById = function (req, res) {
   var id = req.params.datosControlId;
   DatosControl.update(

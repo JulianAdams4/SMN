@@ -67,6 +67,9 @@ exports.pacienteById = function(req, res, next, id){
   });
 };
 
+/*
+* Función que retorna un json con la información de todos los pacientes almacenados en el sistema.
+*/
 exports.list = function(req, res){
   Paciente.find({}, function(err, pacientes){
     if(err){
@@ -80,6 +83,10 @@ exports.list = function(req, res){
   });
 };
 
+/*
+* Función que almacena en la base de datos un nuevo paciente con su respectiva cédula, nombres, apellidos, fecha de Nacimiento
+* sexo, celular, dirección, motivo de consulta
+*/
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
   var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
@@ -253,6 +260,7 @@ exports.editPaciente = function(req, res){
   }); // Paciente.findById
 };
 
+//Función que desactiva a determinado paciente del sistema, mediante la modificación del campo borrado a true.
 exports.desactivarPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Paciente.findByIdAndUpdate(pacienteId, {
@@ -268,6 +276,7 @@ exports.desactivarPaciente = function(req, res){
     });
 };
 
+//Función que activa a determinado paciente del sistema, mediante la modificación del campo borrado a false.
 exports.activarPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   Paciente.findByIdAndUpdate(pacienteId, {
