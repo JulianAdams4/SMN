@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <style media="screen">
+
+  *, :after, :before {
+    box-sizing: border-box;
+    x-sizing: border-box;
+  }
+  .login_content{
+    width: 100%;
+    padding: 10px 17px;
+    text-align: center;
+    background-color: rgba(3, 3, 3, 0.32);
+    border: 2px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    max-width: 300px;
+    margin: 9% auto 0 auto;
+    border-radius: 10px;
+  }
+  .login_content form{
+    margin: 20px 0;
+    position: relative;
+  }
+  .login_content h1{
+    font: 400 25px Helvetica,Arial,sans-serif;
+    letter-spacing: -.05em;
+    line-height: 20px;
+    margin: 10px 0 30px;
+  }
+  .login_content input{
+    border-radius: 3px;
+    border: 1px solid #c8c8c8;
+    width: 100%;
+    margin: 0 0 20px;
+  }
+  .form-control{
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  .bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    /* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+  }
+  h1{
+    color: rgb(255, 255, 255);
+  }
+  .button{
+    background-color: #fff;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  html {
+  background: url('/img/backgroundLogin.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.mensaje{
+  color: white;
+}
+  </style>
+  <body ng-app="loginApp" ng-controller="LoginController">
+
+      <div class="login_content">
+          <h1>Iniciar Sesión</h1>
+          <input type="text" class="form-control" placeholder="Usuario" ng-model="paciente.usuario">
+          <input type="password" class="form-control" placeholder="Password" ng-model="paciente.password">
+          <h5 class="mensaje" ng-show="mensaje" ng-bind="mensaje"></h5>
+          <button ng-click="iniciarSesion()" class="button" type="button">Ingresar</button>
+      </div>
+
+  </body>
+  <script src="/lib/angular/angular.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    angular.module('loginApp',[]).controller('LoginController',['$scope','$http','$timeout',
+      function($scope, $http,$timeout){
+        $scope.mensaje="";
+        $scope.iniciarSesion = function(){
+          $scope.mensaje="todavía no está implementado el login :O";//Eliminar al implementar el login en el back
+          $timeout(function(){ $scope.mensaje = '';}, 3000);//Eliminar al implementar el login en el back
+          /*$http({
+            method: 'POST',
+            url:,
+            data: $scope.paciente
+          }).then(function(response){
+            $scope.mensaje = response.data.message;
+            $timeout(function(){ $scope.mensaje = '';}, 3000);
+          })*/
+        }
+      }
+    ]);
+  </script>
+</html>
