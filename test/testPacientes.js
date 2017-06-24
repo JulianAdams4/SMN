@@ -1,819 +1,326 @@
-//During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 var server = require('../server');
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Paciente = mongoose.model('Paciente');
-var Antecedente = mongoose.model('Antecedentes');
-var Historia = mongoose.model('HistoriaAlimentaria');
 
-//Require the dev-dependencies
+var paciente = {};
+var puerto = 'http://localhost:3000';
+
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 
 var should = chai.should();
 chai.use(chaiHttp);
-//Our parent block
-describe('Paciente', () => {
-	
-	beforeEach((done) => { // Before each test we delete test data
-		Paciente.remove({}, (err) => {
-			Antecedente.remove({}, (err) => {
-				Historia.remove({}, (err) => {
-					done();
-				});
+
+
+describe('/POST Paciente', function(){
+
+	beforeEach(function(done){
+		paciente = {
+			cedula:		'5928077593',
+			nombres: 	'Stalyn Alfredo',
+			apellidos: 'Gonzabay Yagual',
+			email: 'alfred.leo@hotmail.com',
+			fechaNacimiento: '1990-07-27',
+			sexo: 'Masculino',
+			direccion: 'Santa Elena',
+			celular: '0985493306',
+			ocupacion: 'Estudiante',
+			motivoConsulta: 'Ganar masa muscular',
+			ejercicios: 'Correr en las mañanas',
+			frecuencia: '4 veces por semana'
+		}
+		done();
+	});
+
+	afterEach(function(done){
+		Paciente.remove({},function(err){
+			done();
+		});
+	});
+
+	it('Crea un paciente con todos sus campos válidos', function(done){
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(201);
+				done();
 			});
-		});
 	});
-	
 
-  	/*
-    	Test the /POST route
-  	*/
-  	
-	describe('/POST paciente', () => {
-	  	it('Crea un paciente con éxito', (done) => {
-	  		var paciente = {
-	  			cedula: "0975489076",
-	  			nombres: "Nombre Prueba",
-	  			apellidos: "Apellido Prueba",
-	  			fechaNacimiento: "2014-01-01",
-        		sexo: "Masculino",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-        		motivoConsulta: "Motivo de prueba"
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(201);
-			  		res.body.should.be.a('object');
-			  		res.body.should.have.property('cedula');
-			  		res.body.should.have.property('nombres');
-			  		res.body.should.have.property('apellidos');
-			  		res.body.should.have.property('fechaNacimiento');
-          			res.body.should.have.property('sexo');
-          			res.body.should.have.property('motivoConsulta');
-		      		done();
-		    	});
-	    });
-	  //--------------------------------------------------
-	    it('No crea un paciente por falta de la cédula', (done) => {
-			var paciente = {
-	  			nombres: "Nombre Prueba",
-	  			apellidos: "Apellido Prueba",
-	  			fechaNacimiento: "2014-01-01",
-        		sexo: "Masculino",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-        		motivoConsulta: "Motivo de prueba"
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(500);
-		      		done();
-		    	});
-	    });
-	  //--------------------------------------------------
-		it('No crea un paciente por falta de los nombres', (done) => {
-			var paciente = {
-	  			cedula: "0975489076",
-	  			apellidos: "Apellido Prueba",
-	  			fechaNacimiento: "2014-01-01",
-        		sexo: "Masculino",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-        		motivoConsulta: "Motivo de prueba"
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(500);
-		      		done();
-		    	});
-	  	});
-	  //--------------------------------------------------
-		it('No crea un paciente por falta de los apellidos', (done) => {
-			var paciente = {
-	  			cedula: "0975489076",
-				nombres: "Nombre Prueba",
-	  			fechaNacimiento: "2014-01-01",
-        		sexo: "Masculino",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-        		motivoConsulta: "Motivo de prueba"
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(500);
-		      		done();
-		    	});
-	  	});
-	  //--------------------------------------------------
-		it('No crea un paciente por falta del sexo del paciente', (done) => {
-			var paciente = {
-	  			cedula: "0975489076",
-				nombres: "Nombre Prueba",
-				apellidos: "Apellido Prueba",
-	  			fechaNacimiento: "2014-01-01",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-        		motivoConsulta: "Motivo de prueba"
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(500);
-		      		done();
-		    	});
-	  	});
-	  //--------------------------------------------------
-		it('No crea un paciente por falta del motivo del registro', (done) => {
-			var paciente = {
-	  			cedula: "0975489076",
-				nombres: "Nombre Prueba",
-				apellidos: "Apellido Prueba",
-	  			fechaNacimiento: "2014-01-01",
-				sexo: "Masculino",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(500);
-		      		done();
-		    	});
-	  	});
-	  //--------------------------------------------------
-		it('No crea un paciente por formato de fecha con formato errado', (done) => {
-			var paciente = {
-	  			cedula: "0975489076",
-	  			nombres: "Nombre Prueba",
-	  			apellidos: "Apellido Prueba",
-	  			fechaNacimiento: "19/08/05",
-        		sexo: "Masculino",
-        		direccion: "Direccion prueba",
-        		celular: "0992426763",
-        		ocupacion: "Estudiante",
-        		motivoConsulta: "Motivo de prueba"
-	  		}
-			chai.request('http://localhost:3000')
-		    	.post('/api/pacientes')
-		    	.send(paciente)
-		    	.end((err, res) => {
-			  		res.should.have.status(500);
-		      		done();
-		    	});
-	  	});
+	it('Crea el paciente si el campo sexo es Masculino', function(done){
+		paciente.sexo = 'Masculino';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(201);
+				done();
+			});
 	});
-	
 
-  	/*
-    	Test the /PUT route
-  	*/
-	describe('/PUT /pacientes/:idPaciente', () => {
-		it('Actualiza los datos de un paciente con un determinado ID', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
+	it('Crea el paciente si el campo sexo es Femenino', function(done){
+		paciente.sexo = 'Femenino';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(201);
+				done();
+			});
+	});
 
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: "0920000002", 
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(200);
-							                res.body.should.be.a('object');
-							                res.body.should.have.property('paciente');
-							                res.body.paciente.should.have.property('_id').to.deep.equal( String(patient._id) );
-							              	done();
-							            }); // end
+	it('Crea el paciente si se ignoran campos no obligatorios', function(done){
+		paciente.direccion = '';
+		paciente.celular = '';
+		paciente.ocupacion = '';
+		paciente.ejercicios = '';
+		paciente.frecuenciaEjecicios = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(201);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-	    });
-	  //--------------------------------------------------
-		it('No actualiza los datos de un paciente que no existe', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var idFalso = '000000000000';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + idFalso)
-							            .send({
-							            	paciente: {
-							            		cedula: "0920000002", 
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							            	// paciente no encontrado
-							     			res.should.have.status(404);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no se ingresa la cédula', function(done){
+		paciente.cedula = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
-		//--------------------------------------------------
-		it('No actualiza los datos de un paciente si falta su cedula', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var cedulaFalsa = '';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: cedulaFalsa,
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(500);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no ingresa los nombres', function(done){
+		paciente.nombres = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
-		//--------------------------------------------------
-		it('No actualiza los datos de un paciente si falta el nombre', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var datoFalso = '';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: "0911111111",
-							  					nombres: datoFalso, 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(500);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no ingresa los apellidos', function(done){
+		paciente.apellidos = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
-		//--------------------------------------------------
-		it('No actualiza los datos de un paciente si falta el apellido', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var datoFalso = '';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: "0911111111",
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: datoFalso,
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(500);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no ingresa la fecha de nacimiento', function(done){
+		paciente.fechaNacimiento = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
-		//--------------------------------------------------
-		it('No actualiza los datos de un paciente si falta la fecha de nacimiento', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var datoFalso = '';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: "0911111111",
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: datoFalso,
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(500);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no ingresa el sexo', function(done){
+		paciente.sexo = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
-		//--------------------------------------------------
-		it('No actualiza los datos de un paciente si falta el sexo', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var datoFalso = '';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: "0911111111",
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: datoFalso,
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: "Motivo de prueba"
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(500);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no ingresa el email', function(done){
+		paciente.email = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
-		//--------------------------------------------------
-		it('No actualiza los datos de un paciente si falta el motivo', function(done){
-		  	var paciente = new Paciente({
-		  		cedula: "0911111111",
-		  		nombres: "Nombre Prueba",
-		  		apellidos: "Adams",
-		  		fechaNacimiento: "2000-01-01",
-		        sexo: "Masculino",
-		        direccion: "Direccion prueba",
-		        celular: "0912345678",
-		        ocupacion: "Estudiante",
-		        motivoConsulta: "Motivo de prueba"
-		  	});
-		  	paciente.save((err) => {
-		  		// Obtenemos el id
-		  		Paciente.findOne({cedula:"0911111111"}, (err, patient) => {
-		  			// Creamos antecedente
-			  		var antecedent = new Antecedente({
-			  			idPaciente: patient._id
-			  		});
-			  		antecedent.save((err) => {
-			  			Antecedente.findOne({idPaciente: patient._id}, (err, ante) => {
-			  				// Creamos historia
-			  				var historiaAlim = new Historia({
-			  				  idPaciente: patient._id,
-							  comidasAlDia: 1,
-							  preparadoPor: "Cocinera",
-							  modificaFinesDeSemana: false,
-							  comidaFinesdeSemana: "",
-							  comeEntreComidas: false,
-							  snacksEntreComidas: "",
-							  queCome: "",
-							  aguaAlDia: 1,
-							  cafeAlDia: 1,
-							  cigarrosAlDia: 0,
-							  alcoholALaSemana: 0,
-							  grupoAlimentos:[
-							    {
-							      descripcion: "Lacteos",
-							      frecuencia: 1,
-							      alimentosAgradan: "Leche",
-							      alimentosDesagradan: "Queso"
-							    }
-							  ]
-			  				});
-			  				historiaAlim.save((err)=>{
-			  					Historia.findOne({idPaciente: patient._id}, (err, hist) => {
-			  						// IMPORTANTE
-			  						var datoFalso = '';
-			  						// Chai test
-							        chai.request('http://localhost:3000')
-							            .put('/api/pacientes/' + patient._id)
-							            .send({
-							            	paciente: {
-							            		cedula: "0911111111",
-							  					nombres: "Nombre Prueba", 
-							  					apellidos: "Apellido editado",
-							  					fechaNacimiento: "2000-01-01",
-							        			sexo: "Masculino",
-							        			direccion: "Direccion prueba",
-							        			celular: "0912345678",
-							        			motivoConsulta: datoFalso
-							            	}, 
-							            	antecedente: ante,
-							            	historia: hist
-							            })
-							            .end(function(err, res){
-							     			res.should.have.status(500);
-							              	done();
-							            }); // end
+	it('No crea el paciente si no ingresa el motivo de la consulta', function(done){
+		paciente.motivoConsulta = '';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
 
-			  					});
-			  				})
-			  			})
-			  		});
-		  		}); // findOne
-		  	});
-		});
+	it('No crea el paciente si ingresa un número de cédula no válido', function(done){
 
+		paciente.cedula = 'hola mundo';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
 
-	}); // describe
+		paciente.cedula = '123456';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.cedula = '1234567890123456';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		done();
+	})
+
+	it('No crea el paciente si ingresa unos nombres no válidos', function(done){
+		paciente.nombres = 'h';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.nombres = 'qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxhjhkhkhkhkjhkjhkjhkjhcvba';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+			paciente.nombres = 'hola123';
+			chai.request(puerto)
+				.post('/api/pacientes')
+				.send(paciente)
+				.end(function(err, res){
+					res.should.have.status(500);
+				});
+				paciente.nombres = '123456';
+				chai.request(puerto)
+					.post('/api/pacientes')
+					.send(paciente)
+					.end(function(err, res){
+						res.should.have.status(500);
+					});
+			done();
+	});
+
+	it('No crea el paciente si ingresa unos apellidos no válidos', function(done){
+		paciente.apellidos = 'h';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.apellidos = 'qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvba';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+			paciente.apellidos = 'hola123';
+			chai.request(puerto)
+				.post('/api/pacientes')
+				.send(paciente)
+				.end(function(err, res){
+					res.should.have.status(500);
+				});
+				paciente.apellidos = '123456';
+				chai.request(puerto)
+					.post('/api/pacientes')
+					.send(paciente)
+					.end(function(err, res){
+						res.should.have.status(500);
+					});
+			done();
+	});
+
+	it('No crea el paciente si ingresa un sexo diferente a Masculino o Femenino', function(done){
+		paciente.sexo = 'Cualquier cosa';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			})
+	})
+
+	it('No crea el paciente si ingresa un email no válido', function(done){
+		paciente.email = 'hola mundo';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.email = 'hola.com';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.email = 'hola@mundo';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		done();
+	})
+
+	it('No crea el paciente si ingresa un número de celular no válido', function(done){
+		paciente.celular = 'hola mundo';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.celular = '123456789';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.celular = '123456';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		paciente.celular = '1234567890123';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(paciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+			});
+		done();
+	})
 
 });

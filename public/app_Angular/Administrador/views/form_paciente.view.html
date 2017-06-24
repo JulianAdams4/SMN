@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-sm-4">
+        <div class="col-md-3 col-sm-3">
             <div class="form-group"
                   ng-class="{'has-error': pacienteForm.ocupacion.$invalid && !pacienteForm.ocupacion.$pristine }">
                 <label>Ocupación</label>
@@ -114,7 +114,18 @@
                        data-ng-model="paciente.ocupacion">
             </div>
         </div>
-        <div class="col-md-8 col-sm-8">
+        <div class="col-md-3 col-sm-3">
+            <div class="form-group"
+                  ng-class="{'has-error': !pacienteForm.email.search(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) }">
+                <label>Correo Electrónico</label>
+                <input type="email"
+                       class="form-control border-input"
+                       name="email"
+                       placeholder="Correo Electrónico"
+                       data-ng-model="paciente.email">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
             <div class="form-group"
                   ng-class="{'has-error': pacienteForm.direccion.$invalid && !pacienteForm.direccion.$pristine }">
                 <label>Dirección</label>

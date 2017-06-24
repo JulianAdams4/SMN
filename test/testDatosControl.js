@@ -29,15 +29,18 @@ describe('/POST datosControl', () => {
   //EXISTE PACIENTE
   it('Debe guardar los datos de control de un paciente', (done) => {
     var paciente = new Paciente({
-          cedula: "0900045780",
-          nombres: "Juana",
-          apellidos: "Meza",
-          fechaNacimiento: "2000-01-01",
-            sexo: "Femenino",
-            direccion: "Direccion prueba",
-            celular: "0912345578",
-            ocupacion: "Estudiante",
-            motivoConsulta: "Motivo de prueba"
+          cedula:		'1234567890',
+          nombres: 	'Juan Enrique',
+          apellidos: 'Ramirez Gonzalez',
+          email: 'enjuan@user.com',
+          fechaNacimiento: '1978-09-15',
+          sexo: 'Masculino',
+          direccion: 'Guayaquil',
+          celular: '0987456325',
+          ocupacion: 'Profesor',
+          motivoConsulta: 'Ganar masa muscular',
+          ejercicios: 'Correr en las mañanas',
+          frecuencia: '4 veces por semana'
         });
         paciente.save((err, patient) => {
             patId = ''+patient._id

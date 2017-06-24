@@ -158,6 +158,7 @@ exports.editPaciente = function(req, res){
     paciente.cedula               = datosPaciente.cedula;
     paciente.nombres              = datosPaciente.nombres;
     paciente.apellidos            = datosPaciente.apellidos;
+    paciente.email                = datosPaciente.email;
     paciente.fechaNacimiento      = datosPaciente.fechaNacimiento;
     paciente.sexo                 = datosPaciente.sexo;
     paciente.direccion            = datosPaciente.direccion;
@@ -165,7 +166,7 @@ exports.editPaciente = function(req, res){
     paciente.ocupacion            = datosPaciente.ocupacion;
     paciente.motivoConsulta       = datosPaciente.motivoConsulta;
     paciente.ejercicios           = datosPaciente.ejercicios;
-    paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;  
+    paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;
 
     // Guardamos los cambios del paciente
     paciente.save( function(err) {
@@ -217,7 +218,7 @@ exports.editPaciente = function(req, res){
             return res.status(500).send({ message: 'Ocurrió un error al guardar el antecedente' });
           }
 
-          HistoriaAlimentaria.findById( datosHistoria._id, function (err, historia) {      
+          HistoriaAlimentaria.findById( datosHistoria._id, function (err, historia) {
             // Error del servidor
             if (err) {
               return res.status(500).send({ message:  getErrorMessage(err), type: 'danger'});
