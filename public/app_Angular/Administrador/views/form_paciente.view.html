@@ -115,8 +115,7 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-3">
-            <div class="form-group"
-                  ng-class="{'has-error': !pacienteForm.email.search(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) }">
+            <div class="form-group">
                 <label>Correo Electrónico</label>
                 <input type="email"
                        class="form-control border-input"
@@ -432,10 +431,11 @@
             <label>Observaciones adicionales</label>
             <textarea type="text" rows="6" cols="60"
                    class="form-control border-input"
-                   name="antecedentesFamiliares"
+                   name="observaciones"
                    maxlength="300"
                    onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
                    data-ng-model="antecedente.observaciones">
+          </textarea>
         </div>
       </div>
     </div>
