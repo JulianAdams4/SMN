@@ -83,6 +83,7 @@ var antecedenteSchema = new Schema({
   },
   antecedentesPersonales: String,
   antecedentesFamiliares: String,
+  observaciones: String
 });
 
 mongoose.model('Antecedentes', antecedenteSchema);

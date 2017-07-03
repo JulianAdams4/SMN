@@ -426,6 +426,19 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+            <label>Observaciones adicionales</label>
+            <textarea type="text" rows="6" cols="60"
+                   class="form-control border-input"
+                   name="antecedentesFamiliares"
+                   maxlength="300"
+                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   data-ng-model="antecedente.observaciones">
+        </div>
+      </div>
+    </div>
   </div>
   <!-- HISTORIA ALIMENTARIA -->
   <div class="tab-pane" id="HistoriaAlimentaria" role="tabpanel" ng-init="showAgregar = false;">

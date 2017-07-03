@@ -210,7 +210,7 @@ exports.editPaciente = function(req, res){
         antecedente.piel                    = datosAntecedente.piel;
         antecedente.antecedentesPersonales  = datosAntecedente.antecedentesPersonales;
         antecedente.antecedentesFamiliares  = datosAntecedente.antecedentesFamiliares;
-
+        antecedente.observaciones           = datosAntecedente.observaciones;
         // Guardamos los cambios del antecedente
         antecedente.save( function(err) {
           // Error del servidor
