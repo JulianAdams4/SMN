@@ -109,10 +109,10 @@ exports.editDatosControl = function(req, res){
     datosControl.save( function(err) {
       // Error del servidor
       if (err) {
-        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
       }
       // Editado con exito
-      res.status(200).json(datosControl);
+      return res.status(200).json(datosControl);
     });
 
   });
