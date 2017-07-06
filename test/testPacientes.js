@@ -13,6 +13,23 @@ var chaiHttp = require('chai-http');
 var should = chai.should();
 chai.use(chaiHttp);
 
+function pacienteNuevo(){
+	var paciente = new Paciente({
+				cedula:		'0953653416',
+				nombres: 	'Juan Enrique',
+				apellidos: 'Ramirez Gonzalez',
+				email: 'enjuan@user.com',
+				fechaNacimiento: '1978-09-15',
+				sexo: 'Masculino',
+				direccion: 'Guayaquil',
+				celular: '0987456325',
+				ocupacion: 'Profesor',
+				motivoConsulta: 'Ganar masa muscular',
+				ejercicios: 'Correr en las mañanas',
+				frecuencia: '4 veces por semana'
+			});
+	return paciente;
+}
 
 describe('/POST Paciente', function(){
 
@@ -322,5 +339,55 @@ describe('/POST Paciente', function(){
 			});
 		done();
 	})
+	var patId="";
+	it('Activa un paciente exitosamente', (done) => {
+		var paciente=pacienteNuevo();
+		paciente.save((err, patient) => {
+			patId = ''+patient._id
+			chai.request('http://localhost:3000')
+			.put('/api/activarPaciente/'+patId)
+			.send(paciente)
+			.end((err, res) => {
+				res.should.have.status(204);
+				done();
+			});
+		});
+	});
+
+	it('Desactiva un paciente exitosamente', (done) => {
+		var paciente=pacienteNuevo();
+		paciente.save((err, patient) => {
+			patId = ''+patient._id
+			chai.request('http://localhost:3000')
+			.put('/api/desactivarPaciente/'+patId)
+			.send(paciente)
+			.end((err, res) => {
+				res.should.have.status(204);
+				done();
+			});
+		});
+	});
+
+	it('No desactiva un paciente porque no encuentra el paciente', (done) => {
+		patId = "1";
+		chai.request('http://localhost:3000')
+		.put('/api/desactivarPaciente/'+patId)
+		.send(paciente)
+		.end((err, res) => {
+			res.should.have.status(500);
+			done();
+		});
+	});
+
+	it('No activa un paciente porque no encuentra el paciente', (done) => {
+		patId = "1";
+		chai.request('http://localhost:3000')
+		.put('/api/activarPaciente/'+patId)
+		.send(paciente)
+		.end((err, res) => {
+			res.should.have.status(500);
+			done();
+		});
+	});
 
 });
