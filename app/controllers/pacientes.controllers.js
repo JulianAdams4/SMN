@@ -274,9 +274,9 @@ exports.desactivarPaciente = function(req, res){
     }
   }, function(err, paciente) {
         if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
         } else {
-            res.status(204).json(paciente);
+            return res.status(204).json(paciente);
         }
     });
 };
@@ -290,9 +290,9 @@ exports.activarPaciente = function(req, res){
     }
   }, function(err, paciente) {
         if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
         } else {
-            res.status(204).json(paciente);
+            return res.status(204).json(paciente);
         }
     });
 };
