@@ -55,6 +55,33 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })
     }
+
+    function showBootstraDialog(message,messageSuccess,messageError,route,idPacienteDelete){
+      BootstrapDialog.confirm({
+        title: 'ADVERTENCIA',
+        message: message,
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: 'No',
+        btnOKLabel: 'Sí',
+        btnOKClass: 'btn-warning',
+        callback: function(result) {
+          if(result) {
+            $http({
+              method: 'PUT',
+              url: '/api/'+ route + idPacienteDelete
+            }).then(function(response){
+              demo.mostrarNotificacion("success",messageSuccess);
+              find();
+            },function(errorResponse){
+              demo.mostrarNotificacion("danger", messageError);
+            });
+          }
+        }
+      });
+    }
+
     find();
     $scope.initEdit = function () {
       $scope.idPacienteEdit = $routeParams.idPaciente;
@@ -119,13 +146,13 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
       }
       if ($scope.antecedente.medicamento==false) {
           $scope.antecedente.descripcionMedicamentos = "";
-      }  
+      }
       if ($scope.historiaAlimentaria.modificaFinesDeSemana==false) {
           $scope.antecedente.comidaFinesdeSemana = "";
       }
       if ($scope.historiaAlimentaria.comeEntreComidas==false) {
           $scope.antecedente.snacksEntreComidas = "";
-      }  
+      }
       // Se envian las 3 tabs
       var dataFormEdit = {
         paciente: $scope.paciente,
@@ -152,60 +179,12 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
 
     $scope.desactivarPaciente = function (idPaciente) {
       var idPacienteDelete = idPaciente;
-      BootstrapDialog.confirm({
-        title: 'ADVERTENCIA',
-        message: 'Desea desactivar el paciente?',
-        type: BootstrapDialog.TYPE_WARNING,
-        closable: true,
-        draggable: true,
-        btnCancelLabel: 'No',
-        btnOKLabel: 'Sí',
-        btnOKClass: 'btn-warning',
-        callback: function(result) {
-          if(result) {
-            $http({
-              method: 'PUT',
-              url: '/api/desactivarPaciente/' + idPacienteDelete
-            }).then(function(response){
-              demo.mostrarNotificacion("success", "Paciente desactivado exitosamente");
-              find();
-            },function(errorResponse){
-              demo.mostrarNotificacion("danger", "Ocurrió un problema al desactivar al paciente");
-            });
-          }
-        }
-      });
+      showBootstraDialog('Desea desactivar el paciente?',"Paciente desactivado exitosamente","Ocurrió un problema al desactivar al paciente","desactivarPaciente/",idPacienteDelete);
     }
 
     $scope.activarPaciente = function (idPaciente) {
       var idPacienteDelete = idPaciente;
-      BootstrapDialog.confirm({
-        title: 'ADVERTENCIA',
-        message: 'Desea activar el paciente?',
-        type: BootstrapDialog.TYPE_WARNING,
-        closable: true,
-        draggable: true,
-        btnCancelLabel: 'No',
-        btnOKLabel: 'Sí',
-        btnOKClass: 'btn-warning',
-        callback: function(result) {
-          if(result) {
-            $http({
-               method: 'PUT',
-               url: '/api/activarpaciente/' + idPacienteDelete
-             })
-            .then(
-               function(response){
-                 demo.mostrarNotificacion("success", "Paciente activado exitosamente");
-                 find();
-               },
-               function(errorResponse){
-                 demo.mostrarNotificacion("danger", "Ocuurrió un problema al activar el paciente");
-               }
-             );
-          }
-        }
-      });
+      showBootstraDialog('Desea activar el paciente?',"Paciente activado exitosamente","Ocurrió un problema al activar al paciente","activarPaciente/",idPacienteDelete);
     };
 
     $scope.putGrupoAlimentos = function(){
