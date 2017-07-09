@@ -14,4 +14,7 @@ module.exports = function(app) {
   app.route('/login').get(function(req, res){
       res.render('login');
   });
+  app.route('/paciente/home').get(function(req, res){
+      res.render('paciente');
+  });
 };
