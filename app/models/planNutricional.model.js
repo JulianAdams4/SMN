@@ -17,6 +17,10 @@ var planNutricionalSchema = new Schema({
     type:String,
     required: '<i class="fa ti-alert"></i>El documento del plan es <b>obligatorio</b>'
   },
+  vigente: {
+    type: Boolean,
+    default: true
+  },
   borrado: {
     type: Boolean,
     default: false

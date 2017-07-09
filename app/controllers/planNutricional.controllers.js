@@ -48,21 +48,56 @@ exports.createPlanNutricional = function(req, res){
   }
   cloudinary.uploader.upload(req.body.documento, function(result){
     if (result.url) {
+
       PlanNutricional.create({
         idPaciente:req.body.idPaciente,
         documento: result.url
       },function(err, planNutricional) {
+        // Error al crear
         if(err){
           return res.status(500).send({
             message: getErrorMessage(err),
             type: "danger"
-          })
+          });
         }
-        return res.status(201).json(planNutricional);
-      });
+        // Fijamos el plan creado como el plan vigente (por defecto)
+        // y cambiamos TODOS los demás planes como vigente:false
+        var idPlanCreado = planNutricional._id;
+        PlanNutricional.updateMany(
+          { 
+            vigente: true 
+          }, 
+          {$set:
+            { vigente: false }
+          },
+          function(err, success){
+            // Error al actualizar los demás planes
+            if(err){
+              return res.status(500).send({
+                message: getErrorMessage(err),
+                type: "danger"
+              });
+            }
+            // No error
+            PlanNutricional.findByIdAndUpdate( idPlanCreado , 
+              {$set:
+                { vigente: true }
+              },
+              function(err, plan) {
+                if(err){
+                  return res.status(500).send({
+                    message: getErrorMessage(err),
+                    type: "danger"
+                  });
+                }
+                return res.status(201).json(planNutricional);
+            });
+        }); // End updateMany
+      }); // End PlanNutricional.create
     }
   })
 };
+
 
 /*Permite obtener los planes nutricionales por id del paciente y se incluye la
 información del paciente con populate*/

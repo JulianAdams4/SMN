@@ -29,7 +29,7 @@ module.exports = function() {
   require('../app/routes/antecedentes.routes')(app);
   require('../app/routes/historiaAlimentaria.routes')(app);
   require('../app/routes/planNutricional.routes')(app);
-   require('../app/routes/centro.routes')(app);
+  require('../app/routes/centro.routes')(app);
 
   app.use(express.static('./public'));
 
