@@ -29,7 +29,8 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
       var ruta = document.getElementById("preview").src;
       var data = {
         documento: ruta,
-        idPaciente:$scope.idPaciente
+        idPaciente:$scope.idPaciente,
+        fechaDato:$scope.planNutricional.fechaDato
       };
       if(esArchivoValido){
         $http({

@@ -51,7 +51,8 @@ exports.createPlanNutricional = function(req, res){
 
       PlanNutricional.create({
         idPaciente:req.body.idPaciente,
-        documento: result.url
+        documento: result.url,
+        fechaDato : req.body.fechaDato
       },function(err, planNutricional) {
         /* Error al crear */
         if(err){
@@ -161,7 +162,7 @@ exports.editPlanNutricional = function(req, res){
 // Fijar plan vigente
 function fijarVigentePorId(idPlanCreado, req, res) {
   PlanNutricional.updateMany(
-    { vigente: true }, 
+    { vigente: true },
     {$set:
       { vigente: false }
     },
@@ -174,7 +175,7 @@ function fijarVigentePorId(idPlanCreado, req, res) {
         });
       }
       /* No error */
-      PlanNutricional.findByIdAndUpdate( idPlanCreado , 
+      PlanNutricional.findByIdAndUpdate( idPlanCreado ,
       {$set:
         { vigente: true }
       },
@@ -185,7 +186,7 @@ function fijarVigentePorId(idPlanCreado, req, res) {
             type: "danger"
           });
         }
-        return res.status(200).json(plan);
+        return res.status(201).json(plan);
       });
     }
   ); /* End updateMany */
@@ -195,7 +196,7 @@ function fijarVigentePorId(idPlanCreado, req, res) {
 exports.fijarPlanVigente = function (req, res){
   var planNutricionalId = req.params.planNutricionalId;
   /* Promero verifico si el plan ya está vigente */
-  PlanNutricional.findById( planNutricionalId, 
+  PlanNutricional.findById( planNutricionalId,
     function(err, plan) {
       /* Error del servidor */
       if(err){
@@ -221,7 +222,7 @@ exports.fijarPlanVigente = function (req, res){
 exports.deletePlanNutricional = function(req, res){
    var planNutricionalId = req.params.planNutricionalId;
    console.log(planNutricionalId);
-   PlanNutricional.findByIdAndRemove(planNutricionalId, 
+   PlanNutricional.findByIdAndRemove(planNutricionalId,
      function(err, planNutricional) {
          if (err) {
              res.status(500).send({ message: 'Ocurrió un error en el servidor' });
