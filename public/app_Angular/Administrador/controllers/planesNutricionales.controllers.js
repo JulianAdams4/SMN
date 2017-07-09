@@ -189,7 +189,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
       //Modal de confirmar eliminación
       BootstrapDialog.confirm({
         title: 'ADVERTENCIA',
-        message: '¿Desea como vigente este Plan Nutricional?',
+        message: '¿Desea seleccionar como vigente este Plan Nutricional?',
         type: BootstrapDialog.TYPE_WARNING,
         closable: true,
         draggable: true,
@@ -216,6 +216,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
               },
               function(errorResponse){
                 demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+                console.clear();
               });
           }
         }
