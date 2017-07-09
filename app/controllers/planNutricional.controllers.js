@@ -53,47 +53,19 @@ exports.createPlanNutricional = function(req, res){
         idPaciente:req.body.idPaciente,
         documento: result.url
       },function(err, planNutricional) {
-        // Error al crear
+        /* Error al crear */
         if(err){
           return res.status(500).send({
             message: getErrorMessage(err),
             type: "danger"
           });
         }
-        // Fijamos el plan creado como el plan vigente (por defecto)
-        // y cambiamos TODOS los demás planes como vigente:false
+        /* Fijamos el plan creado como el plan vigente (por defecto)
+           y cambiamos TODOS los demás planes como vigente:false */
         var idPlanCreado = planNutricional._id;
-        PlanNutricional.updateMany(
-          { 
-            vigente: true 
-          }, 
-          {$set:
-            { vigente: false }
-          },
-          function(err, success){
-            // Error al actualizar los demás planes
-            if(err){
-              return res.status(500).send({
-                message: getErrorMessage(err),
-                type: "danger"
-              });
-            }
-            // No error
-            PlanNutricional.findByIdAndUpdate( idPlanCreado , 
-              {$set:
-                { vigente: true }
-              },
-              function(err, plan) {
-                if(err){
-                  return res.status(500).send({
-                    message: getErrorMessage(err),
-                    type: "danger"
-                  });
-                }
-                return res.status(201).json(planNutricional);
-            });
-        }); // End updateMany
-      }); // End PlanNutricional.create
+        fijarVigentePorId(idPlanCreado, req, res);
+
+      }); /* End PlanNutricional.create */
     }
   })
 };
@@ -113,6 +85,7 @@ exports.planNutricionalByPaciente = function(req, res){
         return res.status(200).json(planesNutricionales);
     });
 };
+
 
 /*Permite obtener la información de un plan nutricional por id */
 exports.planNutricionalById = function(req, res, next, id){
@@ -183,6 +156,66 @@ exports.editPlanNutricional = function(req, res){
     updateFile(cloudinary,req,planNutricionalId,res)
   }
 };
+
+
+// Fijar plan vigente
+function fijarVigentePorId(idPlanCreado, req, res) {
+  PlanNutricional.updateMany(
+    { vigente: true }, 
+    {$set:
+      { vigente: false }
+    },
+    function(err, success){
+      /* Error al actualizar los demás planes */
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err),
+          type: "danger"
+        });
+      }
+      /* No error */
+      PlanNutricional.findByIdAndUpdate( idPlanCreado , 
+      {$set:
+        { vigente: true }
+      },
+      function(err, plan) {
+        if(err){
+          return res.status(500).send({
+            message: getErrorMessage(err),
+            type: "danger"
+          });
+        }
+        return res.status(201).json(plan);
+      });
+    }
+  ); /* End updateMany */
+}
+
+/* Fija plan nutricional vigente y cambia los demás planes a vigente:false */
+exports.fijarPlanVigente = function (req, res){
+  var planNutricionalId = req.params.planNutricionalId;
+  /* Promero verifico si el plan ya está vigente */
+  PlanNutricional.findById( planNutricionalId, 
+    function(err, plan) {
+      /* Error del servidor */
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err),
+          type: "danger"
+        });
+      }
+      /* Ya es plan vigente */
+      if (plan.vigente == true) {
+        return res.status(500).send({
+          message: '<i class="fa ti-alert"></i> El plan nutricional ya es el plan vigente',
+          type: "danger"
+        });
+      }
+      /* No es el plan vigente */
+      fijarVigentePorId(idPlanCreado, req, res);
+  });
+}
+
 
 //Función que remueve de la base de datos a un plan nutricional mediante su id.
 exports.deletePlanNutricional = function(req, res){

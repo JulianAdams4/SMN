@@ -17,5 +17,10 @@ module.exports = function(app) {
     .put(planNutricional.editPlanNutricional)
     .delete(planNutricional.deletePlanNutricional);
 
+  /* Sprint 2: Seleccionar plan vigente 
+     Autor: Julián Adams */
+  app.route('/api/planesNutricionales/vigente/:planNutricionalId')
+    .put(planNutricional.fijarPlanVigente);
+
   app.param('planNutricionalId', planNutricional.planNutricionalById);
 };
