@@ -185,7 +185,7 @@ function fijarVigentePorId(idPlanCreado, req, res) {
             type: "danger"
           });
         }
-        return res.status(201).json(plan);
+        return res.status(200).json(plan);
       });
     }
   ); /* End updateMany */
@@ -207,12 +207,12 @@ exports.fijarPlanVigente = function (req, res){
       /* Ya es plan vigente */
       if (plan.vigente == true) {
         return res.status(500).send({
-          message: '<i class="fa ti-alert"></i> El plan nutricional ya es el plan vigente',
+          message: '<h5> El plan nutricional <b>ya es el vigente</b> </h5>',
           type: "danger"
         });
       }
       /* No es el plan vigente */
-      fijarVigentePorId(idPlanCreado, req, res);
+      fijarVigentePorId(planNutricionalId, req, res);
   });
 }
 

@@ -68,3 +68,11 @@
 .table-upgrade td:nth-child(3){
     text-align: center;
 }
+
+.vigente {
+	color: #EB9F08;
+}
+
+.noVigente {
+	color: silver;
+}

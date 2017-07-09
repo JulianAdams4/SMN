@@ -28,12 +28,18 @@
                     <thead>
                         <th>#</th>
                     	<th>Fecha registro plan nutricional</th>
+                        <th>Vigente</th>
                         <th>Acciones</th>
                     </thead>
                     <tbody>
                         <tr data-ng-repeat="plan in planesNutricionales">
                         	<td>{{$index + 1}}</td>
                         	<td data-ng-bind="plan.fechaDato | date:'dd/MM/yyyy'"></td>
+                            <td>
+                                <a title="Seleccionar como vigente" ng-click="seleccionarVigente(plan)">
+                                  <i ng-class="{vigente: plan.vigente, noVigente: !plan.vigente}" class="fa fa-lg fa-star" aria-hidden="true"></i>
+                                </a>
+                            </td>
                             <td>
                                 <a title="Ver informacion" data-ng-href="#!/pacientes/listPlanesNutricionales/{{planesNutricionales[0].idPaciente._id}}/ver/{{plan._id}}">
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>

@@ -169,7 +169,14 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
                   };
             },
             function(errorResponse){
-              demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+              demo.showCustomNotification(
+                'top',
+                'right',
+                errorResponse.data.message,
+                errorResponse.data.type,
+                'ti-close',
+                3000
+              );
             });
           }
         }
@@ -177,5 +184,43 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
 
 
     }
+
+    $scope.seleccionarVigente = function(planNutricional){
+      //Modal de confirmar eliminación
+      BootstrapDialog.confirm({
+        title: 'ADVERTENCIA',
+        message: '¿Desea como vigente este Plan Nutricional?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: 'No',
+        btnOKLabel: 'Sí',
+        btnOKClass: 'btn-warning',
+        callback: function(result) {
+          if(result) {
+            $http({
+              method: 'PUT',
+              url: '/api/planesNutricionales/vigente/'+planNutricional._id
+            }).then(
+              function(response){
+                // Mensaje de éxito al eliminar plan nutricional
+                demo.showCustomNotification(
+                  'top',
+                  'right',
+                  '<h5> ¡Se ha seleccionado el Plan nutricional <b>exitosamente</b>! </h5>',
+                  'success',
+                  'ti-check',
+                  3000
+                );
+                find();
+              },
+              function(errorResponse){
+                demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+              });
+          }
+        }
+      });
+    }
+
 
   }]);
