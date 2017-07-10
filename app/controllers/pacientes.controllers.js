@@ -139,6 +139,7 @@ exports.editPaciente = function(req, res){
   for (var i=0; i<obligatoriosPaciente.length ; i++){
     var field = obligatoriosPaciente[i];
     if ( req.body.paciente[field] == null || req.body.paciente[field] == undefined || req.body.paciente[field] == "") {
+      console.log(field);
       return res.status(500).json({ message: 'Faltan campos del paciente'});
     }
   }
