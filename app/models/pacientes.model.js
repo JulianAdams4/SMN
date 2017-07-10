@@ -64,7 +64,8 @@ var pacienteSchema = new Schema({
   borrado: {
     type: Boolean,
     default: false
-  }
+  },
+  password: String
 });
 
 mongoose.model('Paciente', pacienteSchema);

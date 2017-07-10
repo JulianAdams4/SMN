@@ -3,6 +3,8 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var config = require('./config');
 var methodOverride = require('method-override');
+var session = require('express-session');
+
 module.exports = function() {
 
   var app = express();
@@ -19,6 +21,12 @@ module.exports = function() {
 
   app.use(bodyParser.json({limit: '50mb'}));
   app.use(methodOverride());
+
+  app.use(session({
+    secret : 'MiCodigoNoSeLoDiganANadie',
+    resave : true,
+    saveUninitialized : false
+  }));
 
   app.set('view engine', 'hbs');
   app.set('views', './app/views');

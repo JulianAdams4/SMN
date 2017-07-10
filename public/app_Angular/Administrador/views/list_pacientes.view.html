@@ -21,6 +21,7 @@
                     	<th>Apellidos</th>
                     	<th>Sexo</th>
                     	<th>Dirección</th>
+                      <th>Contraseña</th>
                       <th>Acciones</th>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.sexo"></td>
                         	<td ng-if="paciente.borrado==true" style="color:gray" data-ng-bind="paciente.direccion"></td>
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.direccion"></td>
+                          <td ng-if="paciente.borrado==false" data-ng-bind="paciente.password"></td>
                             <td>
                                 <a title="Ver informacion" data-ng-href="#!/pacientes/ver/{{paciente._id}}">
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>

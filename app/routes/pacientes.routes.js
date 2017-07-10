@@ -26,4 +26,13 @@ module.exports = function(app) {
 
   app.route('/api/activarPaciente/:pacienteId')
     .put(pacientes.activarPaciente);
+
+  app.route('/')
+    .get(pacientes.ingresar);
+
+  app.route('/api/pacienteLogin')
+  .post(pacientes.signIn);
+
+  app.route('/api/pacienteLogout')
+    .get(pacientes.singOut);
 };

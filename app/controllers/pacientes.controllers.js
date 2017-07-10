@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var Paciente = mongoose.model('Paciente');
 var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
+var crypto = require('../services/crypto.js');
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
@@ -36,6 +37,23 @@ var getErrorMessage = function(err) {
   // Devolver el mensaje de error
   return message;
 };
+
+//FUNCIÓN GENERADORA DE PASSWORD
+function GenerarPassword() {
+  var iteration = 0;
+  var password = "";
+  var randomNumber;
+  while(iteration < 8){
+    randomNumber = (Math.floor((Math.random() * 100)) % 94) + 33;
+    if ((randomNumber >=33) && (randomNumber <=47)) { continue; }
+    if ((randomNumber >=58) && (randomNumber <=64)) { continue; }
+    if ((randomNumber >=91) && (randomNumber <=96)) { continue; }
+    if ((randomNumber >=123) && (randomNumber <=126)) { continue; }
+    iteration++;
+    password += String.fromCharCode(randomNumber);
+  }
+  return password;
+}
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador para consultar el paciente
@@ -78,6 +96,10 @@ exports.list = function(req, res){
         type: 'danger'
       });
     } else {
+      //código temporal, sirve para mostrar las contraseñas de los pacientes
+      for(var i in pacientes){
+        pacientes[i].password = crypto.desencriptar(pacientes[i].password);
+      }
       res.json(pacientes);
     }
   });
@@ -96,6 +118,8 @@ exports.createPaciente = function(req, res){
   if (!validador.cedulaEsValida(paciente.cedula)){
     return res.status(500).json({ message: 'Cédula no válida'});
   }
+  paciente.password = crypto.encriptar(GenerarPassword());//Asigna un password a un paciente
+
   paciente.save(function(err){
     if (err) {
       return res.status(500).send({
@@ -295,4 +319,44 @@ exports.activarPaciente = function(req, res){
             return res.status(204).json(paciente);
         }
     });
+};
+
+exports.ingresar = function(req, res){
+  if(!req.session.paciente){
+    res.render('login');
+  } else {
+    console.log(req.session.paciente);
+    res.render('publico');
+  }
+}
+
+exports.signIn = function(req, res){
+  var pacienteIn = Paciente(req.body);
+  Paciente.findOne({'email': pacienteIn.email}, function(err, paciente){
+    if(err){
+      return res.status(500).send({
+        message: getErrorMessage(err)
+      })
+    }
+    if(!paciente){
+      return res.status(400).send({
+        message: 'email no se encuentra registrado'
+      })
+    }
+    if(pacienteIn.password === crypto.desencriptar(paciente.password)){
+      req.session.paciente = paciente;
+      return res.status(200).send({
+        message: 'Autenticación exitosa'
+      })
+    } else {
+      return res.status(404).send({
+        message: 'contraseña incorrecta'
+      })
+    }
+  });
+};
+
+exports.singOut =function(req, res){
+  delete req.session.paciente;
+  res.redirect('/');
 };

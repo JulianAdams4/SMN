@@ -4,7 +4,7 @@ var administrador = require('../controllers/administrador.controllers');
 
 module.exports = function(app) {
 
-  app.route('/')
+  app.route('/administrador')
     .get(administrador.inicio);
 
   app.route('/publico').get(function(req, res){
