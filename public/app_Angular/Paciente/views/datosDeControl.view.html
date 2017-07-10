@@ -1,0 +1,29 @@
+<section ng-controller="datosControlController" ng-init="cargarDatosControl()">
+  <div class="card">
+    <div class="">
+      <h4>Resumen de su progreso</h4>
+    </div>
+    <div class="">
+      <div class="card" ng-repeat="datoControl in datosControl">
+        <h6>Fecha: {{ datoControl.fechaDato | date:'dd/MM/yyyy' }}</h6>
+        <div ng-repeat="dato in datoControl.datos">
+          <b>{{dato.nombreDato}}:</b> {{dato.valorDato}}{{dato.unidadDato}}
+        </div>
+      </div>
+    </div>
+    <!--<div class="content table-responsive table-full-width">
+        <table datatable='ng' class="table table-striped">
+            <thead>
+                <th>#</th>
+              <th>Fecha registro datos de control</th>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="dato in datosControl">
+                  <td>{{$index + 1}}</td>
+                  <td data-ng-bind="dato.fechaDato | date:'dd/MM/yyyy'"></td>
+                </tr>
+            </tbody>
+        </table>
+      </div>-->
+  </div>
+</section>

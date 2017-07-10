@@ -38,15 +38,28 @@ exports.datosControlById = function(req, res, next, id){
 información del paciente con populate*/
 exports.datosControlByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  DatosControl.find({idPaciente:pacienteId,borrado:false}).populate('idPaciente')
-    .exec(function (err, datosControl) {
-        if (err) {
-          return res.status(400).send({
-            message: getErrorMessage(err)
-          });
-        }
-        return res.status(200).json(datosControl);
-    });
+  if(req.session.paciente){
+    DatosControl.find({idPaciente:req.session.paciente._id,borrado:false}).populate('idPaciente')
+      .exec(function (err, datosControl) {
+          if (err) {
+            return res.status(400).send({
+              message: getErrorMessage(err)
+            });
+          }
+          return res.status(200).json(datosControl);
+      });
+  } else {
+    DatosControl.find({idPaciente:pacienteId,borrado:false}).populate('idPaciente')
+      .exec(function (err, datosControl) {
+          if (err) {
+            return res.status(400).send({
+              message: getErrorMessage(err)
+            });
+          }
+          return res.status(200).json(datosControl);
+      });
+  }
+
 };
 /*Permite obtener todos los datos de control de la bd y se incluye la
 información del paciente con populate*/
@@ -101,7 +114,7 @@ exports.editDatosControl = function(req, res){
     datosControl.fechaDato = req.body.fechaDato ? req.body.fechaDato : datosControl.fechaDato;
     datosControl.observaciones = req.body.observaciones ? req.body.observaciones : datosControl.observaciones;
     datosControl.datos = req.body.datos ? req.body.datos : datosControl.datos;
-    
+
     if(datosControl.datos.length==0){
       return res.status(500).json({ message: 'Falta ingresar parámetros de control.'});
     }

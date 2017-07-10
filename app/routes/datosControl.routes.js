@@ -11,6 +11,8 @@ module.exports = function(app) {
   app.route('/api/datosControlPaciente/:pacienteId')
     .get(datosControl.datosControlByPaciente)
     .post(datosControl.createDatosControl);
+  app.route('/api/datosControlPaciente')
+    .get(datosControl.datosControlByPaciente);
 
   app.param('datosControlId', datosControl.datosControlById);
 

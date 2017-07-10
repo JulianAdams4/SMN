@@ -325,7 +325,6 @@ exports.ingresar = function(req, res){
   if(!req.session.paciente){
     res.render('login');
   } else {
-    console.log(req.session.paciente);
     res.render('publico');
   }
 }
