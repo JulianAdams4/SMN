@@ -1,0 +1,164 @@
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item active">
+    <a class="nav-link" data-toggle="tab" href="#DatosGenerales" role="tab">Datos Generales</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <!-- DATOS GENERALES -->
+  <div class="tab-pane active" id="DatosGenerales" role="tabpanel">
+    <div class="row">
+        <div class="col-md-3 col-sm-3">
+          <div  class="form-group"
+                ng-class="{'has-error': pacienteForm.cedula.$invalid && !pacienteForm.cedula.$pristine }">
+              <label>Cédula*</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      placeholder="Cédula"
+                      minlength="10"
+                      maxlength="10"
+                      name='cedula'
+                      onkeypress="return event.charCode>47 && event.charCode<58"
+                      data-ng-model="paciente.cedula"
+                      required>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <div  class="form-group"
+                ng-class="{'has-error': pacienteForm.nombres.$invalid && !pacienteForm.nombres.$pristine }">
+              <label>Nombres*</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      placeholder="Nombres"
+                      minlength="2"
+                      maxlength="50"
+                      name='nombres'
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      data-ng-model="paciente.nombres"
+                      required>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-5">
+          <div  class="form-group"
+                ng-class="{'has-error': pacienteForm.apellidos.$invalid && !pacienteForm.apellidos.$pristine }">
+              <label>Apellidos*</label>
+              <input  type="text"
+                      class="form-control border-input"
+                      minlength="2"
+                      maxlength="50"
+                      name="apellidos"
+                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      placeholder="Apellidos"
+                      data-ng-model="paciente.apellidos"
+                      required>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-3">
+          <div class="form-group">
+            <label>Sexo*</label>
+            <select class="form-control border-input" data-ng-model="paciente.sexo" required>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group"
+               ng-class="{'has-error': pacienteForm.nacimiento.$invalid && !pacienteForm.nacimiento.$pristine }">
+            <label>Fecha de Nacimiento*</label>
+            <input type="Date"
+                   class="form-control border-input"
+                   name="nacimiento"
+                   data-ng-model="paciente.fechaNacimiento"
+                   min="1917-01-01"
+                   max="2013-12-31"
+                   required>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-5">
+          <div class="form-group"
+               ng-class="{'has-error': pacienteForm.celular.$invalid && !pacienteForm.celular.$pristine }">
+            <label>Celular</label>
+            <input type="text"
+                   class="form-control border-input"
+                   minlength="10"
+                   maxlength="10"
+                   name="celular"
+                   onkeypress="return event.charCode>47 && event.charCode<58"
+                   placeholder="Celular"
+                   data-ng-model="paciente.celular">
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-3">
+            <div class="form-group"
+                  ng-class="{'has-error': pacienteForm.ocupacion.$invalid && !pacienteForm.ocupacion.$pristine }">
+                <label>Ocupación</label>
+                <input type="text"
+                       class="form-control border-input"
+                       name="ocupacion"
+                       maxlength="50"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       placeholder="Ocupación"
+                       data-ng-model="paciente.ocupacion">
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email"
+                       class="form-control border-input"
+                       name="email"
+                       placeholder="Correo Electrónico"
+                       data-ng-model="paciente.email"
+                       readonly="1">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group"
+                  ng-class="{'has-error': pacienteForm.direccion.$invalid && !pacienteForm.direccion.$pristine }">
+                <label>Dirección</label>
+                <input type="text"
+                       class="form-control border-input"
+                       name="direccion"
+                       maxlength="200"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       placeholder="Dirección"
+                       data-ng-model="paciente.direccion">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group"
+                  ng-class="{'has-error': pacienteForm.ejercicios.$invalid && !pacienteForm.ejercicios.$pristine }">
+                <label>Ejecicios que realiza</label>
+                <input type="text"
+                       class="form-control border-input"
+                       name="ejercicios"
+                       maxlength="50"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       placeholder="Ejercicios"
+                       data-ng-model="paciente.ejercicios">
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group"
+                  ng-class="{'has-error': pacienteForm.frecuenciaEjecicios.$invalid && !pacienteForm.frecuenciaEjecicios.$pristine }">
+                <label>Frecuencia ejercicios</label>
+                <input type="text"
+                       class="form-control border-input"
+                       name="frecuenciaEjecicios"
+                       maxlength="200"
+                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       placeholder="Frecuencia Ejercicios"
+                       data-ng-model="paciente.frecuenciaEjecicios">
+            </div>
+        </div>
+    </div>
+  </div>

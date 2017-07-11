@@ -67,22 +67,41 @@ exports.read = function(req, res){
 //Controlador para verificar que el id del paciente se encuentra en la base de datos
 //Autor: Stalyn Gonzabay
 exports.pacienteById = function(req, res, next, id){
-  Paciente.findById(id, function(err, paciente){
-    if(err){
-      return res.status(500).send({
-        message: getErrorMessage(err),
-        type: 'danger'
-      })
-    }
-    if(!paciente){
-      return res.status(404).send({
-        message: '<i class="fa ti-alert"></i>No existe el paciente',
-        type: 'danger'
-      })
-    }
-    req.paciente = paciente;
-    next();
-  });
+  if(req.session.paciente){
+    Paciente.findById(req.session.paciente._id, function(err, paciente){
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err),
+          type: 'danger'
+        })
+      }
+      if(!paciente){
+        return res.status(404).send({
+          message: '<i class="fa ti-alert"></i>No existe el paciente',
+          type: 'danger'
+        })
+      }
+      req.paciente = paciente;
+      next();
+    });
+  }else{
+    Paciente.findById(id, function(err, paciente){
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err),
+          type: 'danger'
+        })
+      }
+      if(!paciente){
+        return res.status(404).send({
+          message: '<i class="fa ti-alert"></i>No existe el paciente',
+          type: 'danger'
+        })
+      }
+      req.paciente = paciente;
+      next();
+    });
+  }
 };
 
 /*
@@ -161,7 +180,12 @@ exports.editPaciente = function(req, res){
   }
 
   // Extraemos la data de las tabs
-  var pacienteId = req.params.pacienteId;
+  var pacienteId;
+  if(req.session.paciente){
+    pacienteId = req.session.paciente._id;
+  }else{
+    pacienteId = req.params.pacienteId;
+  }
   var datosPaciente = req.body.paciente;
   var datosAntecedente = req.body.antecedente;
   var datosHistoria = req.body.historia;
@@ -198,8 +222,8 @@ exports.editPaciente = function(req, res){
       if (err) {
         return res.status(500).send({ message: 'Ocurrió un error al guardar el paciente' });
       }
-
-      // Editamos el antecedente
+      if (!req.session.paciente){
+        // Editamos el antecedente
       Antecedentes.findById( datosAntecedente._id, function (err, antecedente) {
         // Error del servidor
         if (err) {
@@ -284,6 +308,12 @@ exports.editPaciente = function(req, res){
 
         }); // save antecedente
       }); // Antecedentes.findById
+      }else{
+        return res.status(200).send({
+                paciente: paciente,
+              });
+      }
+      
 
     }); // save paciente
   }); // Paciente.findById
