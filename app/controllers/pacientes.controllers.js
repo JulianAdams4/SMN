@@ -63,6 +63,7 @@ exports.read = function(req, res){
   res.json(req.paciente);
 };
 
+
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador para verificar que el id del paciente se encuentra en la base de datos
 //Autor: Stalyn Gonzabay
@@ -104,6 +105,7 @@ exports.pacienteById = function(req, res, next, id){
   }
 };
 
+
 /*
 * Función que retorna un json con la información de todos los pacientes almacenados en el sistema.
 */
@@ -123,6 +125,7 @@ exports.list = function(req, res){
     }
   });
 };
+
 
 /*
 * Función que almacena en la base de datos un nuevo paciente con su respectiva cédula, nombres, apellidos, fecha de Nacimiento
@@ -151,12 +154,19 @@ exports.createPaciente = function(req, res){
   });
 };
 
+
+/*
+*  Funcion para editar paciente y que recibe informacion de 3 tabs
+*/
 exports.editPaciente = function(req, res){
   // Validaciones
   // Es diferente a la del archivo validador
-  var obligatoriosPaciente = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
+  var obligatoriosPaciente = ["cedula", "nombres", "apellidos", 
+                              "fechaNacimiento", "sexo", "motivoConsulta", 
+                              "email"];
   for (var i=0; i<obligatoriosPaciente.length ; i++){
     var field = obligatoriosPaciente[i];
+    //console.log('{"' + field + '": "' + req.body.paciente[field] +'"}');
     if ( req.body.paciente[field] == null || req.body.paciente[field] == undefined || req.body.paciente[field] == "") {
       return res.status(500).json({ message: 'Faltan campos del paciente'});
     }
@@ -319,6 +329,7 @@ exports.editPaciente = function(req, res){
   }); // Paciente.findById
 };
 
+
 //Función que desactiva a determinado paciente del sistema, mediante la modificación del campo borrado a true.
 exports.desactivarPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
@@ -334,6 +345,7 @@ exports.desactivarPaciente = function(req, res){
         }
     });
 };
+
 
 //Función que activa a determinado paciente del sistema, mediante la modificación del campo borrado a false.
 exports.activarPaciente = function(req, res){
@@ -351,6 +363,7 @@ exports.activarPaciente = function(req, res){
     });
 };
 
+
 exports.ingresar = function(req, res){
   if(!req.session.paciente){
     res.render('login');
@@ -358,6 +371,7 @@ exports.ingresar = function(req, res){
     res.render('publico');
   }
 }
+
 
 exports.signIn = function(req, res){
   var pacienteIn = Paciente(req.body);
@@ -384,6 +398,7 @@ exports.signIn = function(req, res){
     }
   });
 };
+
 
 exports.singOut =function(req, res){
   delete req.session.paciente;
