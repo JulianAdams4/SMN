@@ -93,7 +93,7 @@ describe('/POST planNutricional', () => {
         .post('/api/planesNutricionales')
         .send(datosPlan)
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(201);
           done();
         });
   });
@@ -183,7 +183,7 @@ describe('/PUT planNutricional vigente', () => {
                 .put('/api/planesNutricionales/' + plan._id)
                 .send({ documento: "http://www.juntadeandalucia.es/empleo/recursos/material_didactico/especialidades/materialdidactico_econtabilidad_financiera/anexos/DOCUMENTOS%20MERCANTILES.pdf"})
                 .end(function(err, res){
-                  res.should.have.status(500);
+                  res.should.have.status(204);
                   done();
           });
         });
