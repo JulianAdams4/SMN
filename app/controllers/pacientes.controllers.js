@@ -6,6 +6,7 @@ var Paciente = mongoose.model('Paciente');
 var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
+var nodemailer = require('nodemailer');
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
@@ -133,6 +134,7 @@ exports.list = function(req, res){
 */
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
+  var passwordNoEncriptada = "";
   var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
@@ -140,7 +142,8 @@ exports.createPaciente = function(req, res){
   if (!validador.cedulaEsValida(paciente.cedula)){
     return res.status(500).json({ message: 'Cédula no válida'});
   }
-  paciente.password = crypto.encriptar(GenerarPassword());//Asigna un password a un paciente
+  passwordNoEncriptada = GenerarPassword();//Genera contraseña sin encriptar
+  paciente.password = crypto.encriptar(passwordNoEncriptada);//Asigna un password encriptado a un paciente
 
   paciente.save(function(err){
     if (err) {
@@ -149,6 +152,32 @@ exports.createPaciente = function(req, res){
         type: "danger"
       })
     } else {
+      //ENVIAR CONTRASEÑA A EMAIL DEL NUEVO PACIENTE
+      var transporter = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+              user: 'saludprimerosadaw@gmail.com',
+              pass: 'dawsaludprimero'
+          }
+      });
+
+      var mailOptions = {
+          from: 'Angie del Pezo <angie.dpezo@gmail.com>',
+          to: paciente.email,
+          subject: 'Notificación de registro como paciente en Sistema de Nutrición',
+          text: 'Contraseña: ' + passwordNoEncriptada,
+          html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.email+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
+      };
+
+      transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+              console.log(error);
+              res.redirect('/');
+          } else {
+              console.log('Mensaje enviado: ' + info.response);
+              //res.redirect('/');
+          }
+      })
       return res.status(201).json(paciente);
     }
   });
