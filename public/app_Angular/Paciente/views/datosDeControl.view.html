@@ -1,8 +1,5 @@
 <section ng-controller="datosControlController" ng-init="cargarDatosControl()">
-  <div class="card">
-    <div class="">
-      <h4>Resumen de su progreso</h4>
-    </div>
+      <h2>Resumen de su progreso</h2>
     <div class="">
       <div class="card" ng-repeat="datoControl in datosControl">
         <h6>Fecha: {{ datoControl.fechaDato | date:'dd/MM/yyyy' }}</h6>

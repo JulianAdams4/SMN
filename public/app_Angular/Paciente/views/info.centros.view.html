@@ -1,0 +1,62 @@
+<section ng-controller="CentroController" data-ng-init="find()"">
+  <h2 class="text-center">Centros</h2>
+  <div class="col-md-12 row" data-ng-repeat="centro in centros">
+      <div class="col-md-6">
+          <h3>Información Centro</h3>
+          <div class="masinfo">
+              <div class="row">
+                  <label>Dirección: </label>
+                  <p data-ng-bind="centro.direccion"></p>
+              </div>
+              <div class="row">
+                  <label>Teléfono: </label>
+                  <p data-ng-bind="centro.telefono"></p>
+              </div>
+              <div class="row">
+                  <label>Horarios de Atención: </label>
+                  <p data-ng-bind="centro.horariosAtencion"></p>
+              </div>
+              <div class="row">
+                  <label>Servicios: </label>
+                  <p data-ng-bind="centro.servicios"></p>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <h3>Nutricionista a Cargo:</h3>
+          <div class="masinfo">
+              <div class="row">
+                  <label>Nombre: </label>
+                  <p data-ng-bind="centro.nutricionista.nombres"></p>
+                  <p data-ng-bind="centro.nutricionista.apellidos"></p>
+              </div>
+              <div class="row">
+                  <label>Estudios: </label>
+                  <p data-ng-bind="centro.nutricionista.estudios"></p>
+              </div>
+              <div class="row">
+                  <label>Especializaciones: </label>
+                  <p data-ng-bind="centro.nutricionista.especializaciones"></p>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-12">
+          <h3>Visítanos en:</h3>
+          <div class="masinfo">
+              <div class="col-md-12 row" data-ng-repeat="red in centro.redesSociales">
+                  <!--
+                  <a ng-if="{[{red.nombre}]}=='Facebook'" href="{[{red.url}]}">
+                    <img src="/img/facebook.png" alt="Facebook"/>
+                  </a>
+                  <a ng-if="{[{red.nombre}]}=='Twitter'" href="{[{red.url}]}">
+                    <img src="/img/twitter.png" alt="Twitter"/>
+                  </a>
+                  <a ng-if="{[{red.nombre}]}=='Instagram'" href="{[{red.url}]}">
+                    <img src="/img/instagram.png" alt="Instagram"/>
+                  </a>
+                  -->
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

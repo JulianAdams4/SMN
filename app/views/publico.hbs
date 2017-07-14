@@ -95,54 +95,7 @@
                       <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fhunzafoodec%2F&tabs=timeline%2Cmessages&height=500&small_header=true&hide_cover=true&show_facepile=true&appId" style="border:none;overflow:hidden;width:100%;height:500px" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                     </div>
                     <div class="col-md-8 ">
-                        <h2 class="text-center">Centros</h2>
-                        <div class="row info" data-ng-controller="CentroController" data-ng-init="find()">
-                           <div class="col-md-12 row" data-ng-repeat="centro in centros">
-                                <div class="col-md-6">
-                                    <h3>Información Centro</h3>
-                                    <div class="masinfo">
-                                        <div class="row">
-                                            <label>Dirección: </label>
-                                            <p data-ng-bind="centro.direccion"></p>
-                                        </div>
-                                        <div class="row">
-                                            <label>Teléfono: </label>
-                                            <p data-ng-bind="centro.telefono"></p>
-                                        </div>
-                                        <div class="row">
-                                            <label>Horarios de Atención: </label>
-                                            <p data-ng-bind="centro.horariosAtencion"></p>
-                                        </div>
-                                        <div class="row">
-                                            <label>Servicios: </label>
-                                            <p data-ng-bind="centro.servicios"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h3>Nutricionista a Cargo:</h3>
-                                    <div class="masinfo">
-                                        <div class="row">
-                                            <label>Nombre: </label>
-                                            <p data-ng-bind="centro.nutricionista.nombres"></p>
-                                            <p data-ng-bind="centro.nutricionista.apellidos"></p>
-                                        </div>
-                                        <div class="row">
-                                            <label>Estudios: </label>
-                                            <p data-ng-bind="centro.nutricionista.estudios"></p>
-                                        </div>
-                                        <div class="row">
-                                            <label>Especializaciones: </label>
-                                            <p data-ng-bind="centro.nutricionista.especializaciones"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- DATOS DE CONTROL -->
-                    <div class="col-md-12">
-                      <section ng-include="'/app_Angular/Paciente/views/datosDeControl.view.html'"></section>
+                        <section ng-include="'/app_Angular/Paciente/views/info.centros.view.html'"></section>
                     </div>
                 </div>
             </div>
@@ -201,7 +154,6 @@
 <script src="/app_Angular/Administrador/config/centro.routes.js" charset="utf-8"></script>
 <!-- Controladores -->
 <script src="/app_Angular/Administrador/controllers/centro.controllers.js" charset="utf-8"></script>
-<script src="/app_Angular/Paciente/views/datosDeControl.controller.js" charset="utf-8"></script>
 
 </html>
 <style media="screen">

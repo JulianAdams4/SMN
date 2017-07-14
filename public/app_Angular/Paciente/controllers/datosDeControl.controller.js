@@ -1,10 +1,12 @@
-angular.module('administrador').controller('datosControlController',['$scope','$http',
+'use strict';
+
+angular.module('paciente').controller('datosControlController',['$scope','$http',
   function($scope, $http){
 
     $scope.cargarDatosControl = function(){
       $http({
         method: 'GET',
-        url: 'api/datosControlPaciente'
+        url: '/api/datosControlPaciente'
       }).then(function(response){
         $scope.datosControl = response.data;
       }, function(errorResponse){
