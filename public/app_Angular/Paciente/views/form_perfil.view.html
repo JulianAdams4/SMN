@@ -133,32 +133,4 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-6">
-            <div class="form-group"
-                  ng-class="{'has-error': pacienteForm.ejercicios.$invalid && !pacienteForm.ejercicios.$pristine }">
-                <label>Ejecicios que realiza</label>
-                <input type="text"
-                       class="form-control border-input"
-                       name="ejercicios"
-                       maxlength="50"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
-                       placeholder="Ejercicios"
-                       data-ng-model="paciente.ejercicios">
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6">
-            <div class="form-group"
-                  ng-class="{'has-error': pacienteForm.frecuenciaEjecicios.$invalid && !pacienteForm.frecuenciaEjecicios.$pristine }">
-                <label>Frecuencia ejercicios</label>
-                <input type="text"
-                       class="form-control border-input"
-                       name="frecuenciaEjecicios"
-                       maxlength="200"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
-                       placeholder="Frecuencia Ejercicios"
-                       data-ng-model="paciente.frecuenciaEjecicios">
-            </div>
-        </div>
-    </div>
   </div>

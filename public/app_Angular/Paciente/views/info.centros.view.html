@@ -42,19 +42,17 @@
       </div>
       <div class="col-md-12">
           <h3>Visítanos en:</h3>
-          <div class="masinfo">
-              <div class="col-md-12 row" data-ng-repeat="red in centro.redesSociales">
-                  <!--
-                  <a ng-if="{[{red.nombre}]}=='Facebook'" href="{[{red.url}]}">
+          <div class="masinfo row">
+              <div data-ng-repeat="red in centro.redesSociales">
+                  <a ng-if="red.nombre=='Facebook' " href="{{red.link}}">
                     <img src="/img/facebook.png" alt="Facebook"/>
                   </a>
-                  <a ng-if="{[{red.nombre}]}=='Twitter'" href="{[{red.url}]}">
+                  <a ng-if="red.nombre=='Twitter'" href="{{red.link}}">
                     <img src="/img/twitter.png" alt="Twitter"/>
                   </a>
-                  <a ng-if="{[{red.nombre}]}=='Instagram'" href="{[{red.url}]}">
+                  <a ng-if="red.nombre=='Instagram'" href="{{red.link}}">
                     <img src="/img/instagram.png" alt="Instagram"/>
                   </a>
-                  -->
               </div>
           </div>
       </div>
