@@ -46,19 +46,6 @@ angular.module('paciente').controller('UsuarioController',['$scope','$http','$ro
         }
       );
     }
-
-    $scope.putGrupoAlimentos = function(){
-      $scope.historiaAlimentaria.grupoAlimentos.push({descripcion: $scope.newGrupo.descripcion, frecuencia: $scope.newGrupo.frecuencia, alimentosAgradan: $scope.newGrupo.alimentosAgradan, alimentosDesagradan: $scope.newGrupo.alimentosDesagradan});
-      $scope.newGrupo = {};
-    }
-
-    $scope.removeGrupoAlimentos = function(grupo){
-      for (var i in $scope.historiaAlimentaria.grupoAlimentos) {
-            if ($scope.historiaAlimentaria.grupoAlimentos[i] === grupo) {
-              $scope.historiaAlimentaria.grupoAlimentos.splice(i, 1);
-            }
-          }
-    }
     // ==============================================
     $scope.goEditView = function(){
       $location.path('/perfil/edit');
