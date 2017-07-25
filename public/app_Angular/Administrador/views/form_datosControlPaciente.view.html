@@ -102,3 +102,20 @@
       <button type="button" class="btn btn-success btn-fill btn-wd pull-right" ng-click="showAgregar = false; putParametro();"><i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i>Agregar a la Tabla</button>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-2 col-sm-2"></div>
+  <div class="imageupload panel panel-default col-sm-4 col-md-4 portfolio-filters wow fadeInUp" style="text-align: center">
+  <div class="file-tab panel-body">
+        <img id="preview" ng-src="http://www.imagen.com.mx/assets/img/imagen_share.png" class="thumbnail" />
+        <label class="btn btn-default btn-file">
+            <span id="span">Cambiar</span>
+            <!-- The file is stored here. -->
+            <input id="image_file" name="fotoDePerfil" onchange="angular.element(this).scope().click()" type="file">
+        </label>
+        <label class="btn btn-default btn-file" ng-click="update(boletin._id)">
+            <span id="span">Actualizar</span>
+        </label>
+    </div>
+  </div>
+  
+</div>
