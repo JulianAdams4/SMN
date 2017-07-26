@@ -42,7 +42,6 @@
   margin:auto;
   height: 250px;
   width: 300px;
-  margin-bottom: 10px;
 }
 .panel-default{
   height: 316px;
@@ -53,6 +52,10 @@
 .imageupload .url-tab .thumbnail {
   margin: 10px 0;
 }
-.row{
-  margin: 0 auto;
+@media only screen and (max-width: 320px) {
+  .imageupload .file-tab .thumbnail {
+    margin:auto;
+    height: 250px;
+    width: 250px;
+  }
 }
