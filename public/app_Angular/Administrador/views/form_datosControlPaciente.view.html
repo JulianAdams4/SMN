@@ -107,10 +107,10 @@
   <div class="imageupload panel panel-default col-sm-4 col-md-4 portfolio-filters wow fadeInUp" style="text-align: center;padding:0px">
   <div class="file-tab panel-body">
         <img id="preview" class="thumbnail" ng-src="{{datosControl.foto}}"/>
-        <label class="btn btn-success btn-file" id="botonSubir">
+        <label class="btn btn-success btn-file form-group">
             <span id="span">Seleccionar foto</span>
             <!-- The file is stored here. -->
-            <input id="image_file" name="foto" onchange="angular.element(this).scope().selectFile()" type="file">
+            <input id="image_file" name="foto" onchange="angular.element(this).scope().selectFile()" type="file"  ng-model="datosControl.foto" valid-file>
         </label>
     </div>
   </div>

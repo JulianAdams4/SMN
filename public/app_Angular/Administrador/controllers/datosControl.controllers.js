@@ -93,28 +93,38 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
 
     $scope.edit = function () {
       var idToEdit = $scope.idDatoControlEdit;
-      var dataFormEdit = $scope.datosControl
-     $http({
-        method: 'PUT',
-        url: '/api/datosControl/' + idToEdit,
-        data: dataFormEdit
-      })
-     .then(
-        function(response){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Dato de Control editado <b>exitosamente</b>! </h5>',
-            'success',
-            'ti-check',
-            3000
-          );
-          $location.path('/pacientes/listDatosControl/' + $routeParams.idPaciente);
-        },
-        function(errorResponse){
+      var data = {};
+      if(cambioArchivo){//si se cambió la foto entonces se obtiene la nueva ruta
+        var ruta = document.getElementById("preview").src;
+        data = {
+         foto: ruta,
+         fechaDato:$scope.datosControl.fechaDato,
+         observaciones: $scope.datosControl.observaciones,
+         datos: $scope.datosControl.datos
+       };
+      }
+      else{//si no se cambió la foto se envian todos los campos excepto el campo foto
+        data = {
+         fechaDato:$scope.datosControl.fechaDato,
+         observaciones: $scope.datosControl.observaciones,
+         datos: $scope.datosControl.datos
+       };
+      }
+      if(esArchivoValido){
+        $http({
+          method: 'PUT',
+          url: '/api/datosControl/' + idToEdit,
+          data: data
+        }).then(function(response){
+          demo.mostrarNotificacion("success", "¡Dato de control editado exitosamente!");
+          $scope.backToList();
+        }, function(errorResponse){
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
-        }
-      );
+        });
+      }
+      else{
+        demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
+      }
     }
 
     // ==============================================
