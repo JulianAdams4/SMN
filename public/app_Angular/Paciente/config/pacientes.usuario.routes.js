@@ -13,6 +13,8 @@ angular.module('paciente').config(['$routeProvider',
       templateUrl: '/app_Angular/Paciente/views/ver_perfil.view.html'
     }).when('/perfil/edit', {
       templateUrl: '/app_Angular/Paciente/views/editar_perfil.view.html'
+    }).when('/fotoSeguimiento', {
+      templateUrl: '/app_Angular/Paciente/views/fotoSeguimiento.view.html'
     });
   }
 ]);
