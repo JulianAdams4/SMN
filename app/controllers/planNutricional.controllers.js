@@ -76,15 +76,31 @@ exports.createPlanNutricional = function(req, res){
 información del paciente con populate*/
 exports.planNutricionalByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
-  PlanNutricional.find({idPaciente:pacienteId,borrado:false}).populate('idPaciente')
-    .exec(function (err, planesNutricionales) {
+    PlanNutricional.find({idPaciente:pacienteId,borrado:false}).populate('idPaciente')
+      .exec(function (err, planesNutricionales) {
+          if (err) {
+            return res.status(400).send({
+              message: getErrorMessage(err)
+            });
+          }
+          return res.status(200).json(planesNutricionales);
+      });
+};
+
+/*Permite obtener el plan nutricional vigente por id del paciente extraído de la sesión y se incluye la
+información del paciente con populate*/
+exports.planNutricionalVigenteByPaciente = function(req, res){
+  if(req.session.paciente){
+    PlanNutricional.find({idPaciente:req.session.paciente._id, borrado:false, vigente: true}).populate('idPaciente')
+    .exec(function (err, planNutricionalVigente) {
         if (err) {
           return res.status(400).send({
             message: getErrorMessage(err)
           });
         }
-        return res.status(200).json(planesNutricionales);
-    });
+        return res.status(200).json(planNutricionalVigente);
+    });   
+  } 
 };
 
 

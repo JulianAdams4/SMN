@@ -1,0 +1,25 @@
+<section ng-controller="planNutricionalController" ng-init="cargarPlanNutricional()">
+      <h2>Plan Nutricional Actual</h2>
+                  <!--a ng-href="{{plan.documento}}" download="yourFilename">Download</a-->
+
+    <div class="">
+      <div class="" ng-repeat="plan in planNutricional">
+
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
+                <iframe ng-src="{{trustSrc(plan.documento)}}" id="preview" height="450" width="100%" frameborder="0" scrolling="auto" style="border: 1px solid black">    
+            </div>
+            <div class="col-md-2 col-sm-2">
+                <a ng-href="{{plan.documento}}" download="yourFilename">Download</a>
+            </div>
+          </div>
+          <!--div class="row">
+            <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                <h1>Hola</h1>
+                <a ng-href="{{plan.documento}}" download="yourFilename">Download</a>
+            </div>
+          </div-->
+      </div>
+    </div>
+    
+</section>

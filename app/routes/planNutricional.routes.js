@@ -9,6 +9,9 @@ module.exports = function(app) {
   app.route('/api/planesNutricionalesPaciente/:pacienteId')
     .get(planNutricional.planNutricionalByPaciente);
 
+  app.route('/api/planNutricionalPacienteVigente')
+    .get(planNutricional.planNutricionalVigenteByPaciente);
+
   app.route('/api/planesNutricionales')
     .post(planNutricional.createPlanNutricional);
 

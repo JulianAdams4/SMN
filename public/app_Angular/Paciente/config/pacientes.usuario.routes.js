@@ -5,6 +5,8 @@ angular.module('paciente').config(['$routeProvider',
     $routeProvider.
     when('/mis-datos', {
       templateUrl: '/app_Angular/Paciente/views/datosDeControl.view.html'
+    }).when('/mi-plan', {
+      templateUrl: '/app_Angular/Paciente/views/planNutricional.view.html'
     }).when('/centros', {
       templateUrl: '/app_Angular/Paciente/views/info.centros.view.html'
     }).when('/perfil', {
