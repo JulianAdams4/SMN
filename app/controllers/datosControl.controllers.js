@@ -94,9 +94,9 @@ exports.createDatosControl = function(req, res){
   //var datosControl = new DatosControl(req.body);
   var campos = ["foto"];
   if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos'});
+    return res.status(500).json({ message: 'Faltan campos.',type: 'danger'});
   }else if(req.body.datos.length==0){
-    return res.status(500).json({ message: 'Falta ingresar parámetros de control.'});
+    return res.status(500).json({ message: 'Falta ingresar parámetros de control.',type: 'danger'});
   }
   cloudinary.uploader.upload(req.body.foto, function(result){
     if (result.url) {
@@ -120,38 +120,56 @@ exports.createDatosControl = function(req, res){
   })
 };
 
+function updateFile(cloudinary,req,id,res){
+  cloudinary.uploader.upload(req.body.foto, function(result){
+    if (result.url) {
+      update(id,req,res,result.url);
+    }
+  })
+}
+//La función update edita los todos los campos excepto el campo foto ya que este no fue cambiado por el admin
+function update(id,req,res,foto){
+  DatosControl.findByIdAndUpdate(id, {
+    $set: {
+      foto: foto,
+      fechaDato : req.body.fechaDato,
+      observaciones: req.body.observaciones,
+      datos: req.body.datos
+    }
+  }, function(err, datosControl) {
+        if (err) {
+            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        } else {
+            res.status(204).json(datosControl);
+        }
+    });
+}
+
 exports.editDatosControl = function(req, res){
   var datosControlId = req.params.datosControlId;
-
+  var campos = ["foto"];
+  var cambioArchivo=false;
   DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
     // Error del servidor
     if (err) {
       res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
     }
-
     // Paciente no encontrado
     if (!datosControl) {
       res.status(404).send({ message: 'Datos de Control no encontrados.' });
     }
-    // Si existe el campo en el body, se reemplaza
-    // caso contrario se deja el valor que estaba
-    datosControl.fechaDato = req.body.fechaDato ? req.body.fechaDato : datosControl.fechaDato;
-    datosControl.observaciones = req.body.observaciones ? req.body.observaciones : datosControl.observaciones;
-    datosControl.datos = req.body.datos ? req.body.datos : datosControl.datos;
-
-    if(datosControl.datos.length==0){
-      return res.status(500).json({ message: 'Falta ingresar parámetros de control.'});
+    if(!validador.camposSonValidos(campos,req)){//si falta el campo foto
+      cambioArchivo=false;//entonces no se cambia la foto al editar
     }
-    // Guardamos los cambios
-    datosControl.save( function(err) {
-      // Error del servidor
-      if (err) {
-        return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
-      }
-      // Editado con exito
-      return res.status(200).json(datosControl);
-    });
-
+    else{//si está el campo foto
+      cambioArchivo=true;//entonces se cambio el archivo al editar
+    }
+    if(!cambioArchivo){//si no se cambió la foto al editar
+      update(datosControlId,req,res,datosControl.foto);
+    }
+    else{//si se cambió el archivo al editar
+      updateFile(cloudinary,req,datosControlId,res)
+    }
   });
 };
 
