@@ -36,7 +36,10 @@ var datosControlSchema = new Schema({
   borrado: {
     type: Boolean,
     default: false
+  },
+  foto:{
+    type:String,
+    required: '<i class="fa ti-alert"></i>La foto del plan es <b>obligatoria</b>'
   }
 });
 mongoose.model('DatosControl', datosControlSchema);
-

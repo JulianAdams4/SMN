@@ -2,6 +2,20 @@
 var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var DatosControl = mongoose.model('DatosControl');
+var cloudinary = require('cloudinary');
+
+var cloudinaryCredentials = {
+  cloud_name: 'dsqpicprf',
+  api_key:    '259691129854149',
+  api_secret: 'jNwDkTwnkXaCzkbdwy6WrqOS8ik'
+};
+
+cloudinary.config({
+  cloud_name: cloudinaryCredentials.cloud_name,
+  api_key:    cloudinaryCredentials.api_key,
+  api_secret: cloudinaryCredentials.api_secret
+});
+
 var getErrorMessage = function(err){
   if(err.errors){
     for(var errName in err.error){
@@ -77,23 +91,33 @@ exports.list = function(req, res){
 
 //Función que permite almacenar en la base de datos un nuevo dato de control a un determinado paciente.
 exports.createDatosControl = function(req, res){
-  var datosControl = new DatosControl(req.body);
-  var campos = ["idPaciente"];
+  //var datosControl = new DatosControl(req.body);
+  var campos = ["foto"];
   if(!validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
-  }else if(datosControl.datos.length==0){
+  }else if(req.body.datos.length==0){
     return res.status(500).json({ message: 'Falta ingresar parámetros de control.'});
   }
-  datosControl.save( function(err){
-    if (err) {
-      return res.status(500).send({
-        message: "Error del servidor"
-      })
+  cloudinary.uploader.upload(req.body.foto, function(result){
+    if (result.url) {
+      DatosControl.create({
+        idPaciente:req.body.idPaciente,
+        foto: result.url,
+        fechaDato : req.body.fechaDato,
+        observaciones: req.body.observaciones,
+        datos: req.body.datos
+      },function(err, datosControl) {
+        /* Error al crear */
+        if(err){
+          return res.status(500).send({
+            message: getErrorMessage(err),
+            type: "danger"
+          });
+        }
+        return res.status(201).json(datosControl);
+      });
     }
-    else {
-      return res.status(201).json(datosControl);
-    }
-  });
+  })
 };
 
 exports.editDatosControl = function(req, res){

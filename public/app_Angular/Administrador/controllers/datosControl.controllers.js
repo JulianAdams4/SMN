@@ -7,6 +7,8 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     $scope.datosControl = {};
     $scope.datosControl.datos = [];
     $scope.newParametro = {};
+    var cambioArchivo=false;
+    var esArchivoValido=true;
 
     $scope.find = function(){
       $scope.idPaciente = $routeParams.idPaciente;
@@ -41,30 +43,31 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     }
 
     $scope.create = function() {
+      var ruta = document.getElementById("preview").src;
       var data  = {
         idPaciente: $routeParams.idPaciente,
         fechaDato: $scope.datosControl.fechaDato,
         observaciones: $scope.datosControl.observaciones,
-        datos: $scope.datosControl.datos
+        datos: $scope.datosControl.datos,
+        foto: ruta
       }
-      $http({
-        method: 'POST',
-        url: 'api/datosControlPaciente/' + $routeParams.idPaciente,
-        data: data
-      }).then(function(response){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> ¡Dato de control creado <b>exitosamente</b>! </h5>',
-            'success',
-            'ti-check',
-            3000
-          );
-        $location.path('/pacientes/listDatosControl/' + $routeParams.idPaciente);
-      }, function(errorResponse){
-        //console.log(errorResponse.data.message);
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
-      });
+      console.log(data);
+      if(esArchivoValido){
+        $http({
+          method: 'POST',
+          url: 'api/datosControlPaciente/' + $routeParams.idPaciente,
+          data: data
+        }).then(function(response){
+          demo.mostrarNotificacion("success", "Datos de control creado exitosamente!");
+          $scope.backToList();
+        }, function(errorResponse){
+          //console.log(errorResponse.data.message);
+            demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+        });
+      }
+      else{
+        demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
+      }
     };
 
     $scope.initEdit = function () {
@@ -125,7 +128,6 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     }
 
     $scope.eliminar = function(datoControl){
-
       BootstrapDialog.confirm({
         title: 'ADVERTENCIA',
         message: 'Desea eliminar este dato de control?',
@@ -161,8 +163,37 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           }
         }
       });
-
-
+    }
+    // ==============================================
+    $scope.selectFile = function (){
+      cambioArchivo = true;//si se da click en seleccionar archivo es por que se cambió el archivo
+      var formatosPermitidos= ['jpg', 'jpeg', 'png', 'gif',"JPG"];
+      var archivo = document.getElementById("image_file").files[0];
+      if(archivo!=undefined){
+        var nombreArchivo = archivo.name;
+        //se extrae la extensión del archivo
+        var extArchivo = nombreArchivo.split('.').pop();
+        var vistaArchivo = document.getElementById('preview');
+        // preparación HTML5 FileReader
+        var oReader = new FileReader();
+        oReader.onload = function(e) {
+            if ($.inArray(extArchivo,formatosPermitidos) > -1) {
+              esArchivoValido=true;
+              // e.target.result contiene el url del archivo
+              vistaArchivo.src = e.target.result;
+            }
+            else {
+              esArchivoValido=false;
+              demo.mostrarNotificacion("danger", "Formato de imagen inválido");
+            }
+        };
+        // lee el archivo seleccionado como url
+        oReader.readAsDataURL(archivo);
+      }
+      else{
+        esArchivoValido=false;
+        demo.mostrarNotificacion("danger", "No se escojio ninguna foto");
+      }
     }
 
   }]);
