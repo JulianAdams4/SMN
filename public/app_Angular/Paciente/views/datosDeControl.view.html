@@ -1,26 +1,48 @@
 <section ng-controller="datosControlController" ng-init="cargarDatosControl()">
-      <h2>Resumen de su progreso</h2>
-    <div class="">
-      <div class="card" ng-repeat="datoControl in datosControl">
-        <h6>Fecha: {{ datoControl.fechaDato | date:'dd/MM/yyyy' }}</h6>
-        <div ng-repeat="dato in datoControl.datos">
-          <b>{{dato.nombreDato}}:</b> {{dato.valorDato}}{{dato.unidadDato}}
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3"></div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-header" data-background-color="red">
+              <i class="fa fa-lg fa-heartbeat"></i>
+            </div>
+            <div class="card-content">
+              <h2 class="title" style="font-weight: bold;">Resumen de su progreso</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-repeat="datoControl in datosControl">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header" data-background-color="green">
+              <h4 class="title">Fecha</h4>
+              <p class="category">{{ datoControl.fechaDato | date:'dd/MM/yyyy' }}</p>
+            </div>
+            <div class="card-content table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Dato</th>
+                  <th>Medida</th>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="dato in datoControl.datos">
+                    <td>{{dato.nombreDato}}</td>
+                    <td>{{dato.valorDato}}{{dato.unidadDato}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="imageupload panel panel-default col-sm-4 col-md-4 portfolio-filters wow fadeInUp" style="padding:0px;height: 282px">
+          <div class="file-tab panel-body">
+            <img id="preview" class="thumbnail" ng-src="{{datoControl.foto}}"/>
+          </div>
         </div>
       </div>
     </div>
-    <!--<div class="content table-responsive table-full-width">
-        <table datatable='ng' class="table table-striped">
-            <thead>
-                <th>#</th>
-              <th>Fecha registro datos de control</th>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="dato in datosControl">
-                  <td>{{$index + 1}}</td>
-                  <td data-ng-bind="dato.fechaDato | date:'dd/MM/yyyy'"></td>
-                </tr>
-            </tbody>
-        </table>
-      </div>-->
   </div>
 </section>
