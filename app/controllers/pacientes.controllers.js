@@ -395,7 +395,7 @@ exports.activarPaciente = function(req, res){
 
 exports.ingresar = function(req, res){
   if(!req.session.paciente){
-    res.render('login');
+    res.render('publico');
   } else {
     res.render('paciente');
   }
