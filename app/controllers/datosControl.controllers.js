@@ -149,6 +149,9 @@ exports.editDatosControl = function(req, res){
   var datosControlId = req.params.datosControlId;
   var campos = ["foto"];
   var cambioArchivo=false;
+  if(req.body.datos.length==0){
+    return res.status(500).json({ message: 'Falta ingresar parámetros de control.',type: 'danger'});
+  }
   DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
     // Error del servidor
     if (err) {

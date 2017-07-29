@@ -26,6 +26,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     }
     // ==============================================
     $scope.create = function() {
+      $("div#divLoading").addClass('show');
       var ruta = document.getElementById("preview").src;
       var data = {
         documento: ruta,
@@ -38,9 +39,11 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           url: '/api/planesNutricionales',
           data: data
         }).then(function(response){
+          $("div#divLoading").removeClass('show');
           demo.mostrarNotificacion("success", "¡Plan nutricional creado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
+          $("div#divLoading").removeClass('show');
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }
@@ -98,6 +101,8 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
     }
     // ==============================================
     $scope.edit = function () {
+      console.log("kikiki");
+      $("div#divLoading").addClass('show');
       var data = {};
       if(cambioArchivo){//si se cambió el archivo entonces se obtiene la nueva ruta
         var ruta = document.getElementById("preview").src;
@@ -117,9 +122,11 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           url: '/api/planesNutricionales/'+$routeParams.planNutricionalId,
           data: data
         }).then(function(response){
+          $("div#divLoading").removeClass('show');
           demo.mostrarNotificacion("success", "¡Plan nutricional editado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
+          $("div#divLoading").removeClass('show');
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }

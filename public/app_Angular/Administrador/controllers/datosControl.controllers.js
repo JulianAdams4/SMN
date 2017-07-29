@@ -28,6 +28,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       $scope.datosControl.fechaDato = new Date();
     }
 
+    // ==============================================
 
     $scope.putParametro = function(){
       $scope.datosControl.datos.push({nombreDato: $scope.newParametro.nombreDato, valorDato: $scope.newParametro.valorDato, unidadDato: $scope.newParametro.unidadDato});
@@ -42,6 +43,8 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           }
     }
 
+    // ==============================================
+
     $scope.create = function() {
       var ruta = document.getElementById("preview").src;
       var data  = {
@@ -53,15 +56,17 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       }
       console.log(data);
       if(esArchivoValido){
+        $("div#divLoading").addClass('show');
         $http({
           method: 'POST',
           url: 'api/datosControlPaciente/' + $routeParams.idPaciente,
           data: data
         }).then(function(response){
+          $('div#divLoading').removeClass('show');
           demo.mostrarNotificacion("success", "Datos de control creado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
-          //console.log(errorResponse.data.message);
+            $('div#divLoading').removeClass('show');
             demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }
@@ -69,6 +74,8 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
       }
     };
+
+    // ==============================================
 
     $scope.initEdit = function () {
       $scope.idDatoControlEdit = $routeParams.datosControlId;
@@ -90,10 +97,13 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       );
     }
 
+    // ==============================================
+
     $scope.edit = function () {
       var idToEdit = $scope.idDatoControlEdit;
       var data = {};
       if(cambioArchivo){//si se cambió la foto entonces se obtiene la nueva ruta
+        $("div#divLoading").addClass('show');
         var ruta = document.getElementById("preview").src;
         data = {
          foto: ruta,
@@ -115,9 +125,11 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           url: '/api/datosControl/' + idToEdit,
           data: data
         }).then(function(response){
+          $('div#divLoading').removeClass('show');
           demo.mostrarNotificacion("success", "¡Dato de control editado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
+          $('div#divLoading').removeClass('show');
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }
@@ -131,10 +143,14 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     $scope.backToList = function() {
       $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente);
     };
+
     // ==============================================
+
     $scope.goEditView = function(){
       $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente+'/edit/'+$routeParams.datosControlId);
     }
+
+    // ==============================================
 
     $scope.eliminar = function(datoControl){
       BootstrapDialog.confirm({
@@ -173,7 +189,9 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
         }
       });
     }
+
     // ==============================================
+
     $scope.selectFile = function (){
       cambioArchivo = true;//si se da click en seleccionar archivo es por que se cambió el archivo
       var formatosPermitidos= ['jpg', 'jpeg', 'png', 'gif',"JPG"];
