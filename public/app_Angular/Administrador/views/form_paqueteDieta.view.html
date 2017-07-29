@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+      <div  class="form-group"
+            ng-class="{'has-error': paqueteForm.nombre.$invalid && !paqueteForm.nombre.$pristine }">
+          <label>Nombre:</label>
+          <input  type="text"
+                  class="form-control border-input"
+                  placeholder="Nombre"
+                  minlength="2"
+                  maxlength="50"
+                  name='nombre'
+                  onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                  data-ng-model="paquetesDieta.nombre"
+                  required>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <div  class="form-group"
+            ng-class="{'has-error': paqueteForm.precio.$invalid && !paqueteForm.precio.$pristine }">
+          <label>Precio:</label>
+          <input  type="text"
+                  class="form-control border-input"
+                  placeholder="Nombre"
+                  minlength="2"
+                  maxlength="50"
+                  name='precio'
+                  onkeypress="return (event.charCode>47 && event.charCode<58)|| event.charCode58=44"
+                  data-ng-model="paquetesDieta.precio"
+                  required>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="form-group"
+         ng-class="{'has-error': paqueteForm.descripcion.$invalid && !paqueteForm.descripcion.$pristine }">
+      <label>Descripción:</label>
+      <input type="text"
+             class="form-control border-input"
+             name="descripcion"
+             minlength="2"
+             maxlength="50"
+             onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+             data-ng-model="paquetesDieta.descripcion"
+             placeholder="Descripción"
+             required>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 col-sm-4"></div>
+  <div class="imageupload panel panel-default col-sm-4 col-md-4 portfolio-filters wow fadeInUp" style="text-align: center;padding:0px">
+  <div class="file-tab panel-body">
+        <img id="preview" class="thumbnail" ng-src="{{paquetesDieta.foto}}"/>
+        <label class="btn btn-success btn-file form-group">
+            <span id="span">Seleccionar foto</span>
+            <!-- The file is stored here. -->
+            <input id="image_file" name="foto" onchange="angular.element(this).scope().selectFile()" type="file"  ng-model="paquetesDieta.foto" valid-file>
+        </label>
+    </div>
+  </div>
+</div>

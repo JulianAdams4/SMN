@@ -176,9 +176,7 @@ exports.editDatosControl = function(req, res){
 //Función que remueve de la base de datos a un dato de control mediante su id.
 exports.borrarDatoControlById = function (req, res) {
   var id = req.params.datosControlId;
-  DatosControl.update(
-    { _id: id },
-    { $set:{ borrado: true } },
+  DatosControl.findByIdAndRemove(id,
     function (err, datos) {
       if (err) {
         res.status(500).send({

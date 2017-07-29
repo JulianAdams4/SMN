@@ -1,64 +1,39 @@
 'use strict';
 
-angular.module('administrador').controller('DatosController',['$scope','$http','$routeParams','$location','$window',
+angular.module('administrador').controller('PaquetesController',['$scope','$http','$routeParams','$location','$window',
   function($scope, $http, $routeParams, $location, $window) {
-    $scope.idPaciente = '';
-    $scope.idDatoControlEdit = '';
-    $scope.datosControl = {};
-    $scope.datosControl.datos = [];
-    $scope.newParametro = {};
+    $scope.idPaqueteDietaEdit = '';
+    $scope.paquetesDieta = {};
     var cambioArchivo=false;
     var esArchivoValido=true;
 
     $scope.find = function(){
-      $scope.idPaciente = $routeParams.idPaciente;
       $http({
         method: 'GET',
-        url: 'api/datosControlPaciente/' + $scope.idPaciente
+        url: 'api/paquetesDieta/'
       }).then(function(response){
-        $scope.datosControl = response.data;
+        $scope.paquetesDieta = response.data;
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       })
     }
 
-    // ==============================================
-
-    $scope.initCreate = function () {
-      $scope.datosControl.fechaDato = new Date();
-    }
-
-
-    $scope.putParametro = function(){
-      $scope.datosControl.datos.push({nombreDato: $scope.newParametro.nombreDato, valorDato: $scope.newParametro.valorDato, unidadDato: $scope.newParametro.unidadDato});
-      $scope.newParametro = {};
-    }
-
-    $scope.removeParametro = function(parametro){
-      for (var i in $scope.datosControl.datos) {
-            if ($scope.datosControl.datos[i] === parametro) {
-              $scope.datosControl.datos.splice(i, 1);
-            }
-          }
-    }
 
     $scope.create = function() {
       var ruta = document.getElementById("preview").src;
       var data  = {
-        idPaciente: $routeParams.idPaciente,
-        fechaDato: $scope.datosControl.fechaDato,
-        observaciones: $scope.datosControl.observaciones,
-        datos: $scope.datosControl.datos,
+        nombre: $scope.paquetesDieta.nombre,
+        descripcion: $scope.paquetesDieta.descripcion,
+        precio: $scope.paquetesDieta.precio,
         foto: ruta
       }
-      console.log(data);
       if(esArchivoValido){
         $http({
           method: 'POST',
-          url: 'api/datosControlPaciente/' + $routeParams.idPaciente,
+          url: 'api/paquetesDieta/',
           data: data
         }).then(function(response){
-          demo.mostrarNotificacion("success", "Datos de control creado exitosamente!");
+          demo.mostrarNotificacion("success", "Paquete de Dieta creado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
           //console.log(errorResponse.data.message);
@@ -71,17 +46,17 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     };
 
     $scope.initEdit = function () {
-      $scope.idDatoControlEdit = $routeParams.datosControlId;
+      $scope.idPaqueteDietaEdit = $routeParams.paqueteDietaId;
       $http({
         method: 'GET',
-        url: '/api/datosControl/' + $scope.idDatoControlEdit
+        url: '/api/paquetesDieta/' + $scope.idPaqueteDietaEdit
       })
       .then(
         function(response){
-          $scope.datosControl=response.data;
-          $scope.datosControl.fechaDato = new Date(response.data.fechaDato);
-          $scope.datosControl.observaciones = response.data.observaciones;
-          $scope.datosControl.datos = response.data.datos;
+          $scope.paquetesDieta = response.data;
+          $scope.paquetesDieta.nombre = response.data.nombre;
+          $scope.paquetesDieta.descripcion= response.data.descripcion;
+          $scope.paquetesDieta.precio=response.data.precio;
         },
         function(errorResponse){
           console.log(errorResponse.data.message);
@@ -91,31 +66,31 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     }
 
     $scope.edit = function () {
-      var idToEdit = $scope.idDatoControlEdit;
+      var idToEdit = $scope.idPaqueteDietaEdit;
       var data = {};
       if(cambioArchivo){//si se cambió la foto entonces se obtiene la nueva ruta
         var ruta = document.getElementById("preview").src;
         data = {
          foto: ruta,
-         fechaDato:$scope.datosControl.fechaDato,
-         observaciones: $scope.datosControl.observaciones,
-         datos: $scope.datosControl.datos
+         nombre:$scope.paquetesDieta.nombre,
+         descripcion: $scope.paquetesDieta.descripcion,
+         precio: $scope.paquetesDieta.precio
        };
       }
       else{//si no se cambió la foto se envian todos los campos excepto el campo foto
         data = {
-         fechaDato:$scope.datosControl.fechaDato,
-         observaciones: $scope.datosControl.observaciones,
-         datos: $scope.datosControl.datos
+         nombre:$scope.paquetesDieta.nombre,
+         descripcion: $scope.paquetesDieta.descripcion,
+         precio: $scope.paquetesDieta.precio
        };
       }
       if(esArchivoValido){
         $http({
           method: 'PUT',
-          url: '/api/datosControl/' + idToEdit,
+          url: '/api/paquetesDieta/' + idToEdit,
           data: data
         }).then(function(response){
-          demo.mostrarNotificacion("success", "¡Dato de control editado exitosamente!");
+          demo.mostrarNotificacion("success", "¡Paquete de Dieta editado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
@@ -129,17 +104,21 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
     // ==============================================
 
     $scope.backToList = function() {
-      $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente);
+      $location.path('/paquetes-dieta');
     };
     // ==============================================
     $scope.goEditView = function(){
-      $location.path('/pacientes/listDatosControl/'+$routeParams.idPaciente+'/edit/'+$routeParams.datosControlId);
+      $location.path('/paquetes-dieta/edit/'+$routeParams.paqueteDietaId);
     }
 
-    $scope.eliminar = function(datoControl){
+    $scope.goCreateView = function(){
+      $location.path('/paquetes-dieta/create');
+    }
+
+    $scope.eliminar = function(paquetedieta){
       BootstrapDialog.confirm({
         title: 'ADVERTENCIA',
-        message: 'Desea eliminar este dato de control?',
+        message: 'Desea eliminar este paquete de dieta?',
         type: BootstrapDialog.TYPE_WARNING,
         closable: true,
         draggable: true,
@@ -150,19 +129,19 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           if(result) {
             $http({
               method: 'DELETE',
-              url: '/api/datosControl/'+datoControl._id
+              url: '/api/paquetesDieta/'+paquetedieta._id
             }).then(function(response){
               demo.showCustomNotification(
                 'top',
                 'right',
-                '<h5> Dato de Control eliminado <b>exitosamente</b>! </h5>',
+                '<h5> Paquete de Dieta eliminado <b>exitosamente</b>! </h5>',
                 'success',
                 'ti-check',
                 3000
               );
-              for (var i in $scope.datosControl) {
-                    if ($scope.datosControl[i] === datoControl) {
-                      $scope.datosControl.splice(i, 1);
+              for (var i in $scope.paquetesDieta) {
+                    if ($scope.paquetesDieta[i] === paquetedieta) {
+                      $scope.paquetesDieta.splice(i, 1);
                     }
                   };
             },
@@ -201,7 +180,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
       }
       else{
         esArchivoValido=false;
-        demo.mostrarNotificacion("danger", "No se escojio ninguna foto");
+        demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
       }
     }
 

@@ -16,5 +16,6 @@ module.exports = function(){
   require('../app/models/historiaAlimentaria.model');
   require('../app/models/planNutricional.model');
   require('../app/models/centro.model');
+  require('../app/models/paquete.dieta.model');
   return db;
 }

@@ -1,0 +1,57 @@
+<div class="row" data-ng-controller="PaquetesController" data-ng-init="find()">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+              <div class="row">
+                <div class="col-md-8">
+                <h4 class="title">Paquetes de Dieta</h4>
+                <p class="category">Lista de paquetes de dieta</p>
+              </div>
+                <div class="col-md-4">
+                <div class="text-right">
+                  <a type="button" class="btn btn-success" data-ng-href="#!/paquetes-dieta/create" style="margin-right: 10px;">
+                    <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
+                    Registrar paquete de dieta
+                  </a>
+              </div>
+              </div>
+            </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="card col-md-3" ng-repeat="paquetedieta in paquetesDieta">
+                    <div class="card-content paquete">
+                          <div class="imageupload panel col-md-12 portfolio-filters wow fadeInUp " style="padding:0px;">
+                              <div class="file-tab panel-body">
+                                <img id="preview" class="thumbnail" ng-src="{{paquetedieta.foto}}"/>
+                              </div>
+                            </div>
+                          <div class="col-md-12">
+                            <h4 data-ng-bind="paquetedieta.nombre"></h4>
+                          </div>
+                          <div class="col-md-12">
+                            <p data-ng-bind="paquetedieta.descripcion"></p>
+                          </div>
+                          <div class="col-md-12">
+                            <p><span>$</span><span data-ng-bind="paquetedieta.precio"></span></p>
+                          </div>
+                          <div class="col-md-12" style="padding-bottom: 15px;">
+                            <a title="Ver informacion" data-ng-href="#!/paquetes-dieta/ver/{{paquetedieta._id}}">
+                                    <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Editar paquete" data-ng-href="#!/paquetes-dieta/edit/{{paquetedieta._id}}">
+                                    <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true" style="color:green"></i>
+                                </a>
+                                &nbsp;
+                                <a title="Eliminar paquete" ng-click="eliminar(paquetedieta)">
+                                    <i class="fa fa-lg fa-trash-o" aria-hidden="true" style="color:red"></i>
+                                </a>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </div>
+</div>

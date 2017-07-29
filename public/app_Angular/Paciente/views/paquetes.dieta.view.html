@@ -1,37 +1,24 @@
-<section>
+<section ng-controller="PaquetesController" data-ng-init="find()">
   <div class="content">
    <h2 class="text-center">Paquetes de Dieta</h2>
-    <div class="container-fluid">
-
+    <div class="container-fluid flow">
       <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-content paquete">
-                  <div class="col-md-12">
-                    <img src="https://fb-s-b-a.akamaihd.net/h-ak-fbx/v/t45.5328-9/c113.0.493.493/14291392_1302242999820660_4788147051886018560_n.jpg?oh=1ef00c127667825beafba56c63d5268e&oe=59F15C7C&__gda__=1509199447_9c13c96f4ce54ec3a9fb1d9306d46933" style="width:100%;height:auto;">
+        <div class="card col-md-6" ng-repeat="paquetedieta in paquetesDieta">
+          <div class="card-content paquete">
+                <div class="imageupload panel col-md-12 portfolio-filters wow fadeInUp " style="padding:0px;">
+                    <div class="file-tab panel-body">
+                      <img id="preview" class="thumbnail" ng-src="{{paquetedieta.foto}}"/>
+                    </div>
                   </div>
-                  <div class="col-md-12">
-                    <h4>Almuerzos Saludables</h4>
-                  </div>
-                  <div class="col-md-12">
-                    <p>$5,50</p>
-                  </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-content paquete">
-                  <div class="col-md-12">
-                    <img src="https://fb-s-c-a.akamaihd.net/h-ak-fbx/v/t45.5328-0/c78.0.540.540/p180x540/14291371_1161401047265475_232386326605856768_n.jpg?oh=1638a3503bdf5c33bb0a13838e425e6c&oe=59F4F9CF&__gda__=1513556686_95675b9dc359d5595a585b403bceb589" style="width:100%;height:auto;">
-                  </div>
-                  <div class="col-md-12">
-                    <h4>Postres Light</h4>
-                  </div>
-                  <div class="col-md-12">
-                    <p>$4,00</p>
-                  </div>
-            </div>
+                <div class="col-md-12">
+                  <h4 data-ng-bind="paquetedieta.nombre"></h4>
+                </div>
+                <div class="col-md-12">
+                  <p data-ng-bind="paquetedieta.descripcion"></p>
+                </div>
+                <div class="col-md-12">
+                  <p><span>$</span><span data-ng-bind="paquetedieta.precio"></span></p>
+                </div>
           </div>
         </div>
       </div>

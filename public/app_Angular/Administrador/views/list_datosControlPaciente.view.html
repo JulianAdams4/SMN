@@ -1,23 +1,23 @@
 <div class="row" data-ng-controller="DatosController" data-ng-init="find()">
-    <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
-      <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listDatosControl/{{idPaciente}}/create">
-        <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
-        Registrar dato de control
+    <ul class="nav navbar-left panel_toolbox text-right" style="margin-left: 1%;margin-bottom: 1%;">
+      <a type="button" class="btn btn-info btn-fill btn-wd" style="margin-right: 1%" data-ng-href="#!/pacientes">
+            <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i> &nbsp;
+            Regresar
       </a>
     </ul>
     <div class="col-md-12">
         <div class="card">
             <div class="header">
               <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-8">
                 <h4 class="title">Datos de Control</h4>
                 <p class="category">Lista de datos de control del paciente {{datosControl[0].idPaciente.nombres}} {{datosControl[0].idPaciente.apellidos}}</p>
               </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                 <div class="text-right">
-                  <a type="button" class="btn btn-info btn-fill btn-wd" style="margin-right: 1%" data-ng-href="#!/pacientes">
-                    <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i> &nbsp;
-                    Regresar
+                  <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/listDatosControl/{{idPaciente}}/create">
+                    <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
+                    Registrar dato de control
                   </a>
               </div>
               </div>

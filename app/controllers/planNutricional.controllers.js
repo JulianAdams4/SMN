@@ -237,7 +237,6 @@ exports.fijarPlanVigente = function (req, res){
 //Función que remueve de la base de datos a un plan nutricional mediante su id.
 exports.deletePlanNutricional = function(req, res){
    var planNutricionalId = req.params.planNutricionalId;
-   console.log(planNutricionalId);
    PlanNutricional.findByIdAndRemove(planNutricionalId,
      function(err, planNutricional) {
          if (err) {

@@ -1,17 +1,21 @@
 <div class="row" data-ng-controller="PacientesController" data-ng-init="find()">
-  <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
-    <button type="button" class="btn btn-success">
-      <a data-ng-href="#!/pacientes/create">
-        <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
-        Registrar paciente
-      </a>
-    </button>
-  </ul>
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <h4 class="title">Pacientes</h4>
-                <p class="category">Lista de pacientes registrados</p>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="title">Pacientes</h4>
+                        <p class="category">Lista de pacientes registrados</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-right">
+                          <a type="button" class="btn btn-success" data-ng-href="#!/pacientes/create" style="margin-right: 10px;">
+                            <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
+                            Registrar paciente
+                          </a>
+                      </div>
+                    </div>
+                </div>
             </div>
             <div class="content table-responsive table-full-width">
                 <table datatable="ng" class="table table-striped">
