@@ -1,4 +1,4 @@
-var mainAplicationModule = angular.module('administrador', ['ngRoute', 'datatables']);
+var mainAplicationModule = angular.module('administrador', ['ngRoute', 'datatables','ui.calendar','ui.bootstrap','ui.bootstrap.datetimepicker']);
 
 mainAplicationModule.config(['$locationProvider',
   function($locationProvider){

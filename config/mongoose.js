@@ -11,6 +11,7 @@ module.exports = function(){
     }
   });
   require('../app/models/pacientes.model');
+  require('../app/models/citas.model');
   require('../app/models/datosControl.model');
   require('../app/models/antecedentes.model');
   require('../app/models/historiaAlimentaria.model');
