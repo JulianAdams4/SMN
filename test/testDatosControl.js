@@ -4,7 +4,7 @@ var server = require('../server');
 var mongoose = require("mongoose");
 var Paciente = mongoose.model('Paciente');
 var DatosControl = mongoose.model('DatosControl');
-
+var paciente={}
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -15,11 +15,12 @@ chai.use(chaiHttp);
 describe('datosControl', () => {
     beforeEach((done) => {
         DatosControl.remove({}, (err) => {
-          done();
+          Paciente.remove({}, (err) => {
+            done();
+           });
+
           });
-        Paciente.remove({}, (err) => {
-          done();
-         });
+
     });
 });
 
@@ -59,7 +60,8 @@ describe('/POST datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             }
             chai.request('http://localhost:3000')
                 .post('/api/datosControlPaciente/'+patId)
@@ -120,7 +122,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(500);
           done();
         });
   });
@@ -134,7 +136,8 @@ describe('/POST datosControl', () => {
             valorDato: 150.00,
             unidadDato: 'kg'
           }
-        ]
+        ],
+        foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
     }
     chai.request('http://localhost:3000')
         .post('/api/datosControlPaciente/'+patId)
@@ -243,10 +246,59 @@ describe('/GET datosControl', () => {
       });
   });
 
+
+  var idPat = "";
+  var idDato = "";
+
 describe('/PUT datosControl', () => {
+
+    beforeEach( function(done) {
+      var paciente = new Paciente({
+        cedula: '0912345678', nombres: 'Julian', apellidos: 'Adams',
+  		  email: 'jebenitez@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
+  		  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
+  		  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
+  		  frecuencia: '3 veces por semana'
+      });
+          paciente.save((err, patient) => {
+              idPat = '' + patient._id;
+              var datosControl = new DatosControl({
+                  idPaciente: idPat,
+                  fechaDato: '2017-04-13',
+                  observaciones:'prueba',
+                  datos:[
+                    {
+                      nombreDato:'Peso',
+                      valorDato: 150.00,
+                      unidadDato: 'kg'
+                    },
+                    {
+                      nombreDato:'Altura',
+                      valorDato: 165.00,
+                      unidadDato: 'cm'
+                     }
+                  ],
+                  foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
+              });
+              datosControl.save( (err, dato) => {
+                idDato = dato._id;
+                done();
+              });
+          });
+  	});
+
+    // Clean collection
+  	afterEach(function(done){
+  		Paciente.remove({},function(err){
+  			DatosControl.remove({}, function (err) {
+  			  done();
+  			});
+  		});
+  	});
+
       it('Actualiza los datos de control con un determinado ID', function(done){
         var datosControl = new DatosControl({
-                idPaciente: patId,
+                idPaciente: idPat,
                 fechaDato: '2017-04-13',
                 observaciones:'pruebaEditar',
                 datos:[
@@ -260,11 +312,12 @@ describe('/PUT datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
-                .put('/api/datosControl/' + dato._id)
+                .put('/api/datosControl/' + idDato)
                 .send({ fechaDato: '2017-06-13',observaciones: 'cambio' })
                 .end(function(err, res){
                   res.should.have.status(200);
@@ -399,7 +452,8 @@ describe('/DELETE datosControl', () => {
                     valorDato: 150.00,
                     unidadDato: 'kg'
                   }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
