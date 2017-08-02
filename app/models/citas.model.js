@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var citaSchema = new Schema({
   creado: {
     type: Date,
-    default: new Date
+    default: Date.now
   },
   title: {
     type: String
@@ -15,12 +15,7 @@ var citaSchema = new Schema({
   },
   start: {
     type: Date,
-    validate: [
-      function(start){
-        return start > new Date;
-      },
-      'La fecha y hora deben ser mayor a la actual'
-    ]
+    min: [Date.now, 'Solo se pueden programar citas futuras']
   },
   end: {
     type: Date
@@ -60,5 +55,7 @@ citaSchema.pre('save', function(next){
   next();
 
 });
+
+
 
 mongoose.model('Cita', citaSchema);
