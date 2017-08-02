@@ -30,7 +30,7 @@ var citaSchema = new Schema({
   },
   estaOcupado: {
     type: Boolean,
-    defautl: false
+    default: false
   },
   backgroundColor: {
     type: String
