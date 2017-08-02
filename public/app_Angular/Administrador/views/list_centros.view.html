@@ -1,11 +1,5 @@
 <div class="row" data-ng-controller="CentroController" data-ng-init="find()">
   <ul class="nav navbar-right panel_toolbox text-right" style="margin-right: 1%;margin-bottom: 1%;">
-    <a data-ng-href="#!/centro/create" ng-hide="centros.length!=0">
-       <button type="button" class="btn btn-success">
-        <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
-        Registrar Centro
-      </button>
-     </a>
   </ul>
     <div class="col-md-12">
         <div class="card">
@@ -16,10 +10,12 @@
                         <p class="category">Lista de centros registrados</p>
                     </div>
                     <div class="col-md-4">
-                        <a type="button" class="btn btn-info btn-fill btn-wd" data-ng-href="#!/centro/create" ng-hide="centros.length!=0">
+                        <div class="text-right">
+                        <a type="button" class="btn btn-success" data-ng-href="#!/centro/create" ng-hide="centros.length!=0">
                             <i class="fa fa-lg fa-plus-circle" aria-hidden="true"></i> &nbsp;
                             Registrar Centro
                          </a>
+                        </div>
                     </div>
                 </div>
             </div>
