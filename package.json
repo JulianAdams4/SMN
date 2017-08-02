@@ -4,7 +4,7 @@
   "description": "Proyecto de Ingenieria de Software I y II",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "mocha --timeout 10000"
   },
   "repository": {
