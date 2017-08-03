@@ -28,15 +28,18 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
         foto: ruta
       }
       if(esArchivoValido){
+        $("div#divLoading").addClass('show');
         $http({
           method: 'POST',
           url: 'api/paquetesDieta/',
           data: data
         }).then(function(response){
+          $('div#divLoading').removeClass('show');
           demo.mostrarNotificacion("success", "Paquete de Dieta creado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
           //console.log(errorResponse.data.message);
+          $('div#divLoading').removeClass('show');
             demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }
@@ -69,6 +72,7 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
       var idToEdit = $scope.idPaqueteDietaEdit;
       var data = {};
       if(cambioArchivo){//si se cambió la foto entonces se obtiene la nueva ruta
+        $("div#divLoading").addClass('show');
         var ruta = document.getElementById("preview").src;
         data = {
          foto: ruta,
@@ -90,9 +94,11 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
           url: '/api/paquetesDieta/' + idToEdit,
           data: data
         }).then(function(response){
+          $('div#divLoading').removeClass('show');
           demo.mostrarNotificacion("success", "¡Paquete de Dieta editado exitosamente!");
           $scope.backToList();
         }, function(errorResponse){
+          $('div#divLoading').removeClass('show');
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
       }

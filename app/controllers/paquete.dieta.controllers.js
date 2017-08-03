@@ -113,27 +113,25 @@ function update(id,req,res,foto){
 
 exports.editPaqueteDieta = function(req, res){
   var paqueteDietaId = req.params.paqueteDietaId;
-  var campos = ["foto"];
+  var campos = ["precio","nombre"];
   var cambioArchivo=false;
   PaqueteDieta.findById( {_id: paqueteDietaId}, function (err, paquete) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
+      return res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
     }
     // paquete no encontrado
     if (!paquete) {
-      res.status(404).send({ message: 'Paquete de dieta no encontrado.' });
+      return res.status(404).send({ message: 'Paquete de dieta no encontrado.' });
     }
-    if(!validador.camposSonValidos(campos,req)){//si falta el campo foto
-      cambioArchivo=false;//entonces no se cambia la foto al editar
+    if(!validador.camposSonValidos(campos,req)){//si falta el campo 
+      return res.status(500).send({ message: 'Faltan campos.' });
     }
-    else{//si está el campo foto
-      cambioArchivo=true;//entonces se cambio el archivo al editar
-    }
-    if(!cambioArchivo){//si no se cambió la foto al editar
+    if(!validador.camposSonValidos(["foto"],req)){//si falta el campo 
       update(paqueteDietaId,req,res,paquete.foto);
     }
-    else{//si se cambió el archivo al editar
+    else{
+      res.status(200)
       updateFile(cloudinary,req,paqueteDietaId,res)
     }
   });
