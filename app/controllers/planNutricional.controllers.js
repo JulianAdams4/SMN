@@ -99,8 +99,8 @@ exports.planNutricionalVigenteByPaciente = function(req, res){
           });
         }
         return res.status(200).json(planNutricionalVigente);
-    });   
-  } 
+    });
+  }
 };
 
 
@@ -141,9 +141,9 @@ function update(id,req,res,documento){
     }
   }, function(err, planNutricional) {
         if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
         } else {
-            res.status(204).json(planNutricional);
+            return res.status(204).json(planNutricional);
         }
     });
 }
@@ -161,7 +161,7 @@ exports.editPlanNutricional = function(req, res){
   if(!cambioArchivo){//si no se cambió el archivo al editar
     PlanNutricional.findById( planNutricionalId, function (err, planNutricional) {
       if (err) {
-        res.status(500).send({
+        return res.status(500).send({
           message:  getErrorMessage(err),
           type: 'danger'
         });
@@ -240,9 +240,9 @@ exports.deletePlanNutricional = function(req, res){
    PlanNutricional.findByIdAndRemove(planNutricionalId,
      function(err, planNutricional) {
          if (err) {
-             res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+             return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
          } else {
-             res.status(204).json(planNutricional);
+             return res.status(204).json(planNutricional);
          }
      });
  };
