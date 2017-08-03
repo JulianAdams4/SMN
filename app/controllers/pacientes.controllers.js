@@ -190,8 +190,8 @@ exports.createPaciente = function(req, res){
 exports.editPaciente = function(req, res){
   // Validaciones
   // Es diferente a la del archivo validador
-  var obligatoriosPaciente = ["cedula", "nombres", "apellidos", 
-                              "fechaNacimiento", "sexo", "motivoConsulta", 
+  var obligatoriosPaciente = ["cedula", "nombres", "apellidos",
+                              "fechaNacimiento", "sexo", "motivoConsulta",
                               "email"];
   for (var i=0; i<obligatoriosPaciente.length ; i++){
     var field = obligatoriosPaciente[i];
@@ -352,7 +352,7 @@ exports.editPaciente = function(req, res){
                 paciente: paciente,
               });
       }
-      
+
 
     }); // save paciente
   }); // Paciente.findById

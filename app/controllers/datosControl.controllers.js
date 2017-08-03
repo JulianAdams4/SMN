@@ -110,7 +110,7 @@ exports.createDatosControl = function(req, res){
         /* Error al crear */
         if(err){
           return res.status(500).send({
-            message: getErrorMessage(err),
+            message: "Faltan parámetros obligatorios",
             type: "danger"
           });
         }
@@ -128,7 +128,7 @@ function updateFile(cloudinary,req,id,res){
   })
 }
 //La función update edita los todos los campos excepto el campo foto ya que este no fue cambiado por el admin
-function update(id,req,res,foto){
+function update(id,req,res,foto,datosControl){
   DatosControl.findByIdAndUpdate(id, {
     $set: {
       foto: foto,
@@ -138,7 +138,7 @@ function update(id,req,res,foto){
     }
   }, function(err, datosControl) {
         if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            res.status(500).send({ message: 'Ocurrió un error en el servidor',type: 'danger' });
         } else {
             res.status(204).json(datosControl);
         }
@@ -155,11 +155,14 @@ exports.editDatosControl = function(req, res){
   DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
+      res.status(500).send({ message: 'Ocurrió un error en el servidor.',type: 'danger' });
     }
     // Paciente no encontrado
     if (!datosControl) {
       res.status(404).send({ message: 'Datos de Control no encontrados.' });
+    }
+    if(!validador.parametrosSonValidos(req.body.datos)){
+      return res.status(500).json({ message: 'Falta ingresar parámetros obligatorios.',type: 'danger'});
     }
     if(!validador.camposSonValidos(campos,req)){//si falta el campo foto
       cambioArchivo=false;//entonces no se cambia la foto al editar
@@ -168,7 +171,7 @@ exports.editDatosControl = function(req, res){
       cambioArchivo=true;//entonces se cambio el archivo al editar
     }
     if(!cambioArchivo){//si no se cambió la foto al editar
-      update(datosControlId,req,res,datosControl.foto);
+      update(datosControlId,req,res,datosControl.foto,datosControl);
     }
     else{//si se cambió el archivo al editar
       updateFile(cloudinary,req,datosControlId,res)
