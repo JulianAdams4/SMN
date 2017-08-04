@@ -72,7 +72,14 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
               method: 'PUT',
               url: '/api/'+ route + idPacienteDelete
             }).then(function(response){
-              demo.mostrarNotificacion("success",messageSuccess);
+              demo.showCustomNotification(
+                'top',
+                'right',
+                messageSuccess,
+                'success',
+                'ti-check',
+                3000
+              );
               find();
             },function(errorResponse){
               demo.mostrarNotificacion("danger", messageError);

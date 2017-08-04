@@ -41,7 +41,7 @@
                       minlength="2"
                       maxlength="50"
                       name='nombres'
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       data-ng-model="paciente.nombres"
                       required>
           </div>
@@ -55,7 +55,7 @@
                       minlength="2"
                       maxlength="50"
                       name="apellidos"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       placeholder="Apellidos"
                       data-ng-model="paciente.apellidos"
                       required>
@@ -75,13 +75,13 @@
         <div class="col-md-4 col-sm-4">
           <div class="form-group"
                ng-class="{'has-error': pacienteForm.nacimiento.$invalid && !pacienteForm.nacimiento.$pristine }">
-            <label>Fecha de Nacimiento*</label>
+            <label>Fecha de Nacimiento*</label><!--Sólo se pueden ingresar hasta la actual fecha, la función se encuentra en administrador.hbs-->
             <input type="Date"
-                   class="form-control border-input"
+                   class="form-control border-input dateValidate"
                    name="nacimiento"
                    data-ng-model="paciente.fechaNacimiento"
                    min="1917-01-01"
-                   max="2013-12-31"
+                   max="2017-01-01"
                    required>
           </div>
         </div>
@@ -109,14 +109,14 @@
                        class="form-control border-input"
                        name="ocupacion"
                        maxlength="50"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       onkeypress="return validateTextInput(event)"
                        placeholder="Ocupación"
                        data-ng-model="paciente.ocupacion">
             </div>
         </div>
         <div class="col-md-3 col-sm-3">
             <div class="form-group">
-                <label>Correo Electrónico</label>
+                <label>Correo Electrónico*</label>
                 <input type="email"
                        class="form-control border-input"
                        name="email"
@@ -132,7 +132,7 @@
                        class="form-control border-input"
                        name="direccion"
                        maxlength="200"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       onkeypress="return validateTextNumericInput(event)"
                        placeholder="Dirección"
                        data-ng-model="paciente.direccion">
             </div>
@@ -147,7 +147,7 @@
                        class="form-control border-input"
                        name="ejercicios"
                        maxlength="50"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       onkeypress="return validateTextInput(event)"
                        placeholder="Ejercicios"
                        data-ng-model="paciente.ejercicios">
             </div>
@@ -160,7 +160,7 @@
                        class="form-control border-input"
                        name="frecuenciaEjecicios"
                        maxlength="200"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       onkeypress="return validateTextNumericInput(event)"
                        placeholder="Frecuencia Ejercicios"
                        data-ng-model="paciente.frecuenciaEjecicios">
             </div>
@@ -176,7 +176,7 @@
                    name="motivo"
                    minlength="5"
                    maxlength="300"
-                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   onkeypress="return validateTextNumericInput(event)"
                    data-ng-model="paciente.motivoConsulta"
                    required>
         </div>
@@ -405,7 +405,7 @@
                    class="form-control border-input"
                    name="antecedentesPersonales"
                    maxlength="300"
-                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   onkeypress="return validateTextInput(event)"
                    data-ng-model="antecedente.antecedentesPersonales"
                    required>
         </div>
@@ -419,7 +419,7 @@
                    class="form-control border-input"
                    name="antecedentesFamiliares"
                    maxlength="300"
-                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   onkeypress="return validateTextInput(event)"
                    data-ng-model="antecedente.antecedentesFamiliares"
                    required>
         </div>
@@ -432,8 +432,7 @@
             <textarea type="text" rows="6" cols="60"
                    class="form-control border-input"
                    name="observaciones"
-                   maxlength="300"
-                   onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                   maxlength="1000"
                    data-ng-model="antecedente.observaciones">
           </textarea>
         </div>
@@ -464,7 +463,7 @@
                     class="form-control border-input"
                     minlength="2"
                     maxlength="50"
-                    onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                    onkeypress="return validateTextInput(event)"
                     placeholder="Preparadas por"
                     data-ng-model="historiaAlimentaria.preparadoPor">
           </div>
@@ -576,7 +575,7 @@
                       placeholder="Nombres"
                       minlength="2"
                       maxlength="50"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
+                      onkeypress="return validateTextInput(event)" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
           </div>
         </div>
         <div class="col-md-3">
@@ -587,7 +586,7 @@
                       placeholder="Nombres"
                       minlength="2"
                       maxlength="50"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
+                      onkeypress="return validateTextInput(event)" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
           </div>
         </div>
       </div>

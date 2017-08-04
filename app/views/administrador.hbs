@@ -203,12 +203,107 @@
 
     </div>
 </div>
-
+<script>
+	function returnCurrentYear(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		 if(dd<10){
+			 dd='0'+dd
+		 }
+		 if(mm<10){
+			 mm='0'+mm
+		  }
+		today = yyyy+'-'+mm+'-'+dd;
+		document.getElementByClass("dateValidate").setAttribute("max", today);
+	}
+	function validateTextNumericInput(key){
+		if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
+                &&
+                (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
+                &&
+								(key.keyCode<47 || event.keyCode>58)//números
+								&&
+                (key.keyCode != 45) //retroceso
+                &&
+                (key.keyCode != 241) //ñ
+                &&
+                (key.keyCode != 209) //Ñ
+                &&
+                (key.keyCode != 32) //espacio
+                &&
+                (key.keyCode != 225) //á
+                &&
+                (key.keyCode != 233) //é
+                &&
+                (key.keyCode != 237) //í
+                &&
+                (key.keyCode != 243) //ó
+                &&
+                (key.keyCode != 250) //ú
+                &&
+                (key.keyCode != 193) //Á
+                &&
+                (key.keyCode != 201) //É
+                &&
+                (key.keyCode != 205) //Í
+                &&
+                (key.keyCode != 211) //Ó
+                &&
+                (key.keyCode != 218) //Ú
+            ){
+							return false;
+						}
+						else {
+							return true;
+						}
+  }
+  function validateTextInput(key){
+		if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
+                &&
+                (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
+                &&
+                (key.keyCode != 45) //retroceso
+								&&
+                (key.keyCode != 241) //ñ
+                &&
+                (key.keyCode != 209) //Ñ
+                &&
+                (key.keyCode != 32) //espacio
+                &&
+                (key.keyCode != 225) //á
+                &&
+                (key.keyCode != 233) //é
+                &&
+                (key.keyCode != 237) //í
+                &&
+                (key.keyCode != 243) //ó
+                &&
+                (key.keyCode != 250) //ú
+                &&
+                (key.keyCode != 193) //Á
+                &&
+                (key.keyCode != 201) //É
+                &&
+                (key.keyCode != 205) //Í
+                &&
+                (key.keyCode != 211) //Ó
+                &&
+                (key.keyCode != 218) //Ú
+            ){
+							return false;
+						}
+						else {
+							return true;
+						}
+  }
+</script>
 </body>
 
     <!--   Core JS Files   -->
-		<script src="/js/moment.min.js" charset="utf-8"></script>
-    <script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="/js/moment.min.js" charset="utf-8"></script>
+  <script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
 	<script src="/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!-- FullCalendar -->

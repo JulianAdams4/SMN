@@ -11,7 +11,7 @@
                  name="direccion"
                  minlength="2"
                  maxlength="100"
-                 onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                 onkeypress="return validateTextNumericInput(event)"
                  data-ng-model="centro.direccion"
                  placeholder="Dirección"
                  required>
@@ -63,7 +63,7 @@
                       placeholder="Servicios"
                       maxlength="50"
                       name='servicios'
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       data-ng-model="centro.servicios"
                       >
           </div>
@@ -85,7 +85,7 @@
                       minlength="2"
                       maxlength="50"
                       name='nombres'
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       data-ng-model="centro.nutricionista.nombres"
                       required>
           </div>
@@ -99,7 +99,7 @@
                       minlength="2"
                       maxlength="50"
                       name="apellidos"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       placeholder="Apellidos"
                       data-ng-model="centro.nutricionista.apellidos"
                       required>
@@ -121,6 +121,7 @@
                        onkeypress="return event.charCode>47 && event.charCode<58"
                        placeholder="Cédula"
                        data-ng-model="centro.nutricionista.cedula"
+                       required
                        >
               </div>
       </div>
@@ -152,7 +153,7 @@
                       minlength="2"
                       maxlength="50"
                       name="estudios"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       placeholder="Estudios"
                       data-ng-model="centro.nutricionista.estudios"
                       >
@@ -171,7 +172,7 @@
                       minlength="2"
                       maxlength="50"
                       name="especializaciones"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       placeholder="Especializaciones"
                       data-ng-model="centro.nutricionista.especializaciones"
                       >

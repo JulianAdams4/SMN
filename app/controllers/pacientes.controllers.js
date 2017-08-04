@@ -137,7 +137,7 @@ exports.createPaciente = function(req, res){
   var passwordNoEncriptada = "";
   var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
   if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos'});
+    return res.status(500).json({ message: 'Faltan campos obligatorios'});
   }
   if (!validador.cedulaEsValida(paciente.cedula)){
     return res.status(500).json({ message: 'Cédula no válida'});

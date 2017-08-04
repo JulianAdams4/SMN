@@ -61,7 +61,8 @@ exports.createCentro = function(req, res){
   centro.save( function(err){
     if (err) {
       return res.status(500).send({
-        message: "Error del servidor"
+        message: "Error del servidor",
+        type:'danger'
       })
     }
     else {
@@ -94,7 +95,7 @@ exports.editCentro = function(req, res){
     centro.horariosAtencion = req.body.horariosAtencion ? req.body.horariosAtencion : centro.horariosAtencion;
     centro.redesSociales = req.body.redesSociales ? req.body.redesSociales : centro.redesSociales;
     centro.nutricionista = req.body.nutricionista ? req.body.nutricionista : centro.nutricionista;
-    
+
     // Guardamos los cambios
     centro.save( function(err) {
       // Error del servidor
@@ -126,4 +127,3 @@ exports.borrarCentroById = function (req, res) {
       });
   });
 };
-
