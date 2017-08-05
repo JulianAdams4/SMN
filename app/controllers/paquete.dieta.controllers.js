@@ -119,11 +119,14 @@ exports.editPaqueteDieta = function(req, res){
   PaqueteDieta.findById( {_id: paqueteDietaId}, function (err, paquete) {
     // Error del servidor
     if (err) {
-      return res.status(500).send({ message: getErrorMessage(err), type:'danger'});
+      return res.status(500).send({ message: 'Ocurrió un error en el servidor.',type:'danger' });
     }
     // paquete no encontrado
     if (!paquete) {
-      return res.status(404).send({ message: 'Paquete de dieta no encontrado.', type:'danger' });
+      return res.status(404).send({ message: 'Paquete de dieta no encontrado.',type:'danger' });
+    }
+    if(!validador.camposSonValidos(campos,req)){//si falta el campo
+      return res.status(500).send({ message: 'Debe ingresar los campos obligatorios.',type:'danger' });
     }
     if(!validador.camposSonValidos(["foto"],req)){//si falta el campo
       update(paqueteDietaId,req,res,paquete.foto);

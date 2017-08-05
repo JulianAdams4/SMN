@@ -54,7 +54,7 @@ describe('/POST planNutricional', () => {
             patId = ''+patient._id
             var datosPlan = {
                 idPaciente: patId,
-                documento: "http://talentoti.gov.co/635/articles-14312_empresas.pdf"
+                documento: "http://www.comercial.usm.cl/wp-content/uploads/2015/10/vica.com_.mx_Promociones_assets_promocion2.pdf"
             }
             chai.request('http://localhost:3000')
                 .post('/api/planesNutricionales')
@@ -87,7 +87,7 @@ describe('/POST planNutricional', () => {
   it('No ingresa fecha de registro del Plan Nutricional', (done) => {
     var datosPlan = {
         idPaciente: patId,
-        documento: "http://talentoti.gov.co/635/articles-14312_empresas.pdf"
+        documento: "http://www.comercial.usm.cl/wp-content/uploads/2015/10/vica.com_.mx_Promociones_assets_promocion2.pdf"
     }
     chai.request('http://localhost:3000')
         .post('/api/planesNutricionales')

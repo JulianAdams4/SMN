@@ -4,7 +4,7 @@
     <div class="col-md-8 col-sm-8">
       <div class="form-group"
            ng-class="{'has-error': datoControlForm.fechaDato.$invalid && datoControlForm.fechaDato.$pristine }">
-        <label>Fecha</label>
+        <label>Fecha*:</label>
         <input type="Date"
                class="form-control border-input"
                name="fechaDato"
@@ -21,7 +21,7 @@
   <div class="col-md-8 col-sm-8">
     <div class="form-group"
          ng-class="{'has-error': datoControlForm.observaciones.$invalid && !datoControlForm.observaciones.$pristine }">
-      <label>Observaciones:</label>
+      <label>Observaciones*:</label>
       <input type="text"
              class="form-control border-input"
              name="observaciones"
@@ -67,7 +67,7 @@
   <div class="row">
     <div class="col-md-3">
       <div class="form-group">
-          <label><small>Nombre del Dato</small></label>
+          <label><small>Nombre del Dato*:</small></label>
           <input  type="text"
                   class="form-control border-input"
                   minlength="2"
@@ -79,7 +79,7 @@
     </div>
     <div class="col-md-3">
       <div class="form-group">
-          <label><small>Valor</small></label>
+          <label><small>Valor*:</small></label>
           <input type="text"
                   class="form-control border-input"
                   placeholder="Valor"
@@ -91,7 +91,7 @@
     </div>
     <div class="col-md-3">
       <div class="form-group">
-          <label><small>Unidad</small></label>
+          <label><small>Unidad*:</small></label>
           <select class="form-control border-input" data-ng-model="newParametro.unidadDato">
             <option value="%">%</option>
             <option value="mg/L">mg/L</option>

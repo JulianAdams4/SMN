@@ -5,7 +5,7 @@
         <div class="col-md-8 col-sm-8">
           <div class="form-group"
                ng-class="{'has-error': centroForm.direccion.$invalid && !centroForm.direccion.$pristine }">
-            <label>Dirección</label>
+            <label>Dirección*:</label>
             <input type="text"
                  class="form-control border-input"
                  name="direccion"
@@ -24,7 +24,7 @@
       <div class="col-md-2 col-sm-2">
         <div class="form-group"
                    ng-class="{'has-error': centroForm.telefono.$invalid && !centroForm.telefono.$pristine }">
-                <label>Teléfono</label>
+                <label>Teléfono*:</label>
                 <input type="text"
                        class="form-control border-input"
                        minlength="10"
@@ -39,7 +39,7 @@
       <div class="col-md-6 col-sm-6">
         <div class="form-group"
                    ng-class="{'has-error': centroForm.horariosAtencion.$invalid && !centroForm.horariosAtencion.$pristine }">
-                <label>Horarios de Atención</label>
+                <label>Horarios de Atención*:</label>
                 <input type="text"
                        class="form-control border-input"
                        minlength="5"
@@ -57,7 +57,7 @@
         <div class="col-md-8 col-sm-8">
           <div class="form-group"
                ng-class="{'has-error': centroForm.servicios.$invalid && !centroForm.servicios.$pristine }">
-            <label>Servicios</label>
+            <label>Servicios:</label>
               <input  type="text"
                       class="form-control border-input"
                       placeholder="Servicios"
@@ -78,7 +78,7 @@
         <div class="col-md-4 col-sm-4">
           <div class="form-group"
                ng-class="{'has-error': centroForm.nutricionista.nombres.$invalid && !centroForm.nutricionista.nombres.$pristine }">
-            <label>Nombres</label>
+            <label>Nombres*:</label>
               <input  type="text"
                       class="form-control border-input"
                       placeholder="Nombres"
@@ -93,7 +93,7 @@
         <div class="col-md-4 col-sm-4">
           <div class="form-group"
                ng-class="{'has-error': centroForm.nutricionista.apellidos.$invalid && !centroForm.nutricionista.apellidos.$pristine }">
-            <label>Apellidos</label>
+            <label>Apellidos*:</label>
               <input  type="text"
                       class="form-control border-input"
                       minlength="2"
@@ -112,7 +112,7 @@
         <div class="col-md-4 col-sm-4">
         <div class="form-group"
                    ng-class="{'has-error': centroForm.nutricionista.cedula.$invalid && !centroForm.nutricionista.cedula.$pristine }">
-                <label>Cédula</label>
+                <label>Cédula*:</label>
                 <input type="text"
                        class="form-control border-input"
                        minlength="10"
@@ -128,7 +128,7 @@
       <div class="col-md-4 col-sm-4">
         <div class="form-group"
                    ng-class="{'has-error': centroForm.nutricionista.telefono.$invalid && !centroForm.nutricionista.telefono.$pristine }">
-                <label>Teléfono</label>
+                <label>Teléfono:</label>
                 <input type="text"
                        class="form-control border-input"
                        minlength="10"
@@ -147,7 +147,7 @@
         <div class="col-md-8 col-sm-8">
           <div class="form-group"
                ng-class="{'has-error': centroForm.nutricionista.estudios.$invalid && !centroForm.nutricionista.estudios.$pristine }">
-            <label>Estudios</label>
+            <label>Estudios:</label>
               <input  type="text"
                       class="form-control border-input"
                       minlength="2"
@@ -166,7 +166,7 @@
         <div class="col-md-8 col-sm-8">
           <div class="form-group"
                ng-class="{'has-error': centroForm.nutricionista.especializaciones.$invalid && !centroForm.nutricionista.especializaciones.$pristine }">
-            <label>Especializaciones</label>
+            <label>Especializaciones:</label>
               <input  type="text"
                       class="form-control border-input"
                       minlength="2"

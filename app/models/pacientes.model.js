@@ -5,7 +5,9 @@ var pacienteSchema = new Schema({
     type: String,
     unique: true,
     required: '<i class="fa ti-alert"></i>La cédula es <b>obligatoria</b>',
-    match: [/\d{10}/, '<i class="fa ti-alert">Ingrese un número de cédula válido']//SOLO 10 NUMEROS
+    maxlength: [10, '<i class="fa ti-alert"></i>Ingrese un número de cédula válido'],
+    minlength: [10, '<i class="fa ti-alert"></i>Ingrese un número de cédula válido'],
+    match: [/\d{10}/, '<i class="fa ti-alert"></i>Ingrese un número de cédula válido']//DIGITOS
   },
   nombres:{
     type: String,
