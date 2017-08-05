@@ -204,21 +204,7 @@
     </div>
 </div>
 <script>
-	function returnCurrentYear(){
-		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
-		 if(dd<10){
-			 dd='0'+dd
-		 }
-		 if(mm<10){
-			 mm='0'+mm
-		  }
-		today = yyyy+'-'+mm+'-'+dd;
-		document.getElementByClass("dateValidate").setAttribute("max", today);
-	}
-	function validateTextNumericInput(key){
+function validateTextNumericInput(key){
 		if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
                 &&
                 (key.keyCode < 65 || key.keyCode > 90) //letras minusculas

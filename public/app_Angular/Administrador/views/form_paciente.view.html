@@ -75,13 +75,13 @@
         <div class="col-md-4 col-sm-4">
           <div class="form-group"
                ng-class="{'has-error': pacienteForm.nacimiento.$invalid && !pacienteForm.nacimiento.$pristine }">
-            <label>Fecha de Nacimiento*</label><!--Sólo se pueden ingresar hasta la actual fecha, la función se encuentra en administrador.hbs-->
-            <input type="Date"
-                   class="form-control border-input dateValidate"
+            <label>Fecha de Nacimiento*</label><!--Sólo se pueden ingresar hasta la actual fecha-->
+            <input type="Date" id="dateValidate"
+                   class="form-control border-input"
                    name="nacimiento"
                    data-ng-model="paciente.fechaNacimiento"
                    min="1917-01-01"
-                   max="2017-01-01"
+                   max="{{returnCurrentDate()}}"
                    required>
           </div>
         </div>

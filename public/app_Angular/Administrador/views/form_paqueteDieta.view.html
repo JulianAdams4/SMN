@@ -9,7 +9,7 @@
                   minlength="2"
                   maxlength="50"
                   name='nombre'
-                  onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                  onkeypress="return validateTextInput(event)"
                   data-ng-model="paquetesDieta.nombre"
                   required>
       </div>
@@ -41,7 +41,7 @@
              name="descripcion"
              minlength="2"
              maxlength="50"
-             onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+             onkeypress="return validateTextInput(event)"
              data-ng-model="paquetesDieta.descripcion"
              placeholder="Descripción"
              required>

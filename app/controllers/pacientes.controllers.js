@@ -193,6 +193,7 @@ exports.editPaciente = function(req, res){
   var obligatoriosPaciente = ["cedula", "nombres", "apellidos",
                               "fechaNacimiento", "sexo", "motivoConsulta",
                               "email"];
+  console.log(req.body.paciente);
   for (var i=0; i<obligatoriosPaciente.length ; i++){
     var field = obligatoriosPaciente[i];
     //console.log('{"' + field + '": "' + req.body.paciente[field] +'"}');
@@ -412,7 +413,7 @@ exports.signIn = function(req, res){
     }
     if(!paciente){
       return res.status(400).send({
-        message: 'email no se encuentra registrado'
+        message: 'Email no se encuentra registrado'
       })
     }
     if(pacienteIn.password === crypto.desencriptar(paciente.password)){
@@ -422,7 +423,7 @@ exports.signIn = function(req, res){
       })
     } else {
       return res.status(404).send({
-        message: 'contraseña incorrecta'
+        message: 'Contraseña incorrecta'
       })
     }
   });
