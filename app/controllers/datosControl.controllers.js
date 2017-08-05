@@ -16,16 +16,16 @@ cloudinary.config({
   api_secret: cloudinaryCredentials.api_secret
 });
 
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
     }
-  } else {
-    return 'Error de servidor desconocido';
-  }
+    // Devolver el mensaje de error
+  return message;
 };
 
 exports.read = function(req, res){
@@ -94,9 +94,9 @@ exports.createDatosControl = function(req, res){
   //var datosControl = new DatosControl(req.body);
   var campos = ["foto"];
   if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos.',type: 'danger'});
+    return res.status(500).json({ message: 'La foto es obligatoria.',type: 'danger'});
   }else if(req.body.datos.length==0){
-    return res.status(500).json({ message: 'Falta ingresar parámetros de control.',type: 'danger'});
+    return res.status(500).json({ message: 'Los parámetros de control son obligatorios.',type: 'danger'});
   }
   cloudinary.uploader.upload(req.body.foto, function(result){
     if (result.url) {
@@ -110,7 +110,7 @@ exports.createDatosControl = function(req, res){
         /* Error al crear */
         if(err){
           return res.status(500).send({
-            message: "Faltan parámetros obligatorios",
+            message: getErrorMessage(err),
             type: "danger"
           });
         }
@@ -150,7 +150,7 @@ exports.editDatosControl = function(req, res){
   var campos = ["foto"];
   var cambioArchivo=false;
   if(req.body.datos.length==0){
-    return res.status(500).json({ message: 'Falta ingresar parámetros de control.',type: 'danger'});
+    return res.status(500).json({ message: 'Los parámetros de control son obligatorios.',type: 'danger'});
   }
   DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
     // Error del servidor
@@ -159,7 +159,7 @@ exports.editDatosControl = function(req, res){
     }
     // Paciente no encontrado
     if (!datosControl) {
-      res.status(404).send({ message: 'Datos de Control no encontrados.' });
+      res.status(404).send({ message: 'Datos de Control no encontrados.',type: 'danger' });
     }
     if(!validador.parametrosSonValidos(req.body.datos)){
       return res.status(500).json({ message: 'Falta ingresar parámetros obligatorios.',type: 'danger'});

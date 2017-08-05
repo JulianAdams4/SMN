@@ -17,14 +17,14 @@
     <div class="col-md-4 col-sm-4">
       <div  class="form-group"
             ng-class="{'has-error': paqueteForm.precio.$invalid && !paqueteForm.precio.$pristine }">
-          <label>Precio:</label>
+          <label>Precio</label>
           <input  type="text"
                   class="form-control border-input"
-                  placeholder="Nombre"
+                  placeholder="Precio sin el signo de dólar"
                   minlength="2"
-                  maxlength="50"
+                  maxlength="5"
                   name='precio'
-                  onkeypress="return (event.charCode>47 && event.charCode<58)|| event.charCode58=44"
+                  onkeypress="return (event.charCode>47 && event.charCode<58 || event.charCode==44 || event.charCode==46)"
                   data-ng-model="paquetesDieta.precio"
                   required>
       </div>

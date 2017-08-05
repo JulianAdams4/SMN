@@ -135,13 +135,6 @@ exports.list = function(req, res){
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
   var passwordNoEncriptada = "";
-  var campos = ["cedula", "nombres", "apellidos", "fechaNacimiento", "sexo","motivoConsulta"];
-  if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos obligatorios'});
-  }
-  if (!validador.cedulaEsValida(paciente.cedula)){
-    return res.status(500).json({ message: 'Cédula no válida'});
-  }
   passwordNoEncriptada = GenerarPassword();//Genera contraseña sin encriptar
   paciente.password = crypto.encriptar(passwordNoEncriptada);//Asigna un password encriptado a un paciente
 
@@ -260,7 +253,7 @@ exports.editPaciente = function(req, res){
     paciente.save( function(err) {
       // Error del servidor
       if (err) {
-        return res.status(500).send({ message: 'Ocurrió un error al guardar el paciente' });
+        return res.status(500).send({ message: 'Ocurrió un error al guardar el paciente',type: 'danger' });
       }
       if (!req.session.paciente){
         // Editamos el antecedente
@@ -303,7 +296,7 @@ exports.editPaciente = function(req, res){
         antecedente.save( function(err) {
           // Error del servidor
           if (err) {
-            return res.status(500).send({ message: 'Ocurrió un error al guardar el antecedente' });
+            return res.status(500).send({ message: 'Ocurrió un error al guardar el antecedente',type: 'danger' });
           }
 
           HistoriaAlimentaria.findById( datosHistoria._id, function (err, historia) {
@@ -334,7 +327,7 @@ exports.editPaciente = function(req, res){
             historia.save( function(err) {
               // Error del servidor
               if (err) {
-                return res.status(500).send({ message: 'Ocurrió un error al guardar la historia' });
+                return res.status(500).send({ message: 'Ocurrió un error al guardar la historia' ,type: 'danger'});
               }
               /* Paciente, Antecedente e Historia editados con exito */
               return res.status(200).send({
@@ -369,7 +362,7 @@ exports.desactivarPaciente = function(req, res){
     }
   }, function(err, paciente) {
         if (err) {
-            return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            return res.status(500).send({ message: 'Ocurrió un error en el servidor' ,type: 'danger'});
         } else {
             return res.status(204).json(paciente);
         }
@@ -386,7 +379,7 @@ exports.activarPaciente = function(req, res){
     }
   }, function(err, paciente) {
         if (err) {
-            return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            return res.status(500).send({ message: 'Ocurrió un error en el servidor',type: 'danger' });
         } else {
             return res.status(204).json(paciente);
         }
@@ -408,7 +401,8 @@ exports.signIn = function(req, res){
   Paciente.findOne({'email': pacienteIn.email}, function(err, paciente){
     if(err){
       return res.status(500).send({
-        message: getErrorMessage(err)
+        message: getErrorMessage(err),
+        type: 'danger'
       })
     }
     if(!paciente){

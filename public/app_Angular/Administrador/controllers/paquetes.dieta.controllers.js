@@ -35,7 +35,14 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
           data: data
         }).then(function(response){
           $('div#divLoading').removeClass('show');
-          demo.mostrarNotificacion("success", "Paquete de Dieta creado exitosamente!");
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> Paquete de Dieta creado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
           $scope.backToList();
         }, function(errorResponse){
           //console.log(errorResponse.data.message);
@@ -95,7 +102,14 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
           data: data
         }).then(function(response){
           $('div#divLoading').removeClass('show');
-          demo.mostrarNotificacion("success", "¡Paquete de Dieta editado exitosamente!");
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> Paquete de Dieta editado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
           $scope.backToList();
         }, function(errorResponse){
           $('div#divLoading').removeClass('show');
