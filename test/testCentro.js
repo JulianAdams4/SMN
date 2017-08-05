@@ -23,11 +23,12 @@ describe('/POST Centro', () => {
     var centro = {
             direccion: "Direccion prueba",
             telefono: "0912345578",
+            horariosAtencion:"08:00-15:00",
             nutricionista: {
-			    cedula:'1721989364',
-			    nombres:'Angie',
-			    apellidos: 'Del Pezo',
-			  },
+    			    cedula:'1721989364',
+    			    nombres:'Angie',
+    			    apellidos: 'Del Pezo',
+    			  },
         };
         chai.request('http://localhost:3000')
                 .post('/api/centro')
@@ -41,10 +42,10 @@ describe('/POST Centro', () => {
     var centro = {
             telefono: "0912345578",
             nutricionista: {
-          cedula:'1721989364',
-          nombres:'Angie',
-          apellidos: 'Del Pezo',
-        },
+              cedula:'1721989364',
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+            },
         };
         chai.request('http://localhost:3000')
                 .post('/api/centro')
@@ -58,10 +59,10 @@ describe('/POST Centro', () => {
     var centro = {
             direccion: "Direccion prueba",
             nutricionista: {
-          cedula:'1721989364',
-          nombres:'Angie',
-          apellidos: 'Del Pezo',
-        },
+              cedula:'1721989364',
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+            },
         };
         chai.request('http://localhost:3000')
                 .post('/api/centro')
@@ -76,9 +77,9 @@ describe('/POST Centro', () => {
             direccion: "Direccion prueba",
             telefono: "0912345578",
             nutricionista: {
-          cedula:'1721989364',
-          apellidos: 'Del Pezo',
-        },
+              cedula:'1721989364',
+              apellidos: 'Del Pezo',
+            },
         };
         chai.request('http://localhost:3000')
                 .post('/api/centro')
@@ -93,9 +94,9 @@ describe('/POST Centro', () => {
             direccion: "Direccion prueba",
             telefono: "0912345578",
             nutricionista: {
-          nombres:'Angie',
-          apellidos: 'Del Pezo',
-        },
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+            },
         };
         chai.request('http://localhost:3000')
                 .post('/api/centro')
@@ -110,9 +111,9 @@ describe('/POST Centro', () => {
             direccion: "Direccion prueba",
             telefono: "0912345578",
             nutricionista: {
-          cedula:'1721989364',
-          nombres:'Angie',
-        },
+              cedula:'1721989364',
+              nombres:'Angie',
+            },
         };
         chai.request('http://localhost:3000')
                 .post('/api/centro')
@@ -134,11 +135,12 @@ describe('/POST Centro', () => {
         var centro = new Centro({
             direccion: "Direccion prueba2",
             telefono: "0912345578",
+            horariosAtencion:"08:00-15:00",
             nutricionista: {
-          cedula:'1721989364',
-          nombres:'Angie',
-          apellidos: 'Del Pezo',
-        },
+              cedula:'1721989364',
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+            },
         });
         centro.save((err, centro) => {
                 chai.request('http://localhost:3000')
@@ -155,11 +157,12 @@ describe('/POST Centro', () => {
         var centro = new Centro({
             direccion: "Direccion prueba2",
             telefono: "0912345578",
+            horariosAtencion:"08:00-15:00",
             nutricionista: {
-          cedula:'1721989364',
-          nombres:'Angie',
-          apellidos: 'Del Pezo',
-        },
+              cedula:'1721989364',
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+            },
         });
         centro.save((err, centro) => {
                 chai.request('http://localhost:3000')
@@ -168,10 +171,10 @@ describe('/POST Centro', () => {
                     direccion: "",
                     telefono: "0912345578",
                     nutricionista: {
-                  cedula:'1721989364',
-                  nombres:'Angie',
-                  apellidos: 'Del Pezo',
-                },
+                      cedula:'1721989364',
+                      nombres:'Angie',
+                      apellidos: 'Del Pezo',
+                    },
                 })
                 .end((err, res) => {
                   res.should.have.status(200);
@@ -191,11 +194,12 @@ describe('/GET Centro', () => {
         var centro = new Centro({
             direccion: "Direccion prueba2",
             telefono: "0912345578",
+            horariosAtencion:"08:00-15:00",
             nutricionista: {
-          cedula:'1721989364',
-          nombres:'Angie',
-          apellidos: 'Del Pezo',
-        },
+              cedula:'1721989364',
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+            },
         });
         centro.save((err, centro) => {
                 chai.request('http://localhost:3000')

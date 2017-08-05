@@ -186,7 +186,6 @@ exports.editPaciente = function(req, res){
   var obligatoriosPaciente = ["cedula", "nombres", "apellidos",
                               "fechaNacimiento", "sexo", "motivoConsulta",
                               "email"];
-  console.log(req.body.paciente);
   for (var i=0; i<obligatoriosPaciente.length ; i++){
     var field = obligatoriosPaciente[i];
     //console.log('{"' + field + '": "' + req.body.paciente[field] +'"}');
