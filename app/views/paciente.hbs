@@ -11,7 +11,6 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -33,17 +32,18 @@
     <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/lib/angular-datatables/demo/src/archives/dist/css/angular-datatables.min.css">
 
-		<!--BOOTSTRAP-DIALOG -->
-		<link rel="stylesheet" href="/css/bootstrap.dialog.css">
-		<!--IMAGES-->
-		<link href="/css/bootstrap-imageupload.css" rel="stylesheet">
-		<link href="/css/material-dashboard.css" rel="stylesheet"/>
+	<!--BOOTSTRAP-DIALOG -->
+	<link rel="stylesheet" href="/css/bootstrap.dialog.css">
+	<!--IMAGES-->
+	<link href="/css/bootstrap-imageupload.css" rel="stylesheet">
+	<link href="/css/material-dashboard.css" rel="stylesheet"/>
     <!--  Fonts and icons     -->
     <link href="/css/maxcdn.bootstrapcdn.css" rel="stylesheet">
     <link href='/css/fonts.google.css' rel='stylesheet' type='text/css'>
     <link href="/css/themify-icons.css" rel="stylesheet">
-		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-		<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
@@ -88,9 +88,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#!/mis-logros">
                         <i class="ti-clipboard"></i>
-                        <p>Reportes</p>
+                        <p>Mis logros</p>
                     </a>
                 </li>
             </ul>
@@ -196,8 +196,8 @@ function validateTextNumericInput(key){
                 &&
                 (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
                 &&
-								(key.keyCode<47 || event.keyCode>58)//números
-								&&
+				(key.keyCode<47 || event.keyCode>58)//números
+				&&
                 (key.keyCode != 45) //retroceso
                 &&
                 (key.keyCode != 241) //ñ
@@ -314,16 +314,29 @@ function validateTextNumericInput(key){
 	<script src="/lib/angular/angular.min.js" charset="utf-8"></script>
 	<script src="/lib/angular-route/angular-route.min.js" charset="utf-8"></script>
 	<script src="/lib/angular-datatables/demo/src/archives/dist/angular-datatables.min.js" charset="utf-8"></script>
+
 	<!-- BOOTSTRAP3-DIALOG -->
 	<script type="text/javascript" src="/js/bootstrap.dialog.js"></script>
+
+    <!-- Chart Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+
+    <!-- Angular Charts -->
+    <script src="/js/MomentJS/moment.min.js"></script>
+    <script src="/js/chart/angular-chart.min.js"></script>
+    <script src="/js/chart/Chart.bundle.min.js"></script>
+
+    <!-- ROUTES & MODULE -->
     <script src="/app_Angular/Paciente/paciente.js" charset="utf-8"></script>
-    <script src="/app_Angular/Paciente/controllers/datosDeControl.controller.js" charset="utf-8"></script>
-    <script src="/app_Angular/Paciente/controllers/planNutricional.controller.js" charset="utf-8"></script>
-    <script src="/app_Angular/Paciente/controllers/centro.controller.js" charset="utf-8"></script>
     <script src="/app_Angular/Paciente/config/pacientes.usuario.routes.js" charset="utf-8"></script>
 
     <!-- CONTROLLERS -->
     <script src="/app_Angular/Paciente/controllers/pacientes.usuario.controller.js" charset="utf-8"></script>
+    <script src="/app_Angular/Paciente/controllers/datosDeControl.controller.js" charset="utf-8"></script>
+    <script src="/app_Angular/Paciente/controllers/planNutricional.controller.js" charset="utf-8"></script>
+    <script src="/app_Angular/Paciente/controllers/centro.controller.js" charset="utf-8"></script>
+    <script src="/app_Angular/Paciente/controllers/logros.controller.js" charset="utf-8"></script>
+
 </html>
 
 <style media="screen">

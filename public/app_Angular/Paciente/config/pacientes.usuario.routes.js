@@ -5,16 +5,24 @@ angular.module('paciente').config(['$routeProvider',
     $routeProvider.
     when('/', {
       templateUrl: '/app_Angular/Paciente/views/info.centros.paciente.view.html'
-    }).when('/mis-datos', {
+    })
+    .when('/mis-datos', {
       templateUrl: '/app_Angular/Paciente/views/datosDeControl.view.html'
-    }).when('/mi-plan', {
+    })
+    .when('/mi-plan', {
       templateUrl: '/app_Angular/Paciente/views/planNutricional.view.html'
-    }).when('/centros', {
+    })
+    .when('/centros', {
       templateUrl: '/app_Angular/Paciente/views/info.centros.paciente.view.html'
-    }).when('/perfil', {
+    })
+    .when('/perfil', {
       templateUrl: '/app_Angular/Paciente/views/ver_perfil.view.html'
-    }).when('/perfil/edit', {
+    })
+    .when('/perfil/edit', {
       templateUrl: '/app_Angular/Paciente/views/editar_perfil.view.html'
+    })
+    .when('/mis-logros', {
+      templateUrl: '/app_Angular/Paciente/views/estadisticas.paciente.view.html'
     });
   }
 ]);

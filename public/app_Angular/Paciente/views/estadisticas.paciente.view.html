@@ -1,0 +1,127 @@
+<section ng-controller="LogrosController" data-ng-init="init()">
+  <div class="content">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3"></div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <div class="card card-stats">
+            <div class="card-header" data-background-color="red">
+              <i class="fa fa-lg fa-home"></i>
+            </div>
+            <div class="card-content">
+              <h2 class="title" style="font-weight: bold;">Mis logros</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" href="#grafico1" ng-click="resetChart()"> Gráfico de línea </a>
+            </li>
+            <li>
+              <a data-toggle="tab" href="#grafico2" ng-click="resetChart()"> Gráfico de barras </a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="grafico1" class="tab-pane fade in active">
+
+              <div class="col-lg-3 col-md-3 col-xs-12" style="padding:0px;">
+                  <div class="col-xs-2"></div>
+                  <div class="col-lg-12 col-md-12 col-xs-8">
+                      <form name="clienteMensual" autocomplete="off" novalidate>
+                          
+                          <div class="col-lg-12 col-md-12 col-xs-12">
+                              <div class="form-group" 
+                                    ng-class="{'has-error': clienteMensual.parametro.$invalid && !clienteMensual.parametro.$pristine }">
+                                   <label> Par&aacute;metro: *</label>
+                                   <select class="form-control" 
+                                           name="parametro" 
+                                           ng-model="formularioEC.parametro" 
+                                           ng-options="param.value as param.label for param in parametros" 
+                                           ng-required="true">
+                                   </select>
+                                   <p ng-show="clienteMensual.parametro.$invalid && !clienteMensual.parametro.$pristine" class="help-block">
+                                       Campo obligatorio
+                                   </p>
+                              </div>
+                          </div>
+                          
+                          <div class="col-lg-12 col-md-12 col-xs-12">
+                              <div class="form-group" 
+                                    ng-class="{'has-error': clienteMensual.inicio.$invalid && !clienteMensual.inicio.$pristine }">
+                                   <label>Desde: *</label>
+                                   <input type="date" 
+                                          name="inicio" 
+                                          class="form-control" 
+                                          ng-model="formularioEC.inicio"  
+                                          required>
+                                   <p ng-show="clienteMensual.inicio.$invalid && !clienteMensual.inicio.$pristine" class="help-block">
+                                       Campo obligatorio
+                                   </p>
+                              </div>
+                          </div>
+                          
+                          <div class="col-lg-12 col-md-12 col-xs-12">
+                              <div class="form-group" 
+                                    ng-class="{'has-error': clienteMensual.fin.$invalid && !clienteMensual.fin.$pristine }">
+                                   <label>Hasta: *</label>
+                                   <input type="date" 
+                                          name="fin" 
+                                          class="form-control" 
+                                          ng-model="formularioEC.fin"  
+                                          required>
+                                   <p ng-show="clienteMensual.fin.$invalid && !clienteMensual.fin.$pristine" class="help-block">
+                                       Campo obligatorio
+                                   </p>
+                              </div>
+                          </div>
+                          
+                          <div class="col-lg-12 col-md-12 col-xs-12 text-center" style="margin-top:10px;">
+                              <button type="submit" 
+                                      ng-click="submit(clienteMensual)" 
+                                      ng-disabled="!clienteMensual.$valid" 
+                                      class="btn btn-primary"> Ver mis logros 
+                              </button>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="col-xs-2"></div>
+              </div>
+              
+              <div class="col-lg-9 col-md-9 col-xs-12" style="padding:0px; height:100%; padding-top:4%;">
+                  <div class="col-lg-1 col-md-1"></div>
+                  <div class="col-lg-10 col-md-10 col-xs-12">
+                      <canvas id="line" 
+                          class="chart chart-bar" 
+                          chart-data="data"
+                          chart-labels="labels" 
+                          chart-series="series" 
+                          chart-options="options"
+                          chart-dataset-override="datasetOverride">
+                      </canvas>
+                  </div>
+                  <div class="col-lg-1 col-md-1"></div>
+              </div>
+
+
+
+            </div>
+
+            <div id="grafico2" class="tab-pane fade">
+              <h3>Menu 1</h3>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

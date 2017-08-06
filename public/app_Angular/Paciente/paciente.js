@@ -1,4 +1,4 @@
-var mainAplicationModule = angular.module('paciente', ['ngRoute', 'datatables']);
+var mainAplicationModule = angular.module('paciente', ['ngRoute', 'datatables', 'chart.js']);
 
 mainAplicationModule.config(['$locationProvider',
   function($locationProvider){
