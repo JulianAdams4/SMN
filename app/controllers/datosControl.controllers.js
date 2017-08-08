@@ -16,16 +16,16 @@ cloudinary.config({
   api_secret: cloudinaryCredentials.api_secret
 });
 
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
     }
-  } else {
-    return 'Error de servidor desconocido';
-  }
+    // Devolver el mensaje de error
+  return message;
 };
 
 exports.read = function(req, res){
@@ -94,9 +94,9 @@ exports.createDatosControl = function(req, res){
   //var datosControl = new DatosControl(req.body);
   var campos = ["foto"];
   if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos.',type: 'danger'});
+    return res.status(500).json({ message: 'La foto es obligatoria.',type: 'danger'});
   }else if(req.body.datos.length==0){
-    return res.status(500).json({ message: 'Falta ingresar parámetros de control.',type: 'danger'});
+    return res.status(500).json({ message: 'Los parámetros de control son obligatorios.',type: 'danger'});
   }
   cloudinary.uploader.upload(req.body.foto, function(result){
     if (result.url) {
@@ -128,7 +128,7 @@ function updateFile(cloudinary,req,id,res){
   })
 }
 //La función update edita los todos los campos excepto el campo foto ya que este no fue cambiado por el admin
-function update(id,req,res,foto){
+function update(id,req,res,foto,datosControl){
   DatosControl.findByIdAndUpdate(id, {
     $set: {
       foto: foto,
@@ -138,7 +138,7 @@ function update(id,req,res,foto){
     }
   }, function(err, datosControl) {
         if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            res.status(500).send({ message: 'Ocurrió un error en el servidor',type: 'danger' });
         } else {
             res.status(204).json(datosControl);
         }
@@ -150,16 +150,19 @@ exports.editDatosControl = function(req, res){
   var campos = ["foto"];
   var cambioArchivo=false;
   if(req.body.datos.length==0){
-    return res.status(500).json({ message: 'Falta ingresar parámetros de control.',type: 'danger'});
+    return res.status(500).json({ message: 'Los parámetros de control son obligatorios.',type: 'danger'});
   }
   DatosControl.findById( {_id: datosControlId}, function (err, datosControl) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
+      res.status(500).send({ message: 'Ocurrió un error en el servidor.',type: 'danger' });
     }
     // Paciente no encontrado
     if (!datosControl) {
-      res.status(404).send({ message: 'Datos de Control no encontrados.' });
+      res.status(404).send({ message: 'Datos de Control no encontrados.',type: 'danger' });
+    }
+    if(!validador.parametrosSonValidos(req.body.datos)){
+      return res.status(500).json({ message: 'Falta ingresar parámetros obligatorios.',type: 'danger'});
     }
     if(!validador.camposSonValidos(campos,req)){//si falta el campo foto
       cambioArchivo=false;//entonces no se cambia la foto al editar
@@ -168,7 +171,7 @@ exports.editDatosControl = function(req, res){
       cambioArchivo=true;//entonces se cambio el archivo al editar
     }
     if(!cambioArchivo){//si no se cambió la foto al editar
-      update(datosControlId,req,res,datosControl.foto);
+      update(datosControlId,req,res,datosControl.foto,datosControl);
     }
     else{//si se cambió el archivo al editar
       updateFile(cloudinary,req,datosControlId,res)

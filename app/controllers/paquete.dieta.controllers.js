@@ -16,16 +16,17 @@ cloudinary.config({
   api_secret: cloudinaryCredentials.api_secret
 });
 
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
+
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
     }
-  } else {
-    return 'Error de servidor desconocido';
-  }
+    // Devolver el mensaje de error
+  return message;
 };
 
 exports.read = function(req, res){
@@ -63,7 +64,7 @@ exports.list = function(req, res){
 exports.createPaqueteDieta = function(req, res){
   var campos = ["foto"];
   if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos.',type: 'danger'});
+    return res.status(500).json({ message: 'La foto del paquete es obligatoria.',type: 'danger'});
   }
   cloudinary.uploader.upload(req.body.foto, function(result){
     if (result.url) {
@@ -104,7 +105,7 @@ function update(id,req,res,foto){
     }
   }, function(err, paquete) {
         if (err) {
-            res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+            res.status(500).send({ message: getErrorMessage(err), type:'danger'});
         } else {
             res.status(204).json(paquete);
         }
@@ -113,27 +114,25 @@ function update(id,req,res,foto){
 
 exports.editPaqueteDieta = function(req, res){
   var paqueteDietaId = req.params.paqueteDietaId;
-  var campos = ["foto"];
+  var campos = ["precio","nombre"];
   var cambioArchivo=false;
   PaqueteDieta.findById( {_id: paqueteDietaId}, function (err, paquete) {
     // Error del servidor
     if (err) {
-      res.status(500).send({ message: 'Ocurrió un error en el servidor.' });
+      return res.status(500).send({ message: 'Ocurrió un error en el servidor.',type:'danger' });
     }
     // paquete no encontrado
     if (!paquete) {
-      res.status(404).send({ message: 'Paquete de dieta no encontrado.' });
+      return res.status(404).send({ message: 'Paquete de dieta no encontrado.',type:'danger' });
     }
-    if(!validador.camposSonValidos(campos,req)){//si falta el campo foto
-      cambioArchivo=false;//entonces no se cambia la foto al editar
+    if(!validador.camposSonValidos(campos,req)){//si falta el campo
+      return res.status(500).send({ message: 'Debe ingresar los campos obligatorios.',type:'danger' });
     }
-    else{//si está el campo foto
-      cambioArchivo=true;//entonces se cambio el archivo al editar
-    }
-    if(!cambioArchivo){//si no se cambió la foto al editar
+    if(!validador.camposSonValidos(["foto"],req)){//si falta el campo
       update(paqueteDietaId,req,res,paquete.foto);
     }
-    else{//si se cambió el archivo al editar
+    else{
+      res.status(200)
       updateFile(cloudinary,req,paqueteDietaId,res)
     }
   });
@@ -146,7 +145,8 @@ exports.borrarPaqueteDietaById = function (req, res) {
     function (err, paquete) {
       if (err) {
         res.status(500).send({
-          message: getErrorMessage(err)
+          message: getErrorMessage(err),
+          type:'danger'
         });
       }
       // No errors

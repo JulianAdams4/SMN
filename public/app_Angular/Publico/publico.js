@@ -1,4 +1,4 @@
-var mainAplicationModule = angular.module('administrador', ['ngRoute', 'datatables','ui.calendar','ui.bootstrap','ui.bootstrap.datetimepicker']);
+var mainAplicationModule = angular.module('publico', ['ngRoute', 'datatables']);
 
 mainAplicationModule.config(['$locationProvider',
   function($locationProvider){
@@ -20,5 +20,5 @@ mainAplicationModule.directive('validFile',function(){
     };
 });
 angular.element(document).ready(function() {
-  angular.bootstrap(document, ['administrador']);
+  angular.bootstrap(document, ['publico']);
 });

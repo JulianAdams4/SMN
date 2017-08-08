@@ -40,7 +40,14 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           data: data
         }).then(function(response){
           $("div#divLoading").removeClass('show');
-          demo.mostrarNotificacion("success", "¡Plan nutricional creado exitosamente!");
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> Plan nutricional creado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
           $scope.backToList();
         }, function(errorResponse){
           $("div#divLoading").removeClass('show');
@@ -123,7 +130,14 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           data: data
         }).then(function(response){
           $("div#divLoading").removeClass('show');
-          demo.mostrarNotificacion("success", "¡Plan nutricional editado exitosamente!");
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> ¡Plan nutricional editado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
           $scope.backToList();
         }, function(errorResponse){
           $("div#divLoading").removeClass('show');

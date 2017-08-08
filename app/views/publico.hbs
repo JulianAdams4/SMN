@@ -76,15 +76,15 @@
                       <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fhunzafoodec%2F&tabs=timeline&height=650&small_header=true&hide_cover=true&show_facepile=true&appId" style="border:none;overflow:hidden;width:100%;height:650px" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                     </div>
                     <div class="col-md-8 ">
-                        <section ng-include="'/app_Angular/Paciente/views/paquetes.dieta.view.html'"></section>
+                        <section ng-include="'/app_Angular/Publico/views/paquetes.dieta.view.html'"></section>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <footer>
-        <div class="footer info">
-            <section ng-include="'/app_Angular/Paciente/views/info.centros.view.html'"></section>
+        <div class="footer">
+            <section ng-include="'/app_Angular/Publico/views/info.centros.view.html'"></section>
         </div>
     </footer>
 </body>
@@ -136,17 +136,16 @@
     <script src="/lib/angular-datatables/demo/src/archives/dist/angular-datatables.min.js" charset="utf-8"></script>
     <!-- BOOTSTRAP3-DIALOG -->
     <script type="text/javascript" src="/js/bootstrap.dialog.js"></script>
-<script src="/app_Angular/Administrador/administrador.js" charset="utf-8"></script>
-<script src="/app_Angular/Administrador/config/centro.routes.js" charset="utf-8"></script>
-<script src="/app_Angular/Administrador/config/paquetes.dieta.routes.js" charset="utf-8"></script>
-<!-- Controladores -->
-<script src="/app_Angular/Administrador/controllers/centro.controllers.js" charset="utf-8"></script>
-<script src="/app_Angular/Administrador/controllers/paquetes.dieta.controllers.js" charset="utf-8"></script>
+    <script src="/app_Angular/Publico/publico.js" charset="utf-8"></script>
+    <!-- Controladores -->
+    <script src="/app_Angular/Publico/controllers/centro.controller.js" charset="utf-8"></script>
+    <script src="/app_Angular/Publico/controllers/paquetes.dieta.controller.js" charset="utf-8"></script>
 
 </html>
 <style media="screen">
-  .info{
+  footer{
     background-color: #eee;
+    padding-bottom: 5%;
   }
   label{
     font-weight: bold;

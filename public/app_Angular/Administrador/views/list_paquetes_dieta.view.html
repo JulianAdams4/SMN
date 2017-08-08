@@ -18,15 +18,15 @@
             </div>
             </div>
             </div>
-            <div class="row">
+            <div class="row pull-right">
                 <div class="col-md-12">
-                  <div class="card col-md-3" ng-repeat="paquetedieta in paquetesDieta">
-                    <div class="card-content paquete">
-                          <div class="imageupload panel col-md-12 portfolio-filters wow fadeInUp " style="padding:0px;">
-                              <div class="file-tab panel-body">
-                                <img id="preview" class="thumbnail" ng-src="{{paquetedieta.foto}}"/>
+                  <div class="card col-md-4 panel" ng-repeat="paquetedieta in paquetesDieta" style="margin: 5px;">
+                    <div class="card-content paquete panel-body" >
+                          <div class="imageupload col-md-12 portfolio-filters wow fadeInUp " style="padding:0px;">
+                              <div class="file-tab">
+                                <img id="preview" class="thumbnail" ng-src="{{paquetedieta.foto}}" style="width: 100%; height: 271px;" />
                               </div>
-                            </div>
+                          </div>
                           <div class="col-md-12">
                             <h4 data-ng-bind="paquetedieta.nombre"></h4>
                           </div>

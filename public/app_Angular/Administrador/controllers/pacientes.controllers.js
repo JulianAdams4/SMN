@@ -38,7 +38,14 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           console.log(errorResponse);
           demo.mostrarNotificacion('danger',errorResponse.data.message);
         });
-        demo.mostrarNotificacion("success", "Paciente creado exitosamente!");
+        demo.showCustomNotification(
+          'top',
+          'right',
+          'Paciente creado exitosamente',
+          'success',
+          'ti-check',
+          3000
+        );
         $location.path('pacientes');
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
@@ -72,7 +79,14 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
               method: 'PUT',
               url: '/api/'+ route + idPacienteDelete
             }).then(function(response){
-              demo.mostrarNotificacion("success",messageSuccess);
+              demo.showCustomNotification(
+                'top',
+                'right',
+                messageSuccess,
+                'success',
+                'ti-check',
+                3000
+              );
               find();
             },function(errorResponse){
               demo.mostrarNotificacion("danger", messageError);
@@ -203,4 +217,18 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.goEditView = function(){
       $location.path('/pacientes/edit/'+$routeParams.idPaciente);
     }
+    // ==============================================
+    $scope.returnCurrentDate=function (){
+  		var today = new Date();
+  		var dd = today.getDate();
+  		var mm = today.getMonth()+1; //January is 0!
+  		var yyyy = today.getFullYear();
+      if(dd<10){
+        dd='0'+dd
+      }
+  		if(mm<10){
+        mm='0'+mm
+  		}
+  		return today = yyyy+'-'+mm+'-'+dd;
+  	}
   }]);

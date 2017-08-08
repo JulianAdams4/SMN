@@ -32,7 +32,6 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
           );
         $location.path('/centro');
       }, function(errorResponse){
-        //console.log(errorResponse.data.message);
           demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       });
     };

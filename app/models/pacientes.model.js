@@ -5,7 +5,9 @@ var pacienteSchema = new Schema({
     type: String,
     unique: true,
     required: '<i class="fa ti-alert"></i>La cédula es <b>obligatoria</b>',
-    match: [/\d{10}/, '<i class="fa ti-alert">Ingrese un número de cédula válido']//SOLO 10 NUMEROS
+    maxlength: [10, '<i class="fa ti-alert"></i>Ingrese un número de cédula válido'],
+    minlength: [10, '<i class="fa ti-alert"></i>Ingrese un número de cédula válido'],
+    match: [/\d{10}/, '<i class="fa ti-alert"></i>Ingrese un número de cédula válido']//DIGITOS
   },
   nombres:{
     type: String,
@@ -16,7 +18,7 @@ var pacienteSchema = new Schema({
       },
       message: '<i class="fa ti-alert"></i>Ingrese unos nombres válidos1'
     }],
-    match: [/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]*$/, '<i class="fa ti-alert"></i>Ingrese unos nombres válidos2']//SOLO LETRAS
+    match: [/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]*$/, '<i class="fa ti-alert"></i>Ingrese nombres válidos']//SOLO LETRAS
   },
   apellidos:{
     type: String,
@@ -25,9 +27,9 @@ var pacienteSchema = new Schema({
       validator: function(value){
         return value.length >= 2 && value.length <= 50;
       },
-      message: '<i class="fa ti-alert"></i>Ingrese unos apellidos válidos'
+      message: '<i class="fa ti-alert"></i>Ingrese apellidos válidos'
     }],
-    match: [/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]*$/, '<i class="fa ti-alert"></i>Ingrese unos apellidos válidos']//SOLO LETRAS
+    match: [/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑ]*$/, '<i class="fa ti-alert"></i>Ingrese apellidos válidos']//SOLO LETRAS
   },
   fechaNacimiento: {
     type: Date,
@@ -36,13 +38,13 @@ var pacienteSchema = new Schema({
   sexo: {
     type: String,
     enum: ['Masculino','Femenino'],
-    required: '<i class="fa ti-alert"></i>El campo sexo es <b>obligatorio</b>'
+    required: '<i class="fa ti-alert"></i>El sexo es <b>obligatorio</b>'
   },
   email: {
     type: String,
     lowercase: true,
     unique: true,
-    required: '<i class="fa ti-alert"></i>Ingrese el <b>correo electrónico</b>',
+    required: '<i class="fa ti-alert"></i>El <b>correo electrónico</b> es obligatorio',
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, '<i class="fa ti-alert">Ingrese un correo electrónico válido']
   },
   direccion: String,

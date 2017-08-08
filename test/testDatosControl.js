@@ -4,7 +4,7 @@ var server = require('../server');
 var mongoose = require("mongoose");
 var Paciente = mongoose.model('Paciente');
 var DatosControl = mongoose.model('DatosControl');
-
+var paciente={}
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -13,15 +13,23 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 describe('datosControl', () => {
+
     beforeEach((done) => {
         DatosControl.remove({}, (err) => {
-          done();
+          Paciente.remove({}, (err) => {
+            done();
           });
-        Paciente.remove({}, (err) => {
-          done();
-         });
+        });
     });
-});
+    afterEach((done) => {
+        DatosControl.remove({}, (err) => {
+          Paciente.remove({}, (err) => {
+            done();
+          });
+        });
+    });
+
+  });
 
 var patId = '';
 var datId = '';
@@ -59,7 +67,8 @@ describe('/POST datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             }
             chai.request('http://localhost:3000')
                 .post('/api/datosControlPaciente/'+patId)
@@ -120,7 +129,7 @@ describe('/POST datosControl', () => {
         .post('/api/datosControlPaciente/'+patId)
         .send(datosControl)
         .end((err, res) => {
-          res.should.have.status(201);
+          res.should.have.status(500);
           done();
         });
   });
@@ -134,7 +143,8 @@ describe('/POST datosControl', () => {
             valorDato: 150.00,
             unidadDato: 'kg'
           }
-        ]
+        ],
+        foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
     }
     chai.request('http://localhost:3000')
         .post('/api/datosControlPaciente/'+patId)
@@ -243,10 +253,38 @@ describe('/GET datosControl', () => {
       });
   });
 
+
+  var idPat = "";
+  var idDato = "";
+
 describe('/PUT datosControl', () => {
-      it('Actualiza los datos de control con un determinado ID', function(done){
+
+    beforeEach( function(done) {
+
+      var paciente = new Paciente({
+        cedula: '0912345678', nombres: 'Julian', apellidos: 'Adams',
+  		  email: 'jebenitez@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
+  		  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
+  		  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
+  		  frecuencia: '3 veces por semana'
+      });
+          paciente.save((err, patient) => {
+              idPat = '' + patient._id;
+              done();
+          });
+  	});
+
+    // Clean collection
+  	afterEach(function(done){
+  		Paciente.remove({},function(err){
+  			DatosControl.remove({}, function (err) {
+  			  done();
+  			});
+  		});
+  	});
+    it('Actualiza los datos de control con un determinado ID', function(done){
         var datosControl = new DatosControl({
-                idPaciente: patId,
+                idPaciente: idPat,
                 fechaDato: '2017-04-13',
                 observaciones:'pruebaEditar',
                 datos:[
@@ -260,22 +298,31 @@ describe('/PUT datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
                 .put('/api/datosControl/' + dato._id)
-                .send({ fechaDato: '2017-06-13',observaciones: 'cambio' })
+                .send({  datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 165.00,
+                    unidadDato: 'cm'
+                  }
+                ],observaciones:"actualizada"})
                 .end(function(err, res){
-                  res.should.have.status(200);
-                  done();
+                  if(err){
+                    console.log("akiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                  }
+                  res.should.have.status(204);
+                    done();
           });
         });
       });
-
-      it('No se ingresa fecha de dato de control al editar', function(done){
+    it('No se ingresa fecha de dato de control al editar', function(done){
         var datosControl = new DatosControl({
-                idPaciente: patId,
+                idPaciente: idPat,
                 fechaDato: '2017-04-13',
                 observaciones:'pruebaEditar',
                 datos:[
@@ -289,21 +336,22 @@ describe('/PUT datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
                 .put('/api/datosControl/' + dato._id)
                 .send({ fechaDato: '', observaciones: 'cambio' })
                 .end(function(err, res){
-                  res.should.have.status(200);
+                  res.should.have.status(500);
                     done();
           });
         });
       });
       it('No se ingresa observaciones de dato de control al editar', function(done){
         var datosControl = new DatosControl({
-                idPaciente: patId,
+                idPaciente: idPat,
                 fechaDato: '2017-04-13',
                 observaciones:'pruebaEditar',
                 datos:[
@@ -317,21 +365,22 @@ describe('/PUT datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
                 .put('/api/datosControl/' + dato._id)
                 .send({ observaciones: '' })
                 .end(function(err, res){
-              res.should.have.status(200);
+              res.should.have.status(500);
                     done();
           });
         });
       });
       it('No se ingresa ningún dato de control al editar', function(done){
         var datosControl = new DatosControl({
-                idPaciente: patId,
+                idPaciente: idPat,
                 fechaDato: '2017-04-13',
                 observaciones:'pruebaEditar',
                 datos:[
@@ -345,7 +394,8 @@ describe('/PUT datosControl', () => {
                     valorDato: 165.00,
                     unidadDato: 'cm'
                    }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
@@ -359,7 +409,7 @@ describe('/PUT datosControl', () => {
       });
       it('No se ingresa un campo obligatorio de un parametro al editar un dato de control', function(done){
         var datosControl = new DatosControl({
-                idPaciente: patId,
+                idPaciente: idPat,
                 fechaDato: '2017-04-13',
                 observaciones:'pruebaEditar',
                 datos:[
@@ -368,15 +418,15 @@ describe('/PUT datosControl', () => {
                     valorDato: 150.00,
                     unidadDato: 'kg'
                   }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
                 .put('/api/datosControl/' + dato._id)
                 .send({  datos:[
                   {
-                    nombreDato:'Peso',
-                    unidadDato: 'kg'
+                    nombreDato:'Peso'
                   }
                 ]})
                 .end(function(err, res){
@@ -399,7 +449,8 @@ describe('/DELETE datosControl', () => {
                     valorDato: 150.00,
                     unidadDato: 'kg'
                   }
-                ]
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
             });
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')

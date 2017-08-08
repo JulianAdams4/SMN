@@ -21,5 +21,15 @@ module.exports = {
       }
     }
     return true;
-  }
+  },
+  parametrosSonValidos: function(datos) {
+    campos=["nombreDato","valorDato","unidadDato"];
+    for (var i=0; i<datos.length ; i++){
+      var field = datos[i];
+        if(field.nombreDato == undefined || field.nombreDato == "" || field.valorDato == undefined || field.valorDato == "" || field.unidadDato == undefined || field.unidadDato == ""){
+          return false;
+        }
+      }
+      return true;
+    }
 }

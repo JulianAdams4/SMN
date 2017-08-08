@@ -404,7 +404,7 @@ describe('/PUT Paciente', function(){
 		// Creamos un nuevo paciente
 		var datos = {
 		  cedula: '5928077593', nombres: 'Julian', apellidos: 'Adams',
-		  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+		  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 		  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 		  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 		  frecuencia: '3 veces por semana'
@@ -425,31 +425,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -479,31 +479,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: '',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -533,85 +533,31 @@ describe('/PUT Paciente', function(){
 			var idPat = "1"; // ID falso
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
-				  	}
-				  ]
-				}
-				// Guardamos la historia alimentaria
-				var histEditado = new HistoriaA(histo);
-				histEditado.save((err, historiaSaved) => {
-					// Data a enviarse para editar
-					var data = {
-					  paciente: pacienteEditado, antecedente: antecedenteSaved, historia: historiaSaved
-					}
-					// Chai test
-					chai.request(puerto)
-					  .put('/api/pacientes/'+idPat)
-					  .send(data)
-					  .end((err, res) => {
-						res.should.have.status(500);
-						done();
-					}); // End chai
-				}); // historia save
-			}); // antecedente save
-		}); // save paciente
-	}); // end it
-	
-	
-	it('No edita un paciente sin cedula', function(done){
-		paciente.save((err, pacienteSaved) => {
-			var idPat = pacienteSaved._id;
-			var pacienteEditado = {
-			  _id: idPat, cedula: '', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
-			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
-			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
-			  frecuencia: '3 veces por semana'
-			};
-			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
-			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
-			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
-			  antecedentesFamiliares: "", observaciones: ""
-			}
-			// Guardamos el antecedente
-			var antecedEditado = new Antecedente(anteced);
-			antecedEditado.save((err, antecedenteSaved) => {
-				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
-				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
-				  grupoAlimentos:[
-				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -635,37 +581,91 @@ describe('/PUT Paciente', function(){
 		}); // save paciente
 	}); // end it
 
-	
-	it('No edita un paciente con cedula inválida', function(done){
+
+	it('No edita un paciente sin cedula', function(done){
 		paciente.save((err, pacienteSaved) => {
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
-			  _id: idPat, cedula: '123', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  _id: idPat, cedula: '', nombres: 'Adams', apellidos: 'Julian',
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
+				  	}
+				  ]
+				}
+				// Guardamos la historia alimentaria
+				var histEditado = new HistoriaA(histo);
+				histEditado.save((err, historiaSaved) => {
+					// Data a enviarse para editar
+					var data = {
+					  paciente: pacienteEditado, antecedente: antecedenteSaved, historia: historiaSaved
+					}
+					// Chai test
+					chai.request(puerto)
+					  .put('/api/pacientes/'+idPat)
+					  .send(data)
+					  .end((err, res) => {
+						res.should.have.status(500);
+						done();
+					}); // End chai
+				}); // historia save
+			}); // antecedente save
+		}); // save paciente
+	}); // end it
+
+
+	it('No edita un paciente con cedula inválida', function(done){
+		paciente.save((err, pacienteSaved) => {
+			var idPat = pacienteSaved._id;
+			var pacienteEditado = {
+			  _id: idPat, cedula: '123', nombres: 'Adams', apellidos: 'Julian',
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
+			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
+			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
+			  frecuencia: '3 veces por semana'
+			};
+			var anteced = {
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
+			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
+			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
+			  antecedentesFamiliares: "", observaciones: ""
+			}
+			// Guardamos el antecedente
+			var antecedEditado = new Antecedente(anteced);
+			antecedEditado.save((err, antecedenteSaved) => {
+				var histo = {
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
+				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
+				  grupoAlimentos:[
+				    {
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -695,31 +695,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: '', apellidos: 'Adams',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -749,31 +749,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Jul14n', apellidos: 'Adams',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -803,31 +803,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Julian', apellidos: '',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -857,31 +857,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Julian', apellidos: '4d4m5',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -911,31 +911,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -965,31 +965,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: '', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: '',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1019,31 +1019,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1073,31 +1073,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Femenino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Femenino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1128,31 +1128,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Sin definir', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Sin definir',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1182,31 +1182,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: '', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1236,31 +1236,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: '', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: '', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1290,31 +1290,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'www.espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'www.espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1344,31 +1344,31 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
-			  email: 'www.espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino', 
+			  email: 'www.espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '1100000011', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
 			  frecuencia: '3 veces por semana'
 			};
 			var anteced = {
-			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false, 
-			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false, 
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
 			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
-			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false, 
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
 			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
-			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "", 
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
 			  antecedentesFamiliares: "", observaciones: ""
 			}
 			// Guardamos el antecedente
 			var antecedEditado = new Antecedente(anteced);
 			antecedEditado.save((err, antecedenteSaved) => {
 				var histo = {
-				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false, 
-				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas", 
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
 				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
 				  grupoAlimentos:[
 				    {
-				      descripcion: "Lácteos", frecuencia: 3, 
-				      alimentosAgradan: "leche", alimentosDesagradan: "queso" 
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
 				  	}
 				  ]
 				}
@@ -1391,7 +1391,7 @@ describe('/PUT Paciente', function(){
 			}); // antecedente save
 		}); // save paciente
 	}); // end it
-	
+
 
 
 });

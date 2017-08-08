@@ -10,7 +10,10 @@ var centroSchema = new Schema({
       type: String,
       required: 'EL teléfono es obligatorio.'
     },
-  horariosAtencion: String,
+  horariosAtencion: {
+      type: String,
+      required: 'Los horarios son obligatorios.'
+    },
   servicios: String,
   nutricionista: {
     cedula:{
@@ -38,7 +41,7 @@ var centroSchema = new Schema({
     telefono: String,
   },
   redesSociales: [
-      { 
+      {
         nombre: {
           type: String,
           enum: ['Facebook','Twitter','Instagram']

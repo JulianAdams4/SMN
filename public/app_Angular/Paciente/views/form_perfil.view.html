@@ -35,7 +35,7 @@
                       minlength="2"
                       maxlength="50"
                       name='nombres'
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       data-ng-model="paciente.nombres"
                       required>
           </div>
@@ -49,7 +49,7 @@
                       minlength="2"
                       maxlength="50"
                       name="apellidos"
-                      onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                      onkeypress="return validateTextInput(event)"
                       placeholder="Apellidos"
                       data-ng-model="paciente.apellidos"
                       required>
@@ -75,7 +75,7 @@
                    name="nacimiento"
                    data-ng-model="paciente.fechaNacimiento"
                    min="1917-01-01"
-                   max="2013-12-31"
+                   max="{{returnCurrentDate()}}"
                    required>
           </div>
         </div>
@@ -103,7 +103,7 @@
                        class="form-control border-input"
                        name="ocupacion"
                        maxlength="50"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)"
+                       onkeypress="return validateTextInput(event)"
                        placeholder="Ocupación"
                        data-ng-model="paciente.ocupacion">
             </div>
@@ -127,7 +127,7 @@
                        class="form-control border-input"
                        name="direccion"
                        maxlength="200"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47&&event.charCode<58)"
+                       onkeypress="return validateTextNumericInput(event)"
                        placeholder="Dirección"
                        data-ng-model="paciente.direccion">
             </div>

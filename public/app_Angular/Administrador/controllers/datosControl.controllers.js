@@ -63,7 +63,14 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           data: data
         }).then(function(response){
           $('div#divLoading').removeClass('show');
-          demo.mostrarNotificacion("success", "Datos de control creado exitosamente!");
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> ¡Datos de control creado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
           $scope.backToList();
         }, function(errorResponse){
             $('div#divLoading').removeClass('show');
@@ -126,7 +133,14 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           data: data
         }).then(function(response){
           $('div#divLoading').removeClass('show');
-          demo.mostrarNotificacion("success", "¡Dato de control editado exitosamente!");
+          demo.showCustomNotification(
+            'top',
+            'right',
+            '<h5> ¡Centro editado <b>exitosamente</b>! </h5>',
+            'success',
+            'ti-check',
+            3000
+          );
           $scope.backToList();
         }, function(errorResponse){
           $('div#divLoading').removeClass('show');

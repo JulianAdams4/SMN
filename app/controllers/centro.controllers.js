@@ -4,17 +4,17 @@ var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var Centro = mongoose.model('Centro');
 
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
 
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
     }
-  } else {
-    return 'Error de servidor desconocido';
-  }
+    // Devolver el mensaje de error
+  return message;
 };
 
 exports.read = function(req, res){
@@ -61,7 +61,8 @@ exports.createCentro = function(req, res){
   centro.save( function(err){
     if (err) {
       return res.status(500).send({
-        message: "Error del servidor"
+        message: getErrorMessage(err),
+        type:'danger'
       })
     }
     else {
@@ -94,12 +95,12 @@ exports.editCentro = function(req, res){
     centro.horariosAtencion = req.body.horariosAtencion ? req.body.horariosAtencion : centro.horariosAtencion;
     centro.redesSociales = req.body.redesSociales ? req.body.redesSociales : centro.redesSociales;
     centro.nutricionista = req.body.nutricionista ? req.body.nutricionista : centro.nutricionista;
-    
+
     // Guardamos los cambios
     centro.save( function(err) {
       // Error del servidor
       if (err) {
-        res.status(500).send({ message: 'Ocurrió un error en el servidor' });
+        res.status(500).send({ message: getErrorMessage(err),type: 'danger' });
       }
       // Editado con exito
       res.status(200).json(centro);
@@ -117,7 +118,8 @@ exports.borrarCentroById = function (req, res) {
     function (err, centro) {
       if (err) {
         res.status(500).send({
-          message: getErrorMessage(err)
+          message: getErrorMessage(err),
+          type:'danger'
         });
       }
       // No errors
@@ -126,4 +128,3 @@ exports.borrarCentroById = function (req, res) {
       });
   });
 };
-

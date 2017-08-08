@@ -4,7 +4,7 @@
     <div class="col-md-8 col-sm-8">
       <div class="form-group"
            ng-class="{'has-error': planForm.fechaDato.$invalid && planForm.fechaDato.$pristine }">
-        <label>Fecha</label>
+        <label>Fecha:*</label>
         <input type="Date"
                class="form-control border-input"
                name="fechaDato"
@@ -20,7 +20,7 @@
   <div class="col-md-2 col-sm-2"></div>
   <div class="col-md-2 col-sm-2">
     <div class="form-group" ng-class="{'has-error': planForm.documento.$invalid && !planForm.documento.$pristine }">
-      <label>Documento:</label>
+      <label>Documento*:</label>
       <!-- The file is stored here. -->
       <input id="file"
              class="form-control border-input"

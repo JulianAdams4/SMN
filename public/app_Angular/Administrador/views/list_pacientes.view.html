@@ -40,6 +40,7 @@
                         	<td ng-if="paciente.borrado==true" style="color:gray" data-ng-bind="paciente.direccion"></td>
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.direccion"></td>
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.password"></td>
+                          <td ng-if="paciente.borrado==true" data-ng-bind="paciente.password"></td>
                             <td>
                                 <a title="Ver informacion" data-ng-href="#!/pacientes/ver/{{paciente._id}}">
                                     <i class="fa fa-lg fa-eye" aria-hidden="true" style="color:blue"></i>
