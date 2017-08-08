@@ -6,6 +6,16 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
     $scope.centro.redesSociales = [];
     $scope.newRed = {};
 
+    $scope.inputType = 'password';  
+  
+    // Función para mostrar o esconder contraseña
+    $scope.hideShowPassword = function(){
+      if ($scope.inputType == 'password')
+        $scope.inputType = 'text';
+      else
+        $scope.inputType = 'password';
+    };
+
     $scope.create = function() {
       $http({
         method: 'POST',

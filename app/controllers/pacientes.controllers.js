@@ -3,6 +3,7 @@
 var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var Paciente = mongoose.model('Paciente');
+//var Centro = mongoose.model('Centro');
 var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
@@ -404,6 +405,7 @@ exports.ingresar = function(req, res){
 
 exports.signIn = function(req, res){
   var pacienteIn = Paciente(req.body);
+  //var centro = Centro(req.body);
   Paciente.findOne({'email': pacienteIn.email}, function(err, paciente){
     if(err){
       return res.status(500).send({
@@ -411,6 +413,7 @@ exports.signIn = function(req, res){
       })
     }
     if(!paciente){
+      Centro.findOne({})
       return res.status(400).send({
         message: 'email no se encuentra registrado'
       })
