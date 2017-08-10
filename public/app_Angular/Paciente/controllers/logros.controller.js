@@ -4,43 +4,91 @@ angular.module('paciente')
 
 // Configuration for charts
 .config(['ChartJsProvider', function (ChartJsProvider) {
-    // Configure all charts
-    ChartJsProvider.setOptions({
-        chartColors: [
-            "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
-            "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
-            "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
-            "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
-            "#d70206", "#59922b", "#d17905", "#f4c63d"
-        ],
-        responsive: true
-    });
+  // Configure all charts
+  ChartJsProvider.setOptions({
+    chartColors: [
+      "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
+      "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
+      "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
+      "#d70206", "#59922b", "#d17905", "#f4c63d", "#453d3f", "#f05b4f", "#0544d3", "#6b0392", "#f05b4f",
+      "#d70206", "#59922b", "#d17905", "#f4c63d"
+    ],
+    responsive: true
+  });
 }])
 
 .controller('LogrosController',['$scope','$http','$routeParams','$location','$window',
   function($scope, $http, $routeParams, $location, $window) {
+
+    $scope.currentDate  = new Date();
+    $scope.Year  = $scope.currentDate.getFullYear();
+    $scope.Month = $scope.currentDate.getMonth();
+    $scope.Day   = $scope.currentDate.getDay();
+    $scope.datosArray = [];
     
-    $scope.today = new Date();
+    $scope.parametros = [];
+    
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+    }
 
     $scope.init = function(){
-      /*
+      $scope.getDatosPaciente();
+    }
+
+    $scope.getDatosPaciente = function () {
+      var url = '/api/datosControlPaciente';
       $http({
         method: 'GET',
-        url: '/api/centro'
+        url: url
       })
       .then(
         function(response){
-          $scope.centros = response.data;
+          var datosPaciente = response.data;
+          var listaParametros = [];
+          
+          for (var i = 0; i < datosPaciente.length; i++) {
+            var datosArr = datosPaciente[i].datos;
+            var fecha = datosPaciente[i].fechaDato;
+            for (var j = 0; j < datosArr.length; j++) {
+              var nombreDC = datosArr[j].nombreDato;
+              var valorDC = datosArr[j].valorDato;
+              var elem = {
+                "fecha": fecha,
+                "nombre": nombreDC.capitalize(),
+                "valor": valorDC
+              }
+              // Si el parametro no está en lista, se añade
+              if( listaParametros.indexOf( nombreDC.capitalize() ) < 0 ){
+                listaParametros.push( nombreDC.capitalize() );
+              }
+              $scope.datosArray.push(elem);
+            }
+          }
+          // Lista de string -> lista de objects
+          for ( var z=0; z<listaParametros.length ; z++ ){
+            var par = {
+              "value": listaParametros[z].capitalize(),
+              "label": listaParametros[z].capitalize()
+            }
+            $scope.parametros.push(par);
+          }
+          $scope.formularioEC = {};
+          $scope.formularioEC.parametro = $scope.parametros[0].label;
+          // Fechas del formulario 
+          $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
+          $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
         }, 
         function(errorResponse){
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          console.log(errorResponse);
+          // Fechas del formulario 
+          $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
+          $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
+          var defaultErrType = errorResponse.data.type || "danger";
+          var defaultErrMessage = errorResponse.data.message || "Ha ocurrido un error y no se pudo obtener sus logros";
+          demo.mostrarNotificacion( defaultErrType, defaultErrMessage );
         }
-      )*/
-      $scope.formularioEC = {};
-      $scope.formularioEC.parametro = 'porcentajeGrasa';
-      var anio = $scope.today.getFullYear();
-      $scope.formularioEC.fin = new Date(anio, 11, 31);
-      $scope.formularioEC.inicio = new Date(anio, 0, 1);
+      );
     }
 
     $scope.resetChart = function(){
@@ -53,27 +101,24 @@ angular.module('paciente')
     // ===================================
     //   Variables del chart 
     // =================================== 
+    $scope.series = [ "Año" ];
     $scope.labels = [
       'Ene', 'Feb', 'Mar', 'Abr', 
       'May', 'Jun', 'Jul', 'Ago',
       'Sep', 'Oct', 'Nov', 'Dic'
     ];
+    /*
     $scope.parametros = [
-      { "value":"talla", "label":"Talla" },
-      { "value":"pesoActual", "label":"Peso actual" },
-      { "value":"imc", "label":"IMC" },
-      { "value":"porcentajeGrasa", "label":"Porcentaje de grasa" },
-      { "value":"hombroMedida", "label":"Medida hombros" },
-      { "value":"pechoMedida", "label":"Medida pecho" },
-      { "value":"cinturaMedida", "label":"Medida cintura" },
-      { "value":"abdomenMedida", "label":"Medida abdomen" },
-      { "value":"caderaMedida", "label":"Medida cadera" },
-      { "value":"espaldaMedida", "label":"Medida espalda" },
-      { "value":"piernaMedida", "label":"Medida pierna" },
-      { "value":"pantorillaMedida", "label":"Medida pantorrilla" },
-      { "value":"bicepsMedida", "label":"Medida biceps" }
+      { 
+        "value":"talla", 
+        "label":"Talla" 
+      },
+      { 
+        "value":"pesoActual", 
+        "label":"Peso actual" 
+      }
     ];
-    $scope.series = [ "Año" ];
+    */
     $scope.datasetOverride = [
       { backgroundColor: 'transparent' }
     ];
@@ -95,7 +140,6 @@ angular.module('paciente')
         }]
       }
     };
-
     // ===================================
 
     $scope.submit = function(form){
@@ -117,13 +161,13 @@ angular.module('paciente')
           $scope.data = response.data.data;
         }, 
         function(errorResponse){
-          $scope.series = ["2017"];
+          $scope.series = ["Año"];
           $scope.data = [
-            [0, 1, 0, 3, 0, 5, 0, 5, 0, 3, 0, 1]
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
           ];
           var defaultErrType = errorResponse.data.type || "danger";
           var defaultErrMessage = errorResponse.data.message || "Ha ocurrido un error y no se pudo obtener sus logros";
-          demo.mostrarNotificacion( defaultErrType, defaultErrMessage);
+          demo.mostrarNotificacion( defaultErrType, defaultErrMessage );
         }
       );
     }
