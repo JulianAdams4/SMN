@@ -26,8 +26,8 @@
                       minlength="10"
                       maxlength="10"
                       name='cedula'
-                      onkeypress="return (event.charCode>47 && event.charCode<58)"
-                      data-ng-model="paciente.cedula"
+                      onkeypress="return (event.charCode>47 && event.charCode<58)" 
+                      data-ng-model="paciente.cedula" 
                       required>
           </div>
         </div>
@@ -401,13 +401,13 @@
       <div class="col-md-12 col-sm-12">
         <div class="form-group">
             <label>Antecedentes Personales</label>
+            <!-- required -->
             <input type="text"
                    class="form-control border-input"
                    name="antecedentesPersonales"
                    maxlength="300"
                    onkeypress="return validateTextInput(event)"
-                   data-ng-model="antecedente.antecedentesPersonales"
-                   required>
+                   data-ng-model="antecedente.antecedentesPersonales">
         </div>
       </div>
     </div>
@@ -415,13 +415,13 @@
       <div class="col-md-12 col-sm-12">
         <div class="form-group">
             <label>Antecedentes Familiares</label>
+            <!-- required -->
             <input type="text"
                    class="form-control border-input"
                    name="antecedentesFamiliares"
                    maxlength="300"
                    onkeypress="return validateTextInput(event)"
-                   data-ng-model="antecedente.antecedentesFamiliares"
-                   required>
+                   data-ng-model="antecedente.antecedentesFamiliares">
         </div>
       </div>
     </div>

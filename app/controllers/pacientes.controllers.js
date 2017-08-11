@@ -136,6 +136,14 @@ exports.list = function(req, res){
 exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body);
   var passwordNoEncriptada = "";
+
+  // Validaciones
+  if ( validador.validarCedula(paciente.cedula) ) {
+    return res.status(500).send({
+      message: "El número de cécula del paciente no es válido", type: "danger"
+    });
+  }
+
   passwordNoEncriptada = GenerarPassword();//Genera contraseña sin encriptar
   paciente.password = crypto.encriptar(passwordNoEncriptada);//Asigna un password encriptado a un paciente
 
@@ -144,7 +152,7 @@ exports.createPaciente = function(req, res){
       return res.status(500).send({
         message: getErrorMessage(err),
         type: "danger"
-      })
+      });
     } else {
       //ENVIAR CONTRASEÑA A EMAIL DEL NUEVO PACIENTE
       var transporter = nodemailer.createTransport({

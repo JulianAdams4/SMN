@@ -2,6 +2,7 @@
 
 angular.module('administrador').controller('PacientesController',['$scope','$http','$routeParams','$location',
   function($scope, $http, $routeParams, $location) {
+
     $scope.paciente = {};
     $scope.idPacienteEdit = '';
     $scope.pacienteEdit = {};
@@ -12,44 +13,48 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.newGrupo = {};
 
     $scope.create = function() {
-
-      $http({
-        method: 'POST',
-        url: '/api/pacientes',
-        data: $scope.paciente
-      }).then(function(response){
-        $scope.antecedente.idPaciente = response.data._id;
+      if ( validarCedula( $scope.paciente.cedula ) ) {
+        demo.mostrarNotificacion('danger', "El número de cécula del paciente no es válido");
+      } 
+      else {
         $http({
           method: 'POST',
-          url: '/api/antecedentes',
-          data: $scope.antecedente
+          url: '/api/pacientes',
+          data: $scope.paciente
         }).then(function(response){
-        }, function(errorResponse){
-          demo.mostrarNotificacion('danger',errorResponse.data.message);
-        });
+          $scope.antecedente.idPaciente = response.data._id;
+          $http({
+            method: 'POST',
+            url: '/api/antecedentes',
+            data: $scope.antecedente
+          }).then(function(response){
+          }, function(errorResponse){
+            
+          });
 
-        $scope.historiaAlimentaria.idPaciente = response.data._id;
-        $http({
-          method: 'POST',
-          url: '/api/historiaAlimentaria',
-          data: $scope.historiaAlimentaria
-        }).then(function(response){
+          $scope.historiaAlimentaria.idPaciente = response.data._id;
+          $http({
+            method: 'POST',
+            url: '/api/historiaAlimentaria',
+            data: $scope.historiaAlimentaria
+          }).then(function(response){
+          }, function(errorResponse){
+            console.log(errorResponse);
+            demo.mostrarNotificacion('danger',errorResponse.data.message);
+          });
+          demo.showCustomNotification(
+            'top',
+            'right',
+            'Paciente creado exitosamente',
+            'success',
+            'ti-check',
+            3000
+          );
+          $location.path('pacientes');
         }, function(errorResponse){
-          console.log(errorResponse);
-          demo.mostrarNotificacion('danger',errorResponse.data.message);
+          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
         });
-        demo.showCustomNotification(
-          'top',
-          'right',
-          'Paciente creado exitosamente',
-          'success',
-          'ti-check',
-          3000
-        );
-        $location.path('pacientes');
-      }, function(errorResponse){
-        demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
-      });
+      }
     };
 
     var find = function(){
@@ -231,4 +236,45 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
   		}
   		return today = yyyy+'-'+mm+'-'+dd;
   	}
+    // ===============================================
+    function validarCedula( numeroCedula ) {
+      /*  True == Fail validation  */
+      var array = numeroCedula.split('');
+      var num = array.length;
+
+      if ( num != 10 ) {
+          return true;
+      } 
+      else {
+          var total = 0;
+          var digito = (array[9]*1);
+
+          for(var i=0; i < (num-1); i++ ){
+              var mult = 0;
+              if ( ( i%2 ) !== 0 ) {
+                  total = total + ( array[i] * 1 );
+              }
+              else {
+                  mult = array[i] * 2;
+                  if ( mult > 9 )
+                    total = total + ( mult - 9 );
+                  else
+                    total = total + mult;
+              }
+          }
+
+          var decena = total / 10;
+          decena = Math.floor( decena );
+          decena = ( decena + 1 ) * 10;
+          var final = ( decena - total );
+
+          if ( ( final == 10 && digito === 0 ) || ( final == digito ) ) {
+              return false;
+          }
+          else {
+              return true;
+          }
+      } // else
+    }
+
   }]);
