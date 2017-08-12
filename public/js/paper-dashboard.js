@@ -1,17 +1,17 @@
 /*!
-    
+
  =========================================================
  * Paper Dashboard - v1.1.2
  =========================================================
- 
+
  * Product Page: http://www.creative-tim.com/product/paper-dashboard
  * Copyright 2017 Creative Tim (http://www.creative-tim.com)
  * Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard/blob/master/LICENSE.md)
- 
+
  =========================================================
- 
+
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- 
+
  */
 
 
@@ -93,6 +93,37 @@ pd = {
             navbar_content = '<div class="sidebar-wrapper">' + navbar_content + '</div>';
 
             $off_canvas_sidebar.html(navbar_content);
+            //------------------Ocultar menú--------- Stalyn Gonzabay
+            $off_canvas_sidebar.click(function (){
+               if(pd.misc.navbar_menu_visible == 1) {
+                   $('html').removeClass('nav-open');
+                   pd.misc.navbar_menu_visible = 0;
+                   $('#bodyClick').remove();
+                    setTimeout(function(){
+                       $toggle.removeClass('toggled');
+                    }, 400);
+
+               } else {
+                   setTimeout(function(){
+                       $toggle.addClass('toggled');
+                   }, 430);
+
+                   div = '<div id="bodyClick"></div>';
+                   $(div).appendTo("body").click(function() {
+                       $('html').removeClass('nav-open');
+                       pd.misc.navbar_menu_visible = 0;
+                       $('#bodyClick').remove();
+                        setTimeout(function(){
+                           $toggle.removeClass('toggled');
+                        }, 400);
+                   });
+
+                   $('html').addClass('nav-open');
+                   pd.misc.navbar_menu_visible = 1;
+
+               }
+            });
+            //------------------------------------------
 
             $('body').append($off_canvas_sidebar);
 
@@ -133,6 +164,11 @@ pd = {
             });
             navbar_initialized = true;
         }
+
+        $(".nav li").on("click", function() {
+          $(".nav li").removeClass("active");
+          $(this).addClass("active");
+        });
 
     }
 }
