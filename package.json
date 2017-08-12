@@ -28,6 +28,7 @@
     "moment": "^2.18.1",
     "mongoose": "^4.9.9",
     "mongoose-double": "0.0.1",
+    "mongoose-seed": "^0.3.2",
     "morgan": "^1.8.1",
     "nodemailer": "^4.0.1"
   },
