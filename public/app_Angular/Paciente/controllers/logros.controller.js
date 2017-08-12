@@ -50,15 +50,6 @@ angular.module('paciente')
           
           if ( datosPaciente.length < 2 ) {
             $scope.suficientesDatos = false;
-/*            $scope.formularioEC = {};
-            $scope.formularioEC.parametro = "";
-            // Fechas del formulario 
-            $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
-            $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
-            var defaultErrType = "danger";
-            var defaultErrMessage = "No posee datos suficientes para mostrar este contenido";
-            demo.mostrarNotificacion( defaultErrType, defaultErrMessage );
-*/
           } 
           else {
             $scope.suficientesDatos = true;
@@ -124,26 +115,15 @@ angular.module('paciente')
       'May', 'Jun', 'Jul', 'Ago',
       'Sep', 'Oct', 'Nov', 'Dic'
     ];
-    /*
-    $scope.parametros = [
-      { 
-        "value":"talla", 
-        "label":"Talla" 
-      },
-      { 
-        "value":"pesoActual", 
-        "label":"Peso actual" 
-      }
-    ];
-    */
+
     $scope.datasetOverride = [
-      { backgroundColor: 'transparent' }
+//      { backgroundColor: 'transparent' }
     ];
     // Fake data
     $scope.data = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     ];
-    $scope.options = {
+    $scope.lineOptions = {
       legend: { display: true },
       scales: {
         xAxes: [
@@ -157,12 +137,26 @@ angular.module('paciente')
         }]
       }
     };
+    $scope.barOptions = {
+      legend: { display: true },
+      scales: {
+        xAxes: [
+          { ticks: { maxRotation: 0, minRotation: 0 } }
+        ],
+        yAxes: [
+          { 
+            type: 'linear', display: true, position: 'left', 
+            ticks: { beginAtZero: true }, 
+            stacked: true 
+          }
+        ]
+      }
+    };
     // ===================================
 
     $scope.submit = function(form){
-      var url = '/api/cliente/parametro-en-rango';
-      var dataToSend = { 
-        'cliente': '0001', 
+      var url = '/api/datosControlPacienteRango';
+      var dataToSend = {
         'inicio': $scope.formularioEC.inicio, 
         'fin': $scope.formularioEC.fin, 
         'parametro': $scope.formularioEC.parametro 
@@ -180,7 +174,7 @@ angular.module('paciente')
         function(errorResponse){
           $scope.series = ["Año"];
           $scope.data = [
-            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
           ];
           var defaultErrType = errorResponse.data.type || "danger";
           var defaultErrMessage = errorResponse.data.message || "Ha ocurrido un error y no se pudo obtener sus logros";
