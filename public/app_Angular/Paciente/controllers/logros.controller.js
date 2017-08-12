@@ -20,6 +20,7 @@ angular.module('paciente')
 .controller('LogrosController',['$scope','$http','$routeParams','$location','$window',
   function($scope, $http, $routeParams, $location, $window) {
 
+    $scope.suficientesDatos = true;
     $scope.currentDate  = new Date();
     $scope.Year  = $scope.currentDate.getFullYear();
     $scope.Month = $scope.currentDate.getMonth();
@@ -47,47 +48,63 @@ angular.module('paciente')
           var datosPaciente = response.data;
           var listaParametros = [];
           
-          for (var i = 0; i < datosPaciente.length; i++) {
-            var datosArr = datosPaciente[i].datos;
-            var fecha = datosPaciente[i].fechaDato;
-            for (var j = 0; j < datosArr.length; j++) {
-              var nombreDC = datosArr[j].nombreDato;
-              var valorDC = datosArr[j].valorDato;
-              var elem = {
-                "fecha": fecha,
-                "nombre": nombreDC.capitalize(),
-                "valor": valorDC
+          if ( datosPaciente.length < 2 ) {
+            $scope.suficientesDatos = false;
+/*            $scope.formularioEC = {};
+            $scope.formularioEC.parametro = "";
+            // Fechas del formulario 
+            $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
+            $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
+            var defaultErrType = "danger";
+            var defaultErrMessage = "No posee datos suficientes para mostrar este contenido";
+            demo.mostrarNotificacion( defaultErrType, defaultErrMessage );
+*/
+          } 
+          else {
+            $scope.suficientesDatos = true;
+            for (var i = 0; i < datosPaciente.length; i++) {
+              var datosArr = datosPaciente[i].datos;
+              var fecha = datosPaciente[i].fechaDato;
+              for (var j = 0; j < datosArr.length; j++) {
+                var nombreDC = datosArr[j].nombreDato;
+                var valorDC = datosArr[j].valorDato;
+                var elem = {
+                  "fecha": fecha,
+                  "nombre": nombreDC.capitalize(),
+                  "valor": valorDC
+                }
+                // Si el parametro no está en lista, se añade
+                if( listaParametros.indexOf( nombreDC.capitalize() ) < 0 ){
+                  listaParametros.push( nombreDC.capitalize() );
+                }
+                $scope.datosArray.push(elem);
               }
-              // Si el parametro no está en lista, se añade
-              if( listaParametros.indexOf( nombreDC.capitalize() ) < 0 ){
-                listaParametros.push( nombreDC.capitalize() );
+            }
+            // Lista de string -> lista de objects
+            for ( var z=0; z<listaParametros.length ; z++ ){
+              var par = {
+                "value": listaParametros[z].capitalize(),
+                "label": listaParametros[z].capitalize()
               }
-              $scope.datosArray.push(elem);
+              $scope.parametros.push(par);
             }
-          }
-          // Lista de string -> lista de objects
-          for ( var z=0; z<listaParametros.length ; z++ ){
-            var par = {
-              "value": listaParametros[z].capitalize(),
-              "label": listaParametros[z].capitalize()
-            }
-            $scope.parametros.push(par);
-          }
-          $scope.formularioEC = {};
-          $scope.formularioEC.parametro = $scope.parametros[0].label;
-          // Fechas del formulario 
-          $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
-          $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
+            $scope.formularioEC = {};
+            $scope.formularioEC.parametro = $scope.parametros[0].label;
+            // Fechas del formulario 
+            $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
+            $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
+          } // else ( >= 2 )
         }, 
         function(errorResponse){
-          console.log(errorResponse);
+          $scope.suficientesDatos = false;
+          //console.log(errorResponse);
           // Fechas del formulario 
           $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
           $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
           var defaultErrType = errorResponse.data.type || "danger";
           var defaultErrMessage = errorResponse.data.message || "Ha ocurrido un error y no se pudo obtener sus logros";
           demo.mostrarNotificacion( defaultErrType, defaultErrMessage );
-        }
+        } // errorResponse
       );
     }
 
