@@ -28,6 +28,14 @@ var centroSchema = new Schema({
       type: String,
       required: 'Los apellidos son obligatorios.'
     },
+    email: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: '<i class="fa ti-alert"></i>Ingrese el <b>correo electrónico</b>',
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, '<i class="fa ti-alert">Ingrese un correo electrónico válido']
+    },
+    password: String,
     estudios: String,
     especializaciones: String,
     telefono: String,

@@ -121,8 +121,7 @@
                        onkeypress="return event.charCode>47 && event.charCode<58"
                        placeholder="Cédula"
                        data-ng-model="centro.nutricionista.cedula"
-                       required
-                       >
+                       required>
               </div>
       </div>
       <div class="col-md-4 col-sm-4">
@@ -138,6 +137,38 @@
                        placeholder="Teléfono"
                        data-ng-model="centro.nutricionista.telefono"
                        >
+              </div>
+      </div>
+      <div class="col-md-2 col-sm-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-2"></div>
+        <div class="col-md-4 col-sm-4">
+        <div class="form-group"
+                   ng-class="{'has-error': centroForm.nutricionista.cedula.$invalid && !centroForm.nutricionista.cedula.$pristine }">
+                <label>Correo electrónico*</label>
+                <input type="email"
+                       class="form-control border-input"
+                       name="email"
+                       placeholder="Correo electrónico"
+                       data-ng-model="centro.nutricionista.email"
+                       required>
+              </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <div class="form-group"
+                   ng-class="{'has-error': centroForm.nutricionista.telefono.$invalid && !centroForm.nutricionista.telefono.$pristine }">
+                <label>Contraseña*</label>
+                <input type="{{inputType}}"
+                       class="form-control border-input"
+                       minlength="8"
+                       name="password"
+                       placeholder="Contraseña"
+                       data-ng-model="centro.nutricionista.password"
+                       required>
+                <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
+                <label for="checkbox">Mostrar contraseña</label>
+                <!--label for="checkbox" ng-if="!passwordCheckbox">Mostrar contraseña</label-->  
               </div>
       </div>
       <div class="col-md-2 col-sm-2"></div>
