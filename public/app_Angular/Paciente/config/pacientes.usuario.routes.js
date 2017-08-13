@@ -4,9 +4,10 @@ angular.module('paciente').config(['$routeProvider',
   function($routeProvider){
     $routeProvider.
     when('/', {
-      templateUrl: '/app_Angular/Paciente/views/info.centros.paciente.view.html'
-    })
-    .when('/mis-datos', {
+      templateUrl: '/app_Angular/Paciente/views/principal.view.html'
+    }).when('/principal', {
+      templateUrl: '/app_Angular/Paciente/views/principal.view.html'
+    }).when('/mis-datos', {
       templateUrl: '/app_Angular/Paciente/views/datosDeControl.view.html'
     })
     .when('/mi-plan', {
