@@ -78,7 +78,7 @@ exports.pacienteById = function(req, res, next, id){
         })
       }
       if(!paciente){
-        return res.status(404).send({
+        return res.status(200).send({
           message: '<i class="fa ti-alert"></i>No existe el paciente',
           type: 'danger'
         })
@@ -95,7 +95,7 @@ exports.pacienteById = function(req, res, next, id){
         })
       }
       if(!paciente){
-        return res.status(404).send({
+        return res.status(200).send({
           message: '<i class="fa ti-alert"></i>No existe el paciente',
           type: 'danger'
         })
@@ -165,7 +165,7 @@ exports.createPaciente = function(req, res){
       transporter.sendMail(mailOptions, function(error, info) {
           if (error) {
               console.log(error);
-              res.redirect('/');
+              res.redirect('/')
           } else {
               console.log('Mensaje enviado: ' + info.response);
               //res.redirect('/');

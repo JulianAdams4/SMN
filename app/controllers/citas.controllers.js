@@ -14,7 +14,7 @@ var getErrorMessage = function(err){
 };
 
 exports.listCitas = function(req, res){
-  Cita.find({},'title start end stick backgroundColor',function(err, citas){
+  Cita.find({},function(err, citas){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err)

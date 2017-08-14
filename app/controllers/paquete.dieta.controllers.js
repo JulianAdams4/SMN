@@ -44,7 +44,6 @@ exports.paqueteDietaById = function(req, res, next, id){
             return res.status(404).json({ message: 'No se ha encontrado' });
         }
         req.paqueteDieta = paquete;
-        next();
     });
 };
 
