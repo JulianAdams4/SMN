@@ -150,8 +150,8 @@ exports.createPaciente = function(req, res){
       var transporter = nodemailer.createTransport({
           service: 'Gmail',
           auth: {
-              user: 'saludprimerosadaw@gmail.com',
-              pass: 'dawsaludprimero'
+              user: 'automatic.mensaje@gmail.com',
+              pass: '180895Dtb'
           }
       });
 
