@@ -46,6 +46,7 @@ describe('/POST Centro', () => {
               cedula:'1721989364',
               nombres:'Angie',
               apellidos: 'Del Pezo',
+              email: 'evelynbenitez263@gmail.com'
             },
         };
         chai.request('http://localhost:3000')
@@ -180,7 +181,7 @@ describe('/POST Centro', () => {
                     },
                 })
                 .end((err, res) => {
-                  res.should.have.status(200);
+                  res.should.have.status(500);
                   done();
 
         });
