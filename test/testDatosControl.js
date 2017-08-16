@@ -343,6 +343,35 @@ describe('/PUT datosControl', () => {
           });
         });
       });
+      it('Actualiza foto de seguimiento de un dato de control', function(done){
+        var datosControl = new DatosControl({
+                idPaciente: idPat,
+                fechaDato: '2017-04-13',
+                observaciones:'pruebaEditar',
+                datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 150.00,
+                    unidadDato: 'kg'
+                  },
+                  {
+                    nombreDato:'Altura',
+                    valorDato: 165.00,
+                    unidadDato: 'cm'
+                   }
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
+            });
+        datosControl.save((err, dato) => {
+            chai.request('http://localhost:3000')
+                .put('/api/datosControl/' + dato._id)
+                .send({ foto: 'https://www.bellezapura.com/wp-content/uploads/2013/05/nutricion-magnesio-colageno-ana-maria-lajusticia.jpg' })
+                .end(function(err, res){
+              res.should.have.status(204);
+                    done();
+          });
+        });
+      });
     it('No se ingresa fecha de dato de control al editar', function(done){
         var datosControl = new DatosControl({
                 idPaciente: idPat,
@@ -452,6 +481,35 @@ describe('/PUT datosControl', () => {
                     nombreDato:'Peso'
                   }
                 ]})
+                .end(function(err, res){
+              res.should.have.status(500);
+                    done();
+          });
+        });
+      });
+      it('No se ingresa foto de seguimiento al editar', function(done){
+        var datosControl = new DatosControl({
+                idPaciente: idPat,
+                fechaDato: '2017-04-13',
+                observaciones:'pruebaEditar',
+                datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 150.00,
+                    unidadDato: 'kg'
+                  },
+                  {
+                    nombreDato:'Altura',
+                    valorDato: 165.00,
+                    unidadDato: 'cm'
+                   }
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
+            });
+        datosControl.save((err, dato) => {
+            chai.request('http://localhost:3000')
+                .put('/api/datosControl/' + dato._id)
+                .send({ foto: '' })
                 .end(function(err, res){
               res.should.have.status(500);
                     done();
