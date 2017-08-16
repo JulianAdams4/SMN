@@ -1,39 +1,38 @@
 <div class="row" data-ng-controller='calendario.controller'>
     <div class="col-md-5">
+      <div class="panelCal">
+        <div class="dropdown form-group dropdown-start-parent">
+            <label>Hora y Fecha</label>
+            <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target=".dropdown-start-parent"
+               href="#">
+                <div class="input-group date">
+                    <input type="text" class="form-control" data-ng-model="cita.start" ng-value="cita.start | date:'dd/MMMM/yyyy h:mma'" readonly>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <datetimepicker data-ng-model="cita.start" data-before-render="DateBeforeRender($view, $dates)" data-datetimepicker-config="{ dropdownSelector: '#dropdownStart' }"></datetimepicker>
+            </ul>
+        </div>
 
-      <div class="dropdown form-group dropdown-start-parent">
-          <label>Hora y Fecha</label>
-          <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target=".dropdown-start-parent"
-             href="#">
-              <div class="input-group date">
-                  <input type="text" class="form-control" data-ng-model="cita.start" ng-value="cita.start | date:'dd/MMMM/yyyy h:mma'" readonly>
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-              </div>
-          </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <datetimepicker data-ng-model="cita.start" data-before-render="DateBeforeRender($view, $dates)" data-datetimepicker-config="{ dropdownSelector: '#dropdownStart' }"></datetimepicker>
-          </ul>
+        <div class="form-group">
+          <label><small>Duración</small></label>
+          <select class="form-control" data-ng-model="cita.duracion">
+            <option value="15">15 minutos</option>
+            <option value="30">30 minutos</option>
+            <option value="60">1 hora</option>
+          </select>
+        </div>
+        <label>
+          <input type="checkbox" data-ng-model='cita.estaOcupado' checked="false" /> Marcar como Ocupado
+        </label>
+        <br>
+        <button class="btn btn-primary" type="button" name="button" ng-click="guardarCita(cita)">Guardar Evento</button>
       </div>
-
-      <div class="form-group">
-        <label><small>Duración</small></label>
-        <select class="form-control" data-ng-model="cita.duracion">
-          <option value="15">15 minutos</option>
-          <option value="30">30 minutos</option>
-          <option value="60">1 hora</option>
-        </select>
-      </div>
-      <label>
-        <input type="checkbox" data-ng-model='cita.estaOcupado' checked="false" /> Marcar como Ocupado
-      </label>
-      <br>
-      <button class="btn btn-primary" type="button" name="button" ng-click="guardarCita(cita)">Guardar Evento</button>
-
-
-
-
     </div>
     <div class="col-md-7" ng-init="init()">
-      <div class="calendar" ng-model="eventSources" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div>
+      <div class="panelCal">
+          <div class="calendar" ng-model="eventSources" calendar="myCalendar" ui-calendar="uiConfig.calendar"></div>
+      </div>
     </div>
   </div>
