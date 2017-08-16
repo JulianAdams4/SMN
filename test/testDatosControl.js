@@ -133,7 +133,7 @@ describe('/POST datosControl', () => {
           done();
         });
   });
-  //NO INGRESA FECHA DATO
+  //NO INGRESA OBSERVACIONES
   it('No ingresa observaciones del dato de control', (done) => {
     var datosControl = {
         idPaciente: patId,
@@ -190,7 +190,7 @@ describe('/POST datosControl', () => {
           done();
         });
   });
-  //NO INGRESA NOMBRE DATO
+  //NO INGRESA VALOR DATO
   it('No ingresa el valor de un dato de control', (done) => {
     var datosControl = {
         idPaciente: patId,
@@ -230,6 +230,29 @@ describe('/POST datosControl', () => {
           done();
         });
   });
+//NO INGRESA FOTO DE SEGUIMIENTO
+  it('No ingresa foto de seguimiento del dato de control', (done) => {
+    var datosControl = {
+        idPaciente: patId,
+        fechaDato: '2017-04-13',
+	     	observaciones:'prueba',
+        datos:[
+          {
+            nombreDato:'Peso',
+            valorDato: 150.00,
+            unidadDato: 'kg'
+          }
+        ],
+    }
+    chai.request('http://localhost:3000')
+        .post('/api/datosControlPaciente/'+patId)
+        .send(datosControl)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+  });
+  
 });
 describe('/GET datosControl', () => {
       it('Debe obtener los datos de control de un paciente', function(done){
