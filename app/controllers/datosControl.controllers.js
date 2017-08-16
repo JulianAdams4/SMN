@@ -107,6 +107,7 @@ exports.createDatosControl = function(req, res){
     if (result.url) {
       DatosControl.create({
         idPaciente:req.body.idPaciente,
+        foto: result.url,
         fechaDato : req.body.fechaDato,
         observaciones: req.body.observaciones,
         datos: req.body.datos
@@ -215,16 +216,16 @@ exports.datoControlEnRango = function (req, res) {
         return res.status(500).json({ message: 'Faltan campos'});
       }
   }
-    
+
   var fechaInicio = new Date(req.body.inicio);
   var fechaFin    = new Date(req.body.fin);
   var datoABuscar = req.body.parametro;
 
   // Sumamos 1 dia al final para que incluya la ultima fecha
   var fechaFin2 = new Date(
-      fechaFin.getFullYear(), 
-      fechaFin.getMonth(), 
-      fechaFin.getDate()+1 
+      fechaFin.getFullYear(),
+      fechaFin.getMonth(),
+      fechaFin.getDate()+1
   );
   //  (fecha>=min) && (fecha<max)
   DatosControl.find(
