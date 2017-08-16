@@ -84,7 +84,7 @@ exports.editCentro = function(req, res){
 
     // centro no encontrado
     if (!centro) {
-      res.status(404).send({ message: 'No se encontró información del centro.', type: 'danger' });
+      return res.status(404).send({ message: 'No se encontró información del centro.', type: 'danger' });
     }
 
     // Si existe el campo en el body, se reemplaza
@@ -100,10 +100,10 @@ exports.editCentro = function(req, res){
     centro.save( function(err) {
       // Error del servidor
       if (err) {
-        res.status(500).send({ message: getErrorMessage(err),type: 'danger' });
+        return res.status(500).send({ message: getErrorMessage(err),type: 'danger' });
       }
       // Editado con exito
-      res.status(200).json(centro);
+      return res.status(200).json(centro);
     });
 
   });
