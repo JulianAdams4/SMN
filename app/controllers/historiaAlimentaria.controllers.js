@@ -3,16 +3,31 @@ var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
+
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+  if (err.code) {
+    switch (err.code) {
+      // Si un eror de index único ocurre configurar el mensaje de error
+      case 11000:
+      case 11001:
+        message = '<i class="ti-alert"></i>El paciente ya <b>existe</b>';
+        break;
+      // Si un error general ocurre configurar el mensaje de error
+      default:
+        message = '<i class="ti-alert"></i>Se ha producido un error';
     }
   } else {
-    return 'Error de servidor desconocido';
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
+    }
   }
+
+  // Devolver el mensaje de error
+  return message;
 };
 
 /*Permite obtener los datos de control por id del paciente y se incluye la
@@ -46,12 +61,12 @@ exports.list = function(req, res){
 //Función que almacena en la base de datos una nueva historia alimentaria.
 exports.createHistoriaAlimentaria = function(req, res){
   var historiaAlimentaria = new HistoriaAlimentaria(req.body);
-  //var campos = ["idPaciente"/*, "comidasAlDia", "preparadoPor", "modificaFinesDeSemana",
-  //"comeEntreComidas", "queCome", "aguaAlDia","cafeAlDia","cigarrosAlDia","alcoholALaSemana",
-  //"grupoAlimentos"*/];
-  /*if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos'});
-  }*/
+  if ( req.body.comeEntreComidas==true && req.body.snacksEntreComidas==undefined ) {
+    return res.status(500).json({ message: 'Falta <b>especificar</b> los snacks'});
+  }
+  if ( req.body.modificaFinesDeSemana==true && req.body.comidaFinesdeSemana==undefined ) {
+    return res.status(500).json({ message: 'Falta <b>especificar</b> las comidas'});
+  }
   historiaAlimentaria.save(function(err){
     if (err) {
       return res.status(500).send({

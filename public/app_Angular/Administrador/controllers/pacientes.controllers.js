@@ -38,15 +38,6 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           console.log(errorResponse);
           demo.mostrarNotificacion('danger',errorResponse.data.message);
         });
-        demo.showCustomNotification(
-          'top',
-          'right',
-          'Paciente creado exitosamente',
-          'success',
-          'ti-check',
-          3000
-        );
-        $location.path('pacientes');
       }, function(errorResponse){
         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
       });

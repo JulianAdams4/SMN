@@ -22,11 +22,11 @@ var getErrorMessage = function(err) {
       // Si un eror de index único ocurre configurar el mensaje de error
       case 11000:
       case 11001:
-        message = '<i class="fa ti-alert"></i>El paciente ya existe';
+        message = '<i class="ti-alert"></i>El paciente ya <b>existe</b>';
         break;
       // Si un error general ocurre configurar el mensaje de error
       default:
-        message = '<i class="fa ti-alert"></i>Se ha producido un error';
+        message = '<i class="ti-alert"></i>Se ha producido un error';
     }
   } else {
     // Grabar el primer mensaje de error de una lista de posibles errores
@@ -137,7 +137,6 @@ exports.createPaciente = function(req, res){
   var passwordNoEncriptada = "";
   passwordNoEncriptada = GenerarPassword();//Genera contraseña sin encriptar
   paciente.password = crypto.encriptar(passwordNoEncriptada);//Asigna un password encriptado a un paciente
-
   paciente.save(function(err){
     if (err) {
       return res.status(500).send({
@@ -181,34 +180,22 @@ exports.createPaciente = function(req, res){
 *  Funcion para editar paciente y que recibe informacion de 3 tabs
 */
 exports.editPaciente = function(req, res){
-  // Validaciones
-  // Es diferente a la del archivo validador
-  var obligatoriosPaciente = ["cedula", "nombres", "apellidos",
-                              "fechaNacimiento", "sexo", "motivoConsulta",
-                              "email"];
-  for (var i=0; i<obligatoriosPaciente.length ; i++){
-    var field = obligatoriosPaciente[i];
-    //console.log('{"' + field + '": "' + req.body.paciente[field] +'"}');
-    if ( req.body.paciente[field] == null || req.body.paciente[field] == undefined || req.body.paciente[field] == "") {
-      return res.status(500).json({ message: 'Faltan campos del paciente'});
-    }
-  }
   // Validacion de checks marcados pero sin data
   if ( req.body.antecedente && req.body.antecedente.alergia==true && req.body.antecedente.descripcionAlergias=="" ) {
-    return res.status(500).json({ message: 'Falta especificar las alergias'});
+    return res.status(500).json({ message: 'Falta <b>especificar</b> las alergias'});
   }
   if ( req.body.antecedente && req.body.antecedente.suplementoVitaminicos==true && req.body.antecedente.descripcionSuplementos=="" ) {
-    return res.status(500).json({ message: 'Falta especificar los suplementos'});
+    return res.status(500).json({ message: 'Falta <b>especificar</b> los suplementos'});
   }
   if ( req.body.antecedente && req.body.antecedente.medicamento==true && req.body.antecedente.descripcionMedicamentos=="" ) {
-    return res.status(500).json({ message: 'Falta especificar los medicamentos'});
+    return res.status(500).json({ message: 'Falta <b>especificar</b> los medicamentos'});
   }
 
   if ( req.body.historia && req.body.historia.comeEntreComidas==true && req.body.historia.snacksEntreComidas=="" ) {
-    return res.status(500).json({ message: 'Falta especificar los snacks'});
+    return res.status(500).json({ message: 'Falta <b>especificar</b> los snacks'});
   }
   if ( req.body.historia && req.body.historia.modificaFinesDeSemana==true && req.body.historia.comidaFinesdeSemana=="" ) {
-    return res.status(500).json({ message: 'Falta especificar las comidas'});
+    return res.status(500).json({ message: 'Falta <b>especificar</b> las comidas'});
   }
 
   // Extraemos la data de las tabs
@@ -252,7 +239,10 @@ exports.editPaciente = function(req, res){
     paciente.save( function(err) {
       // Error del servidor
       if (err) {
-        return res.status(500).send({ message: 'Ocurrió un error al guardar el paciente',type: 'danger' });
+        return res.status(500).send({
+          message: getErrorMessage(err),
+          type: "danger"
+        })
       }
       if (!req.session.paciente){
         // Editamos el antecedente
