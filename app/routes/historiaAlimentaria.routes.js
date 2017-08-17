@@ -4,7 +4,6 @@ var historiaAlimentaria = require('../controllers/historiaAlimentaria.controller
 
 module.exports = function(app) {
   app.route('/api/historiaAlimentaria')
-    .post(historiaAlimentaria.createHistoriaAlimentaria)
     .get(historiaAlimentaria.list);
 
   app.route('/api/historiaAlimentaria/:historiaAlimentariaId')

@@ -133,7 +133,39 @@ exports.list = function(req, res){
 * sexo, celular, dirección, motivo de consulta
 */
 exports.createPaciente = function(req, res){
-  var paciente = new Paciente(req.body);
+  var paciente = new Paciente(req.body.paciente);
+  var historia = new HistoriaAlimentaria(req.body.historia);
+  var antecedente=new Antecedentes(req.body.antecedente);
+  if ( antecedente.alergia==true && antecedente.descripcionAlergias == undefined) {
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>Falta <b>especificar</b> las alergias',
+      type: "danger"
+    });
+  }
+  if ( antecedente.suplementoVitaminicos==true && antecedente.descripcionSuplementos==undefined ) {
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>Falta <b>especificar</b> los suplementos',
+      type: "danger"
+    });
+  }
+  if ( antecedente.medicamento==true && antecedente.descripcionMedicamentos==undefined ) {
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>Falta <b>especificar</b> los medicamentos',
+      type: "danger"
+    });
+  }
+  if ( historia.comeEntreComidas==true && historia.snacksEntreComidas==undefined ) {
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>Falta <b>especificar</b> los snacks',
+      type: "danger"
+    });
+  }
+  if ( historia.modificaFinesDeSemana==true && historia.comidaFinesdeSemana==undefined ) {
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>Falta <b>especificar</b> las comidas',
+      type: "danger"
+    });
+  }
   var passwordNoEncriptada = "";
   passwordNoEncriptada = GenerarPassword();//Genera contraseña sin encriptar
   paciente.password = crypto.encriptar(passwordNoEncriptada);//Asigna un password encriptado a un paciente
@@ -144,33 +176,51 @@ exports.createPaciente = function(req, res){
         type: "danger"
       })
     } else {
-      //ENVIAR CONTRASEÑA A EMAIL DEL NUEVO PACIENTE
-      var transporter = nodemailer.createTransport({
-          service: 'Gmail',
-          auth: {
-              user: 'automatic.mensaje@gmail.com',
-              pass: '180895Dtb'
-          }
+      antecedente.idPaciente=paciente._id;
+      antecedente.save(function(err){
+        if (err) {
+          return res.status(500).send({
+            message: 'Ocurrió un error en el servidor'
+          })
+        } else {
+          historia.idPaciente=paciente._id;
+          historia.save(function(err){
+            if (err) {
+              return res.status(500).send({
+                message: 'Ocurrió un error en el servidor'
+              })
+            } else {
+              var transporter = nodemailer.createTransport({
+                  service: 'Gmail',
+                  auth: {
+                      user: 'automatic.mensaje@gmail.com',
+                      pass: '180895Dtb'
+                  }
+              });
+
+              var mailOptions = {
+                  from: 'Angie del Pezo <angie.dpezo@gmail.com>',
+                  to: paciente.email,
+                  subject: 'Notificación de registro como paciente en Sistema de Nutrición',
+                  text: 'Contraseña: ' + passwordNoEncriptada,
+                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.email+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
+              };
+
+              transporter.sendMail(mailOptions, function(error, info) {
+                  if (error) {
+                      console.log(error);
+                      res.redirect('/');
+                  } else {
+                      console.log('Mensaje enviado: ' + info.response);
+                      //res.redirect('/');
+                  }
+              })
+              return res.status(201).json(paciente);
+            }
+          });
+        }
       });
-
-      var mailOptions = {
-          from: 'Angie del Pezo <angie.dpezo@gmail.com>',
-          to: paciente.email,
-          subject: 'Notificación de registro como paciente en Sistema de Nutrición',
-          text: 'Contraseña: ' + passwordNoEncriptada,
-          html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.email+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
-      };
-
-      transporter.sendMail(mailOptions, function(error, info) {
-          if (error) {
-              console.log(error);
-              res.redirect('/');
-          } else {
-              console.log('Mensaje enviado: ' + info.response);
-              //res.redirect('/');
-          }
-      })
-      return res.status(201).json(paciente);
+      //ENVIAR CONTRASEÑA A EMAIL DEL NUEVO PACIENTE
     }
   });
 };

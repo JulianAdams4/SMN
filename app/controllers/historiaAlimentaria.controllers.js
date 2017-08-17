@@ -58,30 +58,9 @@ exports.list = function(req, res){
   });
 };
 
-//Función que almacena en la base de datos una nueva historia alimentaria.
-exports.createHistoriaAlimentaria = function(req, res){
-  var historiaAlimentaria = new HistoriaAlimentaria(req.body);
-  if ( req.body.comeEntreComidas==true && req.body.snacksEntreComidas==undefined ) {
-    return res.status(500).json({ message: 'Falta <b>especificar</b> los snacks'});
-  }
-  if ( req.body.modificaFinesDeSemana==true && req.body.comidaFinesdeSemana==undefined ) {
-    return res.status(500).json({ message: 'Falta <b>especificar</b> las comidas'});
-  }
-  historiaAlimentaria.save(function(err){
-    if (err) {
-      return res.status(500).send({
-        message: 'Ocurrió un error en el servidor'
-      })
-    } else {
-      return res.status(201).json(historiaAlimentaria);
-    }
-  });
-};
-
 //Función que remueve de la base de datos una determinada historia alimentaria mediante su id.
 exports.deleteHistoria = function(req, res){
   var historiaAlimentariaId = req.params.historiaAlimentariaId;
-  console.log(historiaAlimentariaId);
   HistoriaAlimentaria.findByIdAndUpdate(historiaAlimentariaId, {
     $set: {
       borrado: true

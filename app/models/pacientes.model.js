@@ -44,7 +44,7 @@ var pacienteSchema = new Schema({
     type: String,
     lowercase: true,
     unique: true,
-    required: '<i class="ti-alert"></i>El <b>correo electrónico</b> es obligatorio',
+    required: '<i class="ti-alert"></i>El correo electrónico es <b>obligatorio</b>',
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, '<i class="fa ti-alert"></i>Ingrese un correo electrónico <b>válido</b>']
   },
   direccion: String,

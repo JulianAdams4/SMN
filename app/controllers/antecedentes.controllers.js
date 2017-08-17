@@ -58,36 +58,6 @@ exports.list = function(req, res){
   });
 };
 
-//Función que permite almacenar en la base de datos un nuevo antecedente a un determinado paciente.
-exports.createAntecedente = function(req, res){
-  var antecedentes = new Antecedentes(req.body);
-  console.log(antecedentes);
-  var campos = ["idPaciente"/*, "alteracionApetito", "nausea","vomito","estrenimiento",
-  "diarrea","flatulencia","acidez","gastritis","problemasMasticacion","cambioSaborComidas"
-  ,"alergia","suplementoVitaminicos","medicamento","ojos","cabello","uñas","piel"*/];
-  if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos'});
-  }
-  if ( req.body.alergia==true && req.body.descripcionAlergias == undefined) {
-    return res.status(500).json({ message: 'Falta <b>especificar</b> las alergias'});
-  }
-  if ( req.body.suplementoVitaminicos==true && req.body.descripcionSuplementos==undefined ) {
-    return res.status(500).json({ message: 'Falta <b>especificar</b> los suplementos'});
-  }
-  if ( req.body.medicamento==true && req.body.descripcionMedicamentos==undefined ) {
-    return res.status(500).json({ message: 'Falta <b>especificar</b> los medicamentos'});
-  }
-  antecedentes.save(function(err){
-    if (err) {
-      return res.status(500).send({
-        message: 'Ocurrió un error en el servidor'
-      })
-    } else {
-      return res.status(201).json(antecedentes);
-    }
-  });
-};
-
 //Función que modifica en la bd el parámetro borrado a true de un antecedente mediante su id.
 exports.deleteAntecedente = function(req, res){
   var antecedenteId = req.params.antecedenteId;
