@@ -47,11 +47,12 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
         }, function(errorResponse){
           //console.log(errorResponse.data.message);
           $('div#divLoading').removeClass('show');
-            demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          var msj ='<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         });
       }
       else{
-        demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
+        demo.showCustomNotification('top', 'right', "No se escogió ninguna foto", 'danger', 'ti-close', 3000);
       }
     };
 
@@ -113,11 +114,12 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
           $scope.backToList();
         }, function(errorResponse){
           $('div#divLoading').removeClass('show');
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          var msj ='<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         });
       }
       else{
-        demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
+        demo.showCustomNotification('top', 'right', "No se escogió ninguna foto", 'danger', 'ti-close', 3000);
       }
     }
 
@@ -192,7 +194,7 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
             }
             else {
               esArchivoValido=false;
-              demo.mostrarNotificacion("danger", "Formato de imagen inválido");
+              demo.showCustomNotification('top', 'right', "Formato de imagen inválido", 'danger', 'ti-close', 3000);
             }
         };
         // lee el archivo seleccionado como url
@@ -200,7 +202,7 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
       }
       else{
         esArchivoValido=false;
-        demo.mostrarNotificacion("danger", "No se escogió ninguna foto");
+        demo.showCustomNotification('top', 'right', "No se escogió ninguna foto", 'danger', 'ti-close', 3000);
       }
     }
 

@@ -46,7 +46,8 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
          cita.estaOcupado = '';
          cita.duracion = '';
        }, function(errorResponse){
-         demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+         var msj = '<h5> '+errorResponse.data.message+' </h5>';
+         demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
        })
 
 

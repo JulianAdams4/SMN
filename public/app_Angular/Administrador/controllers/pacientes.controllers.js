@@ -31,7 +31,8 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         );
         $location.path('pacientes');
       }, function(errorResponse){
-        demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+        var msj = '<h5> '+errorResponse.data.message+' </h5>';
+        demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
       });
     };
 
