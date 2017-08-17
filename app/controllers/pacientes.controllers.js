@@ -7,6 +7,9 @@ var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
 var nodemailer = require('nodemailer');
+var administrador = require('../controllers/administrador.controllers');
+var Administrador = mongoose.model('Centro');
+
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
@@ -392,7 +395,7 @@ exports.ingresar = function(req, res){
   } else {
     res.render('paciente');
   }
-}
+};
 
 
 exports.signIn = function(req, res){
@@ -405,9 +408,39 @@ exports.signIn = function(req, res){
       })
     }
     if(!paciente){
+      //administrador.iniciarSesion(req ,res);
+      /*
       return res.status(400).send({
         message: 'Email no se encuentra registrado'
-      })
+      })*/
+      var administradorIn = req.body;
+      console.log(administradorIn);
+      console.log(administradorIn.password);
+      Administrador.findOne({"nutricionista.email" : administradorIn.email }, function(err, administrador){
+        if(err){
+          return res.status(500).send({
+            message: getErrorMessage(err),
+            type: 'danger'
+          })
+        }
+        if(!administrador){
+          return res.status(400).send({
+            message: 'Email no se encuentra registrado'
+          })
+        }
+        if(administradorIn.password === administrador.nutricionista.password){
+          req.session.administrador = administrador;
+          res.render('administrador');
+          return res.status(200).send({
+            message: 'Autenticación exitosa'
+          })
+        } else {
+          console.log(administrador.nutricionista.password);
+          return res.status(404).send({
+            message: 'Contraseña incorrecta'
+          })
+        }
+      });
     }
     if(pacienteIn.password === crypto.desencriptar(paciente.password)){
       req.session.paciente = paciente;

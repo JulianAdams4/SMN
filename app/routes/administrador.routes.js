@@ -4,9 +4,12 @@ var administrador = require('../controllers/administrador.controllers');
 
 module.exports = function(app) {
 
-  app.route('/administrador')
-    .get(administrador.inicio);
+  app.route('/administrador').get(administrador.inicio);
+      //res.render('login');
 
+  app.route('/api/pacienteLogin')
+  .post(administrador.iniciarSesion);
+    
   app.route('/publico').get(function(req, res){
     res.render('publico');
   });
