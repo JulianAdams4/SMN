@@ -6,14 +6,14 @@ var paqueteSchema = new Schema({
   //aqui van los campos
   nombre:{
     type:String,
-     required: 'El nombre es obligatorio'
+     required: '<i class="ti-alert"></i>El nombre es <b>obligatorio</b>'
   },
   descripcion:{
     type:String,
   },
   precio:{
     type:String,
-    required: 'El precio es obligatorio'
+    required: '<i class="ti-alert"></i>El precio es <b>obligatorio</b>'
   },
   borrado: {
     type: Boolean,

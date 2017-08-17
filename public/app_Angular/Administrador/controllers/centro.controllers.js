@@ -6,8 +6,8 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
     $scope.centro.redesSociales = [];
     $scope.newRed = {};
 
-    $scope.inputType = 'password';  
-  
+    $scope.inputType = 'password';
+
     // Función para mostrar o esconder contraseña
     $scope.hideShowPassword = function(){
       if ($scope.inputType == 'password')
@@ -32,7 +32,8 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
           );
         $location.path('/centro');
       }, function(errorResponse){
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+        var msj = '<h5> '+errorResponse.data.message+' </h5>';
+        demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
       });
     };
 
@@ -86,7 +87,8 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
           $location.path('/centro');
         },
         function(errorResponse){
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          var msj = '<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         }
       );
     }

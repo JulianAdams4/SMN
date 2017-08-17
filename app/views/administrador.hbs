@@ -213,6 +213,10 @@ function validateTextNumericInput(key){
                 &&
 								(key.keyCode<47 || event.keyCode>58)//números
 								&&
+								(key.keyCode!=44)//coma
+								&&
+								(key.keyCode!=46)//punto
+								&&
                 (key.keyCode != 45) //retroceso
                 &&
                 (key.keyCode != 241) //ñ
@@ -252,6 +256,49 @@ function validateTextNumericInput(key){
                 &&
                 (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
                 &&
+                (key.keyCode != 45) //retroceso
+								&&
+                (key.keyCode != 241) //ñ
+                &&
+                (key.keyCode != 209) //Ñ
+                &&
+                (key.keyCode != 32) //espacio
+                &&
+                (key.keyCode != 225) //á
+                &&
+                (key.keyCode != 233) //é
+                &&
+                (key.keyCode != 237) //í
+                &&
+                (key.keyCode != 243) //ó
+                &&
+                (key.keyCode != 250) //ú
+                &&
+                (key.keyCode != 193) //Á
+                &&
+                (key.keyCode != 201) //É
+                &&
+                (key.keyCode != 205) //Í
+                &&
+                (key.keyCode != 211) //Ó
+                &&
+                (key.keyCode != 218) //Ú
+            ){
+							return false;
+						}
+						else {
+							return true;
+						}
+  }
+	function validateTextInput_punctuation(key){
+		if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
+                &&
+                (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
+								&&
+								(key.keyCode!=44)//coma
+								&&
+								(key.keyCode!=46)//punto
+								&&
                 (key.keyCode != 45) //retroceso
 								&&
                 (key.keyCode != 241) //ñ
