@@ -24,15 +24,35 @@ angular.module('paciente').controller('calendario.controller', ['$scope','$http'
       $scope.eventSources = [$scope.citas];
      }
 
-
-
-     /* alert on eventClick */
-     $scope.alertOnEventClick = function( date, jsEvent, view){
-      if(!date.estaOcupado){
-        BootstrapDialog.alert('I want banana!');
+    /* alert on eventClick */
+    $scope.alertOnEventClick = function(cita){
+      if(!cita.estaOcupado){
+        BootstrapDialog.show({
+          title: 'Cita Disponible',
+          message: 'Mensaje',
+          buttons: [{
+            label: 'Reservar Cita',
+            cssClass: 'btn-primary',
+            action: function(dialogItself) {
+              $http({
+                method: 'PUT',
+                url: '/api/reservarCita/'+cita._id
+              }).then(function(response){
+                for(var i in $scope.citas){
+                  if($scope.citas[i]._id == response.data._id){
+                    $scope.citas.splice(i, 1);
+                  }
+                }
+                response.data.start = new Date(response.data.start);
+                response.data.end = new Date(response.data.end);
+                $scope.citas.push(response.data);
+                dialogItself.close();
+              });
+            }
+          }]
+        });
       }
-       console.log(date);
-     };
+    };
 
      /* config object */
      $scope.uiConfig = {
