@@ -30,7 +30,7 @@ angular.module('paciente').controller('calendario.controller', ['$scope','$http'
       if(!cita.estaOcupado){
         BootstrapDialog.show({
           title: 'Cita Disponible',
-          message: 'Mensaje',
+          message: 'Al seleccionar esta opción reservará una cita con la nutricionista.',
           buttons: [{
             label: 'Reservar Cita',
             cssClass: 'btn-primary',
@@ -48,13 +48,59 @@ angular.module('paciente').controller('calendario.controller', ['$scope','$http'
                 response.data.end = new Date(response.data.end);
                 $scope.citas.push(response.data);
                 dialogItself.close();
-              });
+                demo.showCustomNotification(
+                 'top',
+                 'right',
+                 '<h5> ¡Cita reservada <b>exitosamente</b>! </h5>',
+                 'success',
+                 'ti-check',
+                 3000
+               );
+              }, function(errorResponse){
+                var msj = '<h5> '+errorResponse.data.message+' </h5>';
+                demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
+             });
+            }
+          }]
+        });
+      }else if(cita.estaOcupado){ // falta validar que sea su cita e invariantes
+        BootstrapDialog.show({
+          title: 'Cita Programada',
+          message: 'Al seleccionar esta opción cancelará su cita con la nutricionista.',
+          buttons: [{
+            label: 'Cancelar Cita',
+            cssClass: 'btn-primary',
+            action: function(dialogItself) {
+              $http({
+                method: 'PUT',
+                url: '/api/cancelarCitaPaciente/'+cita._id
+              }).then(function(response){
+                for(var i in $scope.citas){
+                  if($scope.citas[i]._id == response.data._id){
+                    $scope.citas.splice(i, 1);
+                  }
+                }
+                response.data.start = new Date(response.data.start);
+                response.data.end = new Date(response.data.end);
+                $scope.citas.push(response.data);
+                dialogItself.close();
+                demo.showCustomNotification(
+                 'top',
+                 'right',
+                 '<h5> ¡Cita cancelada <b>exitosamente</b>! </h5>',
+                 'success',
+                 'ti-check',
+                 3000
+               );
+              }, function(errorResponse){
+                var msj = '<h5> '+errorResponse.data.message+' </h5>';
+                demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
+             });
             }
           }]
         });
       }
     };
-
      /* config object */
      $scope.uiConfig = {
        calendar:{

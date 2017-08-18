@@ -29,7 +29,6 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
      }
 
      $scope.guardarCita = function(cita){
-
        $http({
          method: 'POST',
          url: '/api/cita',
@@ -38,7 +37,7 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
          demo.showCustomNotification(
            'top',
            'right',
-           '<h5> ¡Cita creada <b>exitosamente</b>! </h5>',
+           '<h5> ¡Cita habilitada <b>exitosamente</b>! </h5>',
            'success',
            'ti-check',
            3000
@@ -53,15 +52,13 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
          var msj = '<h5> '+errorResponse.data.message+' </h5>';
          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
        })
-
-
      }
 
      /* alert on eventClick */
      $scope.alertOnEventClick = function(cita){
        BootstrapDialog.show({
-         title: 'Cita',
-         message: 'Mensaje',
+         title: 'Cita Programada',
+         message: 'Al seleccionar esta opción eliminará la disponibilidad de este horario para citas.',
          buttons: [{
            label: 'Eliminar Cita',
            cssClass: 'btn-primary',
@@ -79,11 +76,14 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
                demo.showCustomNotification(
                  'top',
                  'right',
-                 '<h5> ¡Cita eliminada <b>exitosamente</b>! </h5>',
+                 '<h5> ¡Cita cancelada <b>exitosamente</b>! </h5>',
                  'success',
                  'ti-check',
                  3000
                );
+             }, function(errorResponse){
+                var msj = '<h5> '+errorResponse.data.message+' </h5>';
+                demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
              });
            }
          }]
