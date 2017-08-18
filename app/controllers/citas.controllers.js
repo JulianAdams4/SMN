@@ -57,3 +57,15 @@ exports.reservarCita = function(req, res){
     }
   });
 };
+
+exports.eliminarCita = function(req, res){
+  Cita.findByIdAndRemove(req.params.citaId, function(err, cita){
+    if(err){
+      return res.status(500).send({
+        message: getErrorMessage(err)
+      })
+    } else {
+      return res.status(200).json(cita);
+    }
+  })
+}

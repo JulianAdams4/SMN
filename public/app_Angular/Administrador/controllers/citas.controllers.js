@@ -54,9 +54,36 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
      }
 
      /* alert on eventClick */
-     $scope.alertOnEventClick = function( date, jsEvent, view){
-       console.log(date);
-         $scope.alertMessage = (date.title + ' was clicked ');
+     $scope.alertOnEventClick = function(cita){
+       BootstrapDialog.show({
+         title: 'Cita',
+         message: 'Mensaje',
+         buttons: [{
+           label: 'Eliminar Cita',
+           cssClass: 'btn-primary',
+           action: function(dialogItself) {
+             $http({
+               method: 'DELETE',
+               url: '/api/Cita/'+cita._id
+             }).then(function(response){
+               for(var i in $scope.citas){
+                 if($scope.citas[i]._id == response.data._id){
+                   $scope.citas.splice(i, 1);
+                 }
+               }
+               dialogItself.close();
+               demo.showCustomNotification(
+                 'top',
+                 'right',
+                 '<h5> ¡Cita eliminada <b>exitosamente</b>! </h5>',
+                 'success',
+                 'ti-check',
+                 3000
+               );
+             });
+           }
+         }]
+       });
      };
 
      /* config object */
