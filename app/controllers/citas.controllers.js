@@ -61,7 +61,7 @@ exports.createCita = function(req, res){
         message: getErrorMessage(err)
       })
     } else {
-      return res.status(200).json(cita);
+      return res.status(201).json(cita);
     }
   });
 };
