@@ -96,7 +96,7 @@
                 </li>
                 <li>
                     <a href="#!/centro">
-                        <i class="ti-home"></i>
+                        <i class="fa fa-lg fa-building"></i>
                         <p>Centro</p>
                     </a>
                 </li>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <!--<li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="ti-panel"></i>
 								<p>Stats</p>
@@ -150,7 +150,7 @@
                                 <li><a href="#">Notification 4</a></li>
                                 <li><a href="#">Another notification</a></li>
                               </ul>
-                        </li>
+                        </li>-->
 						<li>
                             <a href="#">
 								<i class="ti-settings"></i>
@@ -213,6 +213,10 @@ function validateTextNumericInput(key){
                 &&
 								(key.keyCode<47 || event.keyCode>58)//números
 								&&
+								(key.keyCode!=44)//coma
+								&&
+								(key.keyCode!=46)//punto
+								&&
                 (key.keyCode != 45) //retroceso
                 &&
                 (key.keyCode != 241) //ñ
@@ -252,6 +256,49 @@ function validateTextNumericInput(key){
                 &&
                 (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
                 &&
+                (key.keyCode != 45) //retroceso
+								&&
+                (key.keyCode != 241) //ñ
+                &&
+                (key.keyCode != 209) //Ñ
+                &&
+                (key.keyCode != 32) //espacio
+                &&
+                (key.keyCode != 225) //á
+                &&
+                (key.keyCode != 233) //é
+                &&
+                (key.keyCode != 237) //í
+                &&
+                (key.keyCode != 243) //ó
+                &&
+                (key.keyCode != 250) //ú
+                &&
+                (key.keyCode != 193) //Á
+                &&
+                (key.keyCode != 201) //É
+                &&
+                (key.keyCode != 205) //Í
+                &&
+                (key.keyCode != 211) //Ó
+                &&
+                (key.keyCode != 218) //Ú
+            ){
+							return false;
+						}
+						else {
+							return true;
+						}
+  }
+	function validateTextInput_punctuation(key){
+		if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
+                &&
+                (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
+								&&
+								(key.keyCode!=44)//coma
+								&&
+								(key.keyCode!=46)//punto
+								&&
                 (key.keyCode != 45) //retroceso
 								&&
                 (key.keyCode != 241) //ñ
@@ -356,3 +403,11 @@ function validateTextNumericInput(key){
     <script src="/app_Angular/Administrador/controllers/paquetes.dieta.controllers.js" charset="utf-8"></script>
 	<script src="/app_Angular/Administrador/controllers/citas.controllers.js" charset="utf-8"></script>
 </html>
+
+<script>
+    $(".nav li").on("click", function() {
+      $(".nav li").removeClass("active");
+      $(this).addClass("active");
+    });
+
+</script>

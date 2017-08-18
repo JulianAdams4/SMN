@@ -4,40 +4,45 @@ var centroSchema = new Schema({
   //aqui van los campos
   direccion: {
       type: String,
-      required: 'La dirección es obligatoria.'
+      required: '<i class="ti-alert"></i>La dirección es <b>obligatoria</b>.'
     },
   telefono: {
       type: String,
-      required: 'EL teléfono es obligatorio.'
+      required: '<i class="ti-alert"></i>El teléfono es <b>obligatorio</b>.',
+      maxlength: [10, '<i class="ti-alert"></i>El teléfono debe tener como máximo 10 dígitos'],
+      minlength: [7, '<i class="ti-alert"></i>El teléfono debe tener como mínimo 7 dígitos'],
     },
   horariosAtencion: {
       type: String,
-      required: 'Los horarios son obligatorios.'
+      required: '<i class="ti-alert"></i>Los horarios son obligatorios.'
     },
   servicios: String,
   nutricionista: {
     cedula:{
       type: String,
-      required: 'La cédula es obligatoria.'
+      required: '<i class="ti-alert"></i>Ingrese un número de cédula <b>válido</b>',
+      maxlength: [10, '<i class="ti-alert"></i>La cédula sólo debe tener 10 dígitos'],
+      minlength: [10, '<i class="ti-alert"></i>La cédula sólo debe tener 10 dígitos'],
+      match: [/\d{10}/, '<i class="ti-alert"></i>Ingrese un número de cédula válido']
     },
     nombres:{
       type: String,
-      required: 'Los nombres son obligatorios.'
+      required: '<i class="ti-alert"></i>Los nombres son <b>obligatorios</b>.'
     },
     apellidos: {
       type: String,
-      required: 'Los apellidos son obligatorios.'
+      required: '<i class="ti-alert"></i>Los apellidos son <b>obligatorios</b>.'
     },
     email: {
       type: String,
       lowercase: true,
       unique: true,
-      required: '<i class="fa ti-alert"></i>Ingrese el <b>correo electrónico</b>',
-      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, '<i class="fa ti-alert">Ingrese un correo electrónico válido']
+      required: '<i class="ti-alert"></i>Ingrese el <b>correo electrónico</b>',
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, '<i class="ti-alert"></i>Ingrese un correo electrónico válido</i>']
     },
     password: {
       type: String,
-      required: '<i class="fa ti-alert"></i>Ingrese la <b>contraseña</b>'
+      required: '<i class="ti-alert"></i>La contraseña debe tener como mínimo <b>8 dígitos</b>.'
     },
     estudios: String,
     especializaciones: String,

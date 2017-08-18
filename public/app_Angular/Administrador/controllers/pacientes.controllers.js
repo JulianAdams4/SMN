@@ -10,34 +10,17 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.historiaAlimentaria = {};
     $scope.historiaAlimentaria.grupoAlimentos = [];
     $scope.newGrupo = {};
-
     $scope.create = function() {
-
+      var dataFormCreate = {
+        paciente: $scope.paciente,
+        antecedente: $scope.antecedente,
+        historia: $scope.historiaAlimentaria
+      };
       $http({
         method: 'POST',
         url: '/api/pacientes',
-        data: $scope.paciente
+        data: dataFormCreate
       }).then(function(response){
-        $scope.antecedente.idPaciente = response.data._id;
-        $http({
-          method: 'POST',
-          url: '/api/antecedentes',
-          data: $scope.antecedente
-        }).then(function(response){
-        }, function(errorResponse){
-          demo.mostrarNotificacion('danger',errorResponse.data.message);
-        });
-
-        $scope.historiaAlimentaria.idPaciente = response.data._id;
-        $http({
-          method: 'POST',
-          url: '/api/historiaAlimentaria',
-          data: $scope.historiaAlimentaria
-        }).then(function(response){
-        }, function(errorResponse){
-          console.log(errorResponse);
-          demo.mostrarNotificacion('danger',errorResponse.data.message);
-        });
         demo.showCustomNotification(
           'top',
           'right',
@@ -48,7 +31,8 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         );
         $location.path('pacientes');
       }, function(errorResponse){
-        demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+        var msj = '<h5> '+errorResponse.data.message+' </h5>';
+        demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
       });
     };
 

@@ -27,14 +27,14 @@
                 <label>Teléfono*:</label>
                 <input type="text"
                        class="form-control border-input"
-                       minlength="10"
+                       minlength="7"
                        maxlength="10"
                        name="telefono"
                        onkeypress="return event.charCode>47 && event.charCode<58"
                        placeholder="Teléfono"
                        data-ng-model="centro.telefono"
                        required>
-              </div>
+        </div>
       </div>
       <div class="col-md-6 col-sm-6">
         <div class="form-group"
@@ -130,7 +130,7 @@
                 <label>Teléfono:</label>
                 <input type="text"
                        class="form-control border-input"
-                       minlength="10"
+                       minlength="7"
                        maxlength="10"
                        name="telefono"
                        onkeypress="return event.charCode>47 && event.charCode<58"
@@ -162,13 +162,14 @@
                 <input type="{{inputType}}"
                        class="form-control border-input"
                        minlength="8"
+                       maxlength="12"
                        name="password"
                        placeholder="Contraseña"
                        data-ng-model="centro.nutricionista.password"
                        required>
                 <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
-                <label for="checkbox">Mostrar contraseña</label>
-                <!--label for="checkbox" ng-if="!passwordCheckbox">Mostrar contraseña</label-->  
+                <label for="checkbox">Mostrar contraseña(Debe tener mínimo 8 caracteres)</label>
+                <!--label for="checkbox" ng-if="!passwordCheckbox">Mostrar contraseña</label-->
               </div>
       </div>
       <div class="col-md-2 col-sm-2"></div>
