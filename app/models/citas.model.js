@@ -36,12 +36,12 @@ var citaSchema = new Schema({
     type: String
   },
   paciente: {
-    type: Schema.ObjectId
+    type: Schema.ObjectId,
+    ref: 'Paciente'
   }
 });
 
 citaSchema.pre('save', function(next){
-
   if(this.estaOcupado){
     this.backgroundColor = '#666';
     this.title = 'Ocupado';
@@ -49,13 +49,8 @@ citaSchema.pre('save', function(next){
     this.backgroundColor = '#449a2e';
     this.title = 'Disponible'
   }
-
   this.end = moment(this.start).add(this.duracion, 'm');
-
   next();
-
 });
-
-
 
 mongoose.model('Cita', citaSchema);

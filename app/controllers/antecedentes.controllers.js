@@ -49,7 +49,7 @@ exports.createAntecedente = function(req, res){
   var campos = ["idPaciente"/*, "alteracionApetito", "nausea","vomito","estrenimiento",
   "diarrea","flatulencia","acidez","gastritis","problemasMasticacion","cambioSaborComidas"
   ,"alergia","suplementoVitaminicos","medicamento","ojos","cabello","uñas","piel"*/];
-  if(!validador.camposSonValidos(campos,req)){
+  if(validador.camposSonValidos(campos,req)){
     return res.status(500).json({ message: 'Faltan campos'});
   }
   antecedentes.save(function(err){

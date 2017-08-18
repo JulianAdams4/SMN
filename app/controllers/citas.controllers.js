@@ -14,7 +14,7 @@ var getErrorMessage = function(err){
 };
 
 exports.listCitas = function(req, res){
-  Cita.find({},'title start end stick backgroundColor',function(err, citas){
+  Cita.find({},function(err, citas){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err)
@@ -34,6 +34,26 @@ exports.createCita = function(req, res){
       })
     } else {
       return res.status(200).json(cita);
+    }
+  });
+};
+
+exports.reservarCita = function(req, res){
+  var _cita = {
+    paciente: req.session.paciente,
+    estaOcupado: true,
+    backgroundColor: '#666',
+    title: 'Ocupado'
+  };
+  Cita.findByIdAndUpdate(req.params.citaId, _cita, function(err, cita){
+    if(err){
+      return res.status(500).send({
+        message: getErrorMessage(err)
+      })
+    } else {
+      Cita.findById(cita._id, function(err, cita){
+        return res.status(200).json(cita);
+      });
     }
   });
 };
