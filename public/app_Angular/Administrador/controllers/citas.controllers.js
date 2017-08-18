@@ -15,7 +15,11 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
          for(var i in $scope.citas){
            $scope.citas[i].start = new Date($scope.citas[i].start);
            $scope.citas[i].end = new Date($scope.citas[i].end);
+           if($scope.citas[i].paciente){
+             $scope.citas[i].title = $scope.citas[i].paciente.nombres + ' ' + $scope.citas[i].paciente.apellidos;
+           }
          }
+         console.log($scope.citas);
          $scope.eventSources.push($scope.citas);
        }, function(errorResponse){
          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
