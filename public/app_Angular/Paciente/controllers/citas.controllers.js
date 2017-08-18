@@ -18,6 +18,7 @@ angular.module('paciente').controller('calendario.controller', ['$scope','$http'
          }
          $scope.eventSources.push($scope.citas);
        }, function(errorResponse){
+         console.log(errorResponse);
          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
        });
 

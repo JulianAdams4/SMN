@@ -1,7 +1,9 @@
 'use stric';
 
 var mongoose = require('mongoose');
+var moment = require('moment');
 var Cita = mongoose.model('Cita');
+var Paciente = mongoose.model('Paciente');
 
 var getErrorMessage = function(err){
   if (err.errors){
@@ -14,15 +16,41 @@ var getErrorMessage = function(err){
 };
 
 exports.listCitas = function(req, res){
-  Cita.find({},function(err, citas){
-    if(err){
-      return res.status(500).send({
-        message: getErrorMessage(err)
-      })
-    } else {
-      return res.status(200).json(citas);
-    }
-  })
+  if(req.session.paciente){
+    var today = new Date();
+    var tomorrow = moment(today).add(1, 'days');
+    Cita.find({$or:[{start:{$gte:today}},{end:{$lte:tomorrow.toDate()}}]}, function(err, citas){
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err)
+        })
+      } else {
+        Paciente.populate(citas, {path: 'paciente'}, function(err, citas){
+          for(var i in citas){
+            if(citas[i].paciente){
+              console.log(citas[i].paciente._id + ' ' + req.session.paciente._id);
+              if(citas[i].paciente._id == req.session.paciente._id){
+                citas[i].title = citas[i].paciente.nombres + ' ' + citas[i].paciente.apellidos;
+              }
+            }
+          }
+          return res.status(200).json(citas);
+        });
+      }
+    });
+  } else {
+    Cita.find({},function(err, citas){
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err)
+        })
+      } else {
+        Paciente.populate(citas, {path: 'paciente'}, function(err, citas){
+          return res.status(200).json(citas);
+        });
+      }
+    })
+  }
 }
 
 exports.createCita = function(req, res){
