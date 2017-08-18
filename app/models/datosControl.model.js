@@ -20,7 +20,7 @@ var datosControlSchema = new Schema({
     {
       nombreDato:{
         type: String,
-        required: 'El nombre del dato es obligatorio.'
+        required: '<i class="ti-alert"></i>El nombre del dato es obligatorio <b>obligatorio</b>'
       },
       valorDato:{
         type: String,
@@ -29,7 +29,7 @@ var datosControlSchema = new Schema({
       unidadDato: {
         type: String,
         enum: ['%','mg/L','cm','kg'],
-        required: 'La unidad del dato es obligatorio.'
+        required: '<i class="ti-alert"></i>La unidad del dato es obligatorio <b>obligatorio</b>'
       }
     }
   ],
