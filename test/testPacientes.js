@@ -16,9 +16,9 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 function pacienteNuevo(){
-	var paciente = new Paciente({
+	var nuePaciente = new Paciente({
 				cedula:		'0953653416',
-				nombres: 	'Juan Enrique',
+				nombres: 	'Mario Enrique',
 				apellidos: 'Ramirez Gonzalez',
 				email: 'enjuan@user.com',
 				fechaNacimiento: '1978-09-15',
@@ -30,25 +30,27 @@ function pacienteNuevo(){
 				ejercicios: 'Correr en las mañanas',
 				frecuencia: '4 veces por semana'
 			});
-	return paciente;
+	return nuePaciente;
 }
 
 describe('/POST Paciente', function(){
 
 	beforeEach(function(done){
-		paciente = {
-			cedula:		'5928077593',
-			nombres: 	'Stalyn Alfredo',
-			apellidos: 'Gonzabay Yagual',
-			email: 'alfred.leo@hotmail.com',
-			fechaNacimiento: '1990-07-27',
-			sexo: 'Masculino',
-			direccion: 'Santa Elena',
-			celular: '0985493306',
-			ocupacion: 'Estudiante',
-			motivoConsulta: 'Ganar masa muscular',
-			ejercicios: 'Correr en las mañanas',
-			frecuencia: '4 veces por semana'
+		objetoPaciente = {
+			paciente : {
+				cedula:		'5928077593',
+				nombres: 	'Stalyn Alfredo',
+				apellidos: 'Gonzabay Yagual',
+				email: 'alfred.leo@hotmail.com',
+				fechaNacimiento: '1990-07-27',
+				sexo: 'Masculino',
+				direccion: 'Santa Elena',
+				celular: '0985493306',
+				ocupacion: 'Estudiante',
+				motivoConsulta: 'Ganar masa muscular',
+				ejercicios: 'Correr en las mañanas',
+				frecuencia: '4 veces por semana'
+			}
 		}
 		done();
 	});
@@ -62,7 +64,7 @@ describe('/POST Paciente', function(){
 	it('Crea un paciente con todos sus campos válidos', function(done){
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(201);
 				done();
@@ -70,10 +72,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('Crea el paciente si el campo sexo es Masculino', function(done){
-		paciente.sexo = 'Masculino';
+		objetoPaciente.paciente.sexo = 'Masculino';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(201);
 				done();
@@ -81,10 +83,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('Crea el paciente si el campo sexo es Femenino', function(done){
-		paciente.sexo = 'Femenino';
+		objetoPaciente.paciente.sexo = 'Femenino';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(201);
 				done();
@@ -92,14 +94,14 @@ describe('/POST Paciente', function(){
 	});
 
 	it('Crea el paciente si se ignoran campos no obligatorios', function(done){
-		paciente.direccion = '';
-		paciente.celular = '';
-		paciente.ocupacion = '';
-		paciente.ejercicios = '';
-		paciente.frecuenciaEjecicios = '';
+		objetoPaciente.paciente.direccion = '';
+		objetoPaciente.paciente.celular = '';
+		objetoPaciente.paciente.ocupacion = '';
+		objetoPaciente.paciente.ejercicios = '';
+		objetoPaciente.paciente.frecuenciaEjecicios = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(201);
 				done();
@@ -107,10 +109,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no se ingresa la cédula', function(done){
-		paciente.cedula = '';
+		objetoPaciente.paciente.cedula = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -118,10 +120,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no ingresa los nombres', function(done){
-		paciente.nombres = '';
+		objetoPaciente.paciente.nombres = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -129,10 +131,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no ingresa los apellidos', function(done){
-		paciente.apellidos = '';
+		objetoPaciente.paciente.apellidos = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -140,10 +142,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no ingresa la fecha de nacimiento', function(done){
-		paciente.fechaNacimiento = '';
+		objetoPaciente.paciente.fechaNacimiento = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -151,10 +153,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no ingresa el sexo', function(done){
-		paciente.sexo = '';
+		objetoPaciente.paciente.sexo = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -162,10 +164,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no ingresa el email', function(done){
-		paciente.email = '';
+		objetoPaciente.paciente.email = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -173,10 +175,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si no ingresa el motivo de la consulta', function(done){
-		paciente.motivoConsulta = '';
+		objetoPaciente.paciente.motivoConsulta = '';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -185,25 +187,25 @@ describe('/POST Paciente', function(){
 
 	it('No crea el paciente si ingresa un número de cédula no válido', function(done){
 
-		paciente.cedula = 'hola mundo';
+		objetoPaciente.paciente.cedula = 'hola mundo';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
 
-		paciente.cedula = '123456';
+		objetoPaciente.paciente.cedula = '123456';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.cedula = '1234567890123456';
+		objetoPaciente.paciente.cedula = '1234567890123456';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
@@ -211,31 +213,31 @@ describe('/POST Paciente', function(){
 	})
 
 	it('No crea el paciente si ingresa unos nombres no válidos', function(done){
-		paciente.nombres = 'h';
+		objetoPaciente.paciente.nombres = 'h';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.nombres = 'qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxhjhkhkhkhkjhkjhkjhkjhcvba';
+		objetoPaciente.paciente.nombres = 'qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxhjhkhkhkhkjhkjhkjhkjhcvba';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-			paciente.nombres = 'hola123';
+			objetoPaciente.paciente.nombres = 'hola123';
 			chai.request(puerto)
 				.post('/api/pacientes')
-				.send(paciente)
+				.send(objetoPaciente)
 				.end(function(err, res){
 					res.should.have.status(500);
 				});
-				paciente.nombres = '123456';
+				objetoPaciente.paciente.nombres = '123456';
 				chai.request(puerto)
 					.post('/api/pacientes')
-					.send(paciente)
+					.send(objetoPaciente)
 					.end(function(err, res){
 						res.should.have.status(500);
 					});
@@ -243,31 +245,31 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si ingresa unos apellidos no válidos', function(done){
-		paciente.apellidos = 'h';
+		objetoPaciente.paciente.apellidos = 'h';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.apellidos = 'qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvba';
+		objetoPaciente.paciente.apellidos = 'qwertyuioplkjhgfdsazxcvbnmqwertyuioplkjhgfdsazxcvba';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-			paciente.apellidos = 'hola123';
+			objetoPaciente.paciente.apellidos = 'hola123';
 			chai.request(puerto)
 				.post('/api/pacientes')
-				.send(paciente)
+				.send(objetoPaciente)
 				.end(function(err, res){
 					res.should.have.status(500);
 				});
-				paciente.apellidos = '123456';
+				objetoPaciente.paciente.apellidos = '123456';
 				chai.request(puerto)
 					.post('/api/pacientes')
-					.send(paciente)
+					.send(objetoPaciente)
 					.end(function(err, res){
 						res.should.have.status(500);
 					});
@@ -275,10 +277,10 @@ describe('/POST Paciente', function(){
 	});
 
 	it('No crea el paciente si ingresa un sexo diferente a Masculino o Femenino', function(done){
-		paciente.sexo = 'Cualquier cosa';
+		objetoPaciente.paciente.sexo = 'Cualquier cosa';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 				done();
@@ -286,24 +288,24 @@ describe('/POST Paciente', function(){
 	})
 
 	it('No crea el paciente si ingresa un email no válido', function(done){
-		paciente.email = 'hola mundo';
+		objetoPaciente.paciente.email = 'hola mundo';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.email = 'hola.com';
+		objetoPaciente.paciente.email = 'hola.com';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.email = 'hola@mundo';
+		objetoPaciente.paciente.email = 'hola@mundo';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
@@ -311,31 +313,24 @@ describe('/POST Paciente', function(){
 	})
 
 	it('No crea el paciente si ingresa un número de celular no válido', function(done){
-		paciente.celular = 'hola mundo';
+		objetoPaciente.paciente.celular = 'hola mundo';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.celular = '123456789';
+		objetoPaciente.paciente.celular = '123456789';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
-		paciente.celular = '123456';
+		objetoPaciente.paciente.celular = '123456';
 		chai.request(puerto)
 			.post('/api/pacientes')
-			.send(paciente)
-			.end(function(err, res){
-				res.should.have.status(500);
-			});
-		paciente.celular = '1234567890123';
-		chai.request(puerto)
-			.post('/api/pacientes')
-			.send(paciente)
+			.send(objetoPaciente)
 			.end(function(err, res){
 				res.should.have.status(500);
 			});
@@ -343,12 +338,13 @@ describe('/POST Paciente', function(){
 	})
 	var patId="";
 	it('Activa un paciente exitosamente', (done) => {
-		var paciente=pacienteNuevo();
-		paciente.save((err, patient) => {
-			patId = ''+patient._id
+
+		var nuePaciente=pacienteNuevo();
+		nuePaciente.save((err, patient) => {
+			patId = ''+patient._id;
 			chai.request('http://localhost:3000')
 			.put('/api/activarPaciente/'+patId)
-			.send(paciente)
+			.send(nuePaciente)
 			.end((err, res) => {
 				res.should.have.status(204);
 				done();
@@ -357,12 +353,12 @@ describe('/POST Paciente', function(){
 	});
 
 	it('Desactiva un paciente exitosamente', (done) => {
-		var paciente=pacienteNuevo();
-		paciente.save((err, patient) => {
+		var nuePaciente=pacienteNuevo();
+		nuePaciente.save((err, patient) => {
 			patId = ''+patient._id
 			chai.request('http://localhost:3000')
 			.put('/api/desactivarPaciente/'+patId)
-			.send(paciente)
+			.send(nuePaciente)
 			.end((err, res) => {
 				res.should.have.status(204);
 				done();

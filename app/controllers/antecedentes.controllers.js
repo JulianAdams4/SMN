@@ -3,16 +3,31 @@ var validador = require('../validators/validador');
 var mongoose = require('mongoose');
 var Antecedentes = mongoose.model('Antecedentes');
 
-var getErrorMessage = function(err){
-  if(err.errors){
-    for(var errName in err.error){
-      if(err.errors[errName].message){
-        return err.errors[errName].message;
-      }
+var getErrorMessage = function(err) {
+  // Definir la variable de error message
+  var message = '';
+
+  // Si un error interno de MongoDB ocurre obtener el mensaje de error
+  if (err.code) {
+    switch (err.code) {
+      // Si un eror de index único ocurre configurar el mensaje de error
+      case 11000:
+      case 11001:
+        message = '<i class="ti-alert"></i>El paciente ya <b>existe</b>';
+        break;
+      // Si un error general ocurre configurar el mensaje de error
+      default:
+        message = '<i class="ti-alert"></i>Se ha producido un error';
     }
   } else {
-    return 'Error de servidor desconocido';
+    // Grabar el primer mensaje de error de una lista de posibles errores
+    for (var errName in err.errors) {
+      if (err.errors[errName].message) message = err.errors[errName].message;
+    }
   }
+
+  // Devolver el mensaje de error
+  return message;
 };
 
 /*Permite obtener los antecedentes por id del paciente y se incluye la
@@ -39,26 +54,6 @@ exports.list = function(req, res){
       });
     } else {
       return res.status(200).json(antecedentes);
-    }
-  });
-};
-
-//Función que permite almacenar en la base de datos un nuevo antecedente a un determinado paciente.
-exports.createAntecedente = function(req, res){
-  var antecedentes = new Antecedentes(req.body);
-  var campos = ["idPaciente"/*, "alteracionApetito", "nausea","vomito","estrenimiento",
-  "diarrea","flatulencia","acidez","gastritis","problemasMasticacion","cambioSaborComidas"
-  ,"alergia","suplementoVitaminicos","medicamento","ojos","cabello","uñas","piel"*/];
-  if(!validador.camposSonValidos(campos,req)){
-    return res.status(500).json({ message: 'Faltan campos'});
-  }
-  antecedentes.save(function(err){
-    if (err) {
-      return res.status(500).send({
-        message: 'Ocurrió un error en el servidor'
-      })
-    } else {
-      return res.status(201).json(antecedentes);
     }
   });
 };

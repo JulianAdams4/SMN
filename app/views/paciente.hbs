@@ -69,12 +69,6 @@
                         <p>Home</p>
                     </a>
                 </li>
-								<li>
-                    <a href="#!/centros">
-                         <i class="fa fa-lg fa-building"></i>
-                        <p>Centros</p>
-                    </a>
-                </li>
                 <li>
                     <a href="#!/mis-datos">
                          <i class="fa fa-lg fa-heartbeat"></i>
@@ -97,6 +91,12 @@
                     <a href="#!/mis-logros">
                         <i class="ti-clipboard"></i>
                         <p>Mis logros</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!/centros">
+                         <i class="fa fa-lg fa-building"></i>
+                        <p>Centros</p>
                     </a>
                 </li>
             </ul>
@@ -123,7 +123,7 @@
 								<p>Mi Perfil</p>
                             </a>
                         </li>
-                        <li class="dropdown">
+                        <!--<li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="ti-bell"></i>
                                     <p class="notification">5</p>
@@ -137,13 +137,7 @@
                                 <li><a href="#">Notification 4</a></li>
                                 <li><a href="#">Another notification</a></li>
                               </ul>
-                        </li>
-						<li>
-                            <a href="#">
-								<i class="ti-settings"></i>
-								<p>Settings</p>
-                            </a>
-                        </li>
+                        </li>-->
                         <li>
                             <a href="/api/pacienteLogout">
                                 <i class="ti-power-off"></i>
@@ -342,13 +336,31 @@ function validateTextNumericInput(key){
     <script src="/app_Angular/Paciente/controllers/planNutricional.controller.js" charset="utf-8"></script>
     <script src="/app_Angular/Paciente/controllers/centro.controller.js" charset="utf-8"></script>
     <script src="/app_Angular/Paciente/controllers/logros.controller.js" charset="utf-8"></script>
-
-</html>
-
-<script>
+    <script>
     $(".nav li").on("click", function() {
       $(".nav li").removeClass("active");
       $(this).addClass("active");
     });
 
 </script>
+</html>
+<style media="screen">
+  .card .card-header{
+    background-color: #f2aa00;
+    color: #fff;
+  }
+  .card .card-header .title{
+    color: #fff;
+  }
+
+  .card .card-header p{
+    color: #000;
+  }
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:not(.btn):hover, .navbar-default .navbar-nav > .active > a:not(.btn):focus, .navbar-default .navbar-nav > li > a:not(.btn):hover, .navbar-default .navbar-nav > li > a:not(.btn):focus {
+    color: #000;
+    }
+    a:hover, a:focus {
+    color: #ccc;
+    }
+  </style>
+
