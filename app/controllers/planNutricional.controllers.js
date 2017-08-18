@@ -64,7 +64,7 @@ exports.createPlanNutricional = function(req, res){
         /* Fijamos el plan creado como el plan vigente (por defecto)
            y cambiamos TODOS los demás planes como vigente:false */
         var idPlanCreado = planNutricional._id;
-        //fijarVigentePorId(idPlanCreado, req, res)
+        fijarVigentePorId(idPlanCreado, req, res)
 
       }); /* End PlanNutricional.create */
     }
@@ -143,7 +143,7 @@ function update(id,req,res,documento){
         if (err) {
             return res.status(500).send({ message: 'Ocurrió un error en el servidor' });
         } else {
-            res.status(200).json(planNutricional);
+            return res.status(204).json(planNutricional);
         }
     });
 }

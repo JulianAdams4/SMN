@@ -107,6 +107,7 @@ exports.createDatosControl = function(req, res){
     if (result.url) {
       DatosControl.create({
         idPaciente:req.body.idPaciente,
+        foto: result.url,
         fechaDato : req.body.fechaDato,
         observaciones: req.body.observaciones,
         datos: req.body.datos
