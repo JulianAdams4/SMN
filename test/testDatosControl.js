@@ -365,9 +365,19 @@ describe('/PUT datosControl', () => {
         datosControl.save((err, dato) => {
             chai.request('http://localhost:3000')
                 .put('/api/datosControl/' + dato._id)
-                .send({ foto: 'https://www.bellezapura.com/wp-content/uploads/2013/05/nutricion-magnesio-colageno-ana-maria-lajusticia.jpg' })
+                .send({  datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 165.00,
+                    unidadDato: 'kg'
+                  }
+                ],
+                  foto: "http://cdn.imagentv.com/resources/defaults/v2/imagen_default300.png"})
                 .end(function(err, res){
-              res.should.have.status(204);
+                  if(err){
+                    console.log("akiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                  }
+                  res.should.have.status(204);
                     done();
           });
         });
