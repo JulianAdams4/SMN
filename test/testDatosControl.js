@@ -252,7 +252,7 @@ describe('/POST datosControl', () => {
           done();
         });
   });
-  
+
 });
 describe('/GET datosControl', () => {
       it('Debe obtener los datos de control de un paciente', function(done){
@@ -335,9 +335,6 @@ describe('/PUT datosControl', () => {
                   }
                 ],observaciones:"actualizada"})
                 .end(function(err, res){
-                  if(err){
-                    console.log("akiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                  }
                   res.should.have.status(204);
                     done();
           });

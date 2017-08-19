@@ -95,7 +95,7 @@ describe('/POST Paciente', function(){
 
 	it('Crea el paciente si se ignoran campos no obligatorios', function(done){
 		objetoPaciente.paciente.direccion = '';
-		objetoPaciente.paciente.celular = '';
+		objetoPaciente.paciente.celular = '0992426763';
 		objetoPaciente.paciente.ocupacion = '';
 		objetoPaciente.paciente.ejercicios = '';
 		objetoPaciente.paciente.frecuenciaEjecicios = '';

@@ -66,7 +66,7 @@ exports.createCita = function(req, res){
         message: getErrorMessage(err)
       })
     } else {
-      return res.status(200).json(cita);
+      return res.status(201).json(cita);
     }
   });
 };
@@ -106,7 +106,7 @@ exports.cancelarCita = function(req, res){
         message: getErrorMessage(err)
       })
     } else {
-      Cita.findById(cita._id, function(err, cita){
+      Cita.findById(req.params.citaId, function(err, cita){
         return res.status(200).json(cita);
       });
     }
