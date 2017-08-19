@@ -85,7 +85,7 @@ exports.reservarCita = function(req, res){
         message: getErrorMessage(err)
       })
     } else {
-      Cita.findById(cita._id, function(err, cita){
+      Cita.findById(req.params.citaId, function(err, cita){
         return res.status(200).json(cita);
       });
     }
