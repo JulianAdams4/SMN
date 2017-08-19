@@ -204,7 +204,7 @@ exports.borrarDatoControlById = function (req, res) {
 
 // Función que devuelve la cantidad de registros, entre un rango de fechas
 exports.datoControlEnRango = function (req, res) {
-  var pacienteId = req.session.paciente;
+  var pacienteId = req.session.paciente || req.params.paciente; // (*)
   if (!pacienteId) {
     return res.status(503).json({ message: 'No autorizado'});
   }
@@ -231,6 +231,7 @@ exports.datoControlEnRango = function (req, res) {
   DatosControl.find(
     {$and:
       [
+        { 'idPaciente': pacienteId },
         { 'datos.nombreDato': datoABuscar },
         { 'fechaDato': {$gte: fechaInicio} },
         { 'fechaDato': {$lt: fechaFin2} }
@@ -239,8 +240,13 @@ exports.datoControlEnRango = function (req, res) {
   )
   .sort({'fechaDato': 1})
   .exec(function(err, datos){
+    // Error del servidor
     if (err) {
       return res.status(500).json({ message: "Ocurrió un error al obtener los datos" });
+    }
+    // No encontrado
+    if ( !datos ) {
+      return res.status(404).json({ message: "No se encontraron los datos del paciente" });
     }
     // Arreglo de zeros con la long de los dias
     var anioInicio  = fechaInicio.getFullYear();
@@ -248,25 +254,29 @@ exports.datoControlEnRango = function (req, res) {
     var diferencia = anioFin - anioInicio + 1;
     var arregloAnios = []; // --> [ [10,8,..], [30,12,10,..], ... ]
     var labels = []; // --> ["2000","2001",...]
+    var uni = "";
+
     for ( var i=0 ; i<diferencia ; i++ ) {
       labels.push( String(anioInicio+i) );
       var arrAnio = Array.apply(null, new Array(12)).map(Number.prototype.valueOf,0);
       arregloAnios.push(arrAnio);
     }
-console.log(datos[0].datos);
+    
     for ( var j=0 ; j<datos.length ; j++ ) {
       var fich_j = datos[j];
       var aniofich_j = new Date(fich_j.fechaDato).getFullYear();
       var mesfich_j  = new Date(fich_j.fechaDato).getMonth();
       var pos = labels.indexOf(String(aniofich_j));
-      // Aumentamos esa posicion en +1 (inicialmente era 0)
+      // Aumentamos esa posicion en el valor del dato (inicialmente era 0)
       for (var k = 0; k < fich_j.datos.length; k++) {
         var cd = fich_j.datos[k];
         if ( cd.nombreDato.toUpperCase() == datoABuscar.toUpperCase() ) {
           arregloAnios[pos][mesfich_j] = arregloAnios[pos][mesfich_j] + parseInt(cd.valorDato);
+          uni = cd.unidadDato;
         }
       }
     }
-    return res.status(200).json({ series: labels, data: arregloAnios });
+
+    return res.status(200).json({ series: labels, data: arregloAnios, unidad: uni });
   });
 };
