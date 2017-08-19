@@ -24,6 +24,9 @@ angular.module('paciente').config(['$routeProvider',
     })
     .when('/mis-logros', {
       templateUrl: '/app_Angular/Paciente/views/estadisticas.paciente.view.html'
+    })
+    .when('/citas', {
+      templateUrl: '/app_Angular/Paciente/views/view_citas.view.html'
     });
   }
 ]);

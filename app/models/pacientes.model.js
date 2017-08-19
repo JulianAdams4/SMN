@@ -50,8 +50,7 @@ var pacienteSchema = new Schema({
   direccion: String,
   celular: {
     type: String,
-    match: [/09+\d{8}/, '<i class="ti-alert"></i>Ingrese un número de celular válido'],
-    match: [/\d{10}/, '<i class="ti-alert"></i>El número de célular debe tener <b>10 dígitos</b>']//Sólo 10 DIGITOS
+    match: [/09+\d{8}/, '<i class="ti-alert"></i>Ingrese un número de celular válido']
   },
   ocupacion: String,
   motivoConsulta: {

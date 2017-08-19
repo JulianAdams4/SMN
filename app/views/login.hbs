@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Login</title>
+    <title>Angie Del Pezo</title>
+  	<link rel="icon" href="/favicon.ico">
   </head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <!-- Bootstrap core CSS -->
@@ -59,12 +60,13 @@
     color: rgb(255, 255, 255);
   }
   .button{
-    background-color: #fff;
+    background-color: #f2aa00;
     padding: 6px 12px;
     margin-bottom: 0;
     font-size: 14px;
     line-height: 1.42857143;
-    border: 1px solid transparent;
+    border: 1px solid #f5f5f5;
+    color: white;
     border-radius: 4px;
   }
   html {
@@ -77,16 +79,19 @@
 .mensaje{
   color: white;
 }
+body {
+  background-color: rgba(255, 255, 255, 0);
+}
   </style>
   <body ng-app="loginApp" ng-controller="LoginController">
 
-      <section class="login">
+      <form class="login" data-ng-submit="iniciarSesion()" novalidate>
           <h1>Iniciar Sesión</h1>
           <input type="email" class="form-control" placeholder="Correo Electrónico" ng-model="paciente.email">
           <input type="password" class="form-control" placeholder="Password" ng-model="paciente.password">
           <h5 class="mensaje" ng-show="mensaje" ng-bind="mensaje"></h5>
-          <button ng-click="iniciarSesion()" class="button" type="button">Ingresar</button>
-      </section>
+          <button class="button" type="submit">Ingresar</button>
+      </form>
 
   </body>
   <script src="/lib/angular/angular.min.js" charset="utf-8"></script>

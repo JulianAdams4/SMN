@@ -145,7 +145,7 @@ describe('/PUT planNutricional vigente', () => {
         datosPlan.save((err, plan) => {
             chai.request('http://localhost:3000')
                 .put('/api/planesNutricionales/'+plan._id)
-                .send({ fechaDato: '2017-06-13',documento: "http://www.juntadeandalucia.es/empleo/recursos/material_didactico/especialidades/materialdidactico_econtabilidad_financiera/anexos/DOCUMENTOS%20MERCANTILES.pdf" })
+                .send({ fechaDato: '2017-06-13',documento: "http://talentoti.gov.co/635/articles-14312_empresas.pdf" })
                 .end(function(err, res){
                   res.should.have.status(204);
                   done();
@@ -181,7 +181,7 @@ describe('/PUT planNutricional vigente', () => {
         datosPlan.save((err, plan) => {
             chai.request('http://localhost:3000')
                 .put('/api/planesNutricionales/' + plan._id)
-                .send({ documento: "http://www.juntadeandalucia.es/empleo/recursos/material_didactico/especialidades/materialdidactico_econtabilidad_financiera/anexos/DOCUMENTOS%20MERCANTILES.pdf"})
+                .send({ documento: "http://talentoti.gov.co/635/articles-14312_empresas.pdf"})
                 .end(function(err, res){
                   res.should.have.status(204);
                   done();
