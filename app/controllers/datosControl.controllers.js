@@ -31,6 +31,7 @@ var getErrorMessage = function(err) {
 exports.read = function(req, res){
   res.json(req.datosControl);
 };
+
 /*Permite obtener los datos de control por id y se incluye la
 información del paciente con populate*/
 exports.datosControlById = function(req, res, next, id){
@@ -48,12 +49,14 @@ exports.datosControlById = function(req, res, next, id){
         next();
     });
 };
+
 /*Permite obtener los datos de control por id del paciente y se incluye la
 información del paciente con populate*/
 exports.datosControlByPaciente = function(req, res){
   var pacienteId = req.params.pacienteId;
   if(req.session.paciente){
     DatosControl.find({idPaciente:req.session.paciente._id,borrado:false}).populate('idPaciente')
+      .sort({'fechaDato': -1})
       .exec(function (err, datosControl) {
           if (err) {
             return res.status(400).send({
@@ -64,6 +67,7 @@ exports.datosControlByPaciente = function(req, res){
       });
   } else {
     DatosControl.find({idPaciente:pacienteId,borrado:false}).populate('idPaciente')
+      .sort({'fechaDato': -1})
       .exec(function (err, datosControl) {
           if (err) {
             return res.status(400).send({
@@ -79,6 +83,7 @@ exports.datosControlByPaciente = function(req, res){
 información del paciente con populate*/
 exports.list = function(req, res){
   DatosControl.find({}).populate('idPaciente')
+    .sort({'fechaDato': 1})
     .exec(function (err, datosControl) {
         if (err) {
           return res.status(400).send({
@@ -127,6 +132,7 @@ function updateFile(cloudinary,req,id,res){
     }
   })
 }
+
 //La función update edita los todos los campos excepto el campo foto ya que este no fue cambiado por el admin
 function update(id,req,res,foto,datosControl){
   DatosControl.findByIdAndUpdate(id, {
@@ -193,5 +199,74 @@ exports.borrarDatoControlById = function (req, res) {
       return res.status(204).json({
         message: "Datos eliminados exitosamente"
       });
+  });
+};
+
+// Función que devuelve la cantidad de registros, entre un rango de fechas
+exports.datoControlEnRango = function (req, res) {
+  var pacienteId = req.session.paciente;
+  if (!pacienteId) {
+    return res.status(503).json({ message: 'No autorizado'});
+  }
+
+  var campos = ["inicio", "fin", "parametro"];
+  for (var i=0; i<campos.length ; i++){
+      var field = campos[i];
+      if ( !req.body[field] || req.body[field] == null || req.body[field] == undefined || req.body[field]== '' ) {
+        return res.status(500).json({ message: 'Faltan campos'});
+      }
+  }
+    
+  var fechaInicio = new Date(req.body.inicio);
+  var fechaFin    = new Date(req.body.fin);
+  var datoABuscar = req.body.parametro;
+
+  // Sumamos 1 dia al final para que incluya la ultima fecha
+  var fechaFin2 = new Date(
+      fechaFin.getFullYear(), 
+      fechaFin.getMonth(), 
+      fechaFin.getDate()+1 
+  );
+  //  (fecha>=min) && (fecha<max)
+  DatosControl.find(
+    {$and:
+      [
+        { 'datos.nombreDato': datoABuscar },
+        { 'fechaDato': {$gte: fechaInicio} },
+        { 'fechaDato': {$lt: fechaFin2} }
+      ]
+    }
+  )
+  .sort({'fechaDato': 1})
+  .exec(function(err, datos){
+    if (err) {
+      return res.status(500).json({ message: "Ocurrió un error al obtener los datos" });
+    }
+    // Arreglo de zeros con la long de los dias
+    var anioInicio  = fechaInicio.getFullYear();
+    var anioFin     = fechaFin.getFullYear();
+    var diferencia = anioFin - anioInicio + 1;
+    var arregloAnios = []; // --> [ [10,8,..], [30,12,10,..], ... ]
+    var labels = []; // --> ["2000","2001",...]
+    for ( var i=0 ; i<diferencia ; i++ ) {
+      labels.push( String(anioInicio+i) );
+      var arrAnio = Array.apply(null, new Array(12)).map(Number.prototype.valueOf,0);
+      arregloAnios.push(arrAnio);
+    }
+console.log(datos[0].datos);
+    for ( var j=0 ; j<datos.length ; j++ ) {
+      var fich_j = datos[j];
+      var aniofich_j = new Date(fich_j.fechaDato).getFullYear();
+      var mesfich_j  = new Date(fich_j.fechaDato).getMonth();
+      var pos = labels.indexOf(String(aniofich_j));
+      // Aumentamos esa posicion en +1 (inicialmente era 0)
+      for (var k = 0; k < fich_j.datos.length; k++) {
+        var cd = fich_j.datos[k];
+        if ( cd.nombreDato.toUpperCase() == datoABuscar.toUpperCase() ) {
+          arregloAnios[pos][mesfich_j] = arregloAnios[pos][mesfich_j] + parseInt(cd.valorDato);
+        }
+      }
+    }
+    return res.status(200).json({ series: labels, data: arregloAnios });
   });
 };

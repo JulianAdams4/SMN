@@ -13,6 +13,9 @@ module.exports = function(app) {
     .post(datosControl.createDatosControl);
   app.route('/api/datosControlPaciente')
     .get(datosControl.datosControlByPaciente);
+  
+  app.route('/api/datosControlPacienteRango')
+    .post(datosControl.datoControlEnRango);
 
   app.param('datosControlId', datosControl.datosControlById);
 

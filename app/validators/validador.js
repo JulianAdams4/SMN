@@ -13,6 +13,19 @@ module.exports = {
       }
     }
   },
+  celularEsValida: function(celular) {
+    if(celular != undefined){
+      if(celular.length!=10){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+    else {
+      return true;
+    }
+    },
   camposSonValidos: function(campos,req) {
     for (var i=0; i<campos.length ; i++){
       var field = campos[i];

@@ -64,7 +64,7 @@ exports.createPlanNutricional = function(req, res){
         /* Fijamos el plan creado como el plan vigente (por defecto)
            y cambiamos TODOS los demás planes como vigente:false */
         var idPlanCreado = planNutricional._id;
-        fijarVigentePorId(idPlanCreado, req, res);
+        fijarVigentePorId(idPlanCreado, req, res)
 
       }); /* End PlanNutricional.create */
     }

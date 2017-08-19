@@ -51,11 +51,12 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           $scope.backToList();
         }, function(errorResponse){
           $("div#divLoading").removeClass('show');
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          var msj = '<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         });
       }
       else{
-        demo.mostrarNotificacion("danger", "No se escogió ningún archivo");
+        demo.showCustomNotification('top', 'right', "No se escogió ningún archivo", 'danger', 'ti-close', 3000);
       }
     }
     // ==============================================
@@ -78,7 +79,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
             }
             else {
               esArchivoValido=false;
-              demo.mostrarNotificacion("danger", "Formato inválido,sólo pfd");
+              demo.showCustomNotification('top', 'right', "Formato inválido,sólo pfd", 'danger', 'ti-close', 3000);
             }
         };
         // lee el archivo seleccionado como url
@@ -86,7 +87,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
       }
       else{
         esArchivoValido=false;
-        demo.mostrarNotificacion("danger", "No se escojio ningún documento");
+        demo.showCustomNotification('top', 'right', "No se escogió ningún archivo", 'danger', 'ti-close', 3000);
       }
     }
     // ==============================================
@@ -141,11 +142,12 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
           $scope.backToList();
         }, function(errorResponse){
           $("div#divLoading").removeClass('show');
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          var msj = '<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         });
       }
       else{
-        demo.mostrarNotificacion("danger", "No se escogió ningún documento");
+        demo.showCustomNotification('top', 'right', "No se escogió ningún archivo", 'danger', 'ti-close', 3000);
       }
     }
     // ==============================================

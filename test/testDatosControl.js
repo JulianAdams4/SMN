@@ -133,7 +133,7 @@ describe('/POST datosControl', () => {
           done();
         });
   });
-  //NO INGRESA FECHA DATO
+  //NO INGRESA OBSERVACIONES
   it('No ingresa observaciones del dato de control', (done) => {
     var datosControl = {
         idPaciente: patId,
@@ -190,7 +190,7 @@ describe('/POST datosControl', () => {
           done();
         });
   });
-  //NO INGRESA NOMBRE DATO
+  //NO INGRESA VALOR DATO
   it('No ingresa el valor de un dato de control', (done) => {
     var datosControl = {
         idPaciente: patId,
@@ -230,6 +230,29 @@ describe('/POST datosControl', () => {
           done();
         });
   });
+//NO INGRESA FOTO DE SEGUIMIENTO
+  it('No ingresa foto de seguimiento del dato de control', (done) => {
+    var datosControl = {
+        idPaciente: patId,
+        fechaDato: '2017-04-13',
+	     	observaciones:'prueba',
+        datos:[
+          {
+            nombreDato:'Peso',
+            valorDato: 150.00,
+            unidadDato: 'kg'
+          }
+        ],
+    }
+    chai.request('http://localhost:3000')
+        .post('/api/datosControlPaciente/'+patId)
+        .send(datosControl)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+  });
+
 });
 describe('/GET datosControl', () => {
       it('Debe obtener los datos de control de un paciente', function(done){
@@ -311,6 +334,42 @@ describe('/PUT datosControl', () => {
                     unidadDato: 'cm'
                   }
                 ],observaciones:"actualizada"})
+                .end(function(err, res){
+                  res.should.have.status(204);
+                    done();
+          });
+        });
+      });
+      it('Actualiza foto de seguimiento de un dato de control', function(done){
+        var datosControl = new DatosControl({
+                idPaciente: idPat,
+                fechaDato: '2017-04-13',
+                observaciones:'pruebaEditar',
+                datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 150.00,
+                    unidadDato: 'kg'
+                  },
+                  {
+                    nombreDato:'Altura',
+                    valorDato: 165.00,
+                    unidadDato: 'cm'
+                   }
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
+            });
+        datosControl.save((err, dato) => {
+            chai.request('http://localhost:3000')
+                .put('/api/datosControl/' + dato._id)
+                .send({  datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 165.00,
+                    unidadDato: 'kg'
+                  }
+                ],
+                  foto: "http://cdn.imagentv.com/resources/defaults/v2/imagen_default300.png"})
                 .end(function(err, res){
                   if(err){
                     console.log("akiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
@@ -429,6 +488,35 @@ describe('/PUT datosControl', () => {
                     nombreDato:'Peso'
                   }
                 ]})
+                .end(function(err, res){
+              res.should.have.status(500);
+                    done();
+          });
+        });
+      });
+      it('No se ingresa foto de seguimiento al editar', function(done){
+        var datosControl = new DatosControl({
+                idPaciente: idPat,
+                fechaDato: '2017-04-13',
+                observaciones:'pruebaEditar',
+                datos:[
+                  {
+                    nombreDato:'Peso',
+                    valorDato: 150.00,
+                    unidadDato: 'kg'
+                  },
+                  {
+                    nombreDato:'Altura',
+                    valorDato: 165.00,
+                    unidadDato: 'cm'
+                   }
+                ],
+                foto: "http://www.imagen.com.mx/assets/img/imagen_share.png"
+            });
+        datosControl.save((err, dato) => {
+            chai.request('http://localhost:3000')
+                .put('/api/datosControl/' + dato._id)
+                .send({ foto: '' })
                 .end(function(err, res){
               res.should.have.status(500);
                     done();

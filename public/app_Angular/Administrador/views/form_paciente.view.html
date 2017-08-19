@@ -91,7 +91,6 @@
             <label>Celular</label>
             <input type="text"
                    class="form-control border-input"
-                   minlength="10"
                    maxlength="10"
                    name="celular"
                    onkeypress="return event.charCode>47 && event.charCode<58"
@@ -147,7 +146,7 @@
                        class="form-control border-input"
                        name="ejercicios"
                        maxlength="50"
-                       onkeypress="return validateTextInput(event)"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Ejercicios"
                        data-ng-model="paciente.ejercicios">
             </div>
@@ -159,8 +158,8 @@
                 <input type="text"
                        class="form-control border-input"
                        name="frecuenciaEjecicios"
-                       maxlength="200"
-                       onkeypress="return validateTextNumericInput(event)"
+                       maxlength="60"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Frecuencia Ejercicios"
                        data-ng-model="paciente.frecuenciaEjecicios">
             </div>
@@ -287,7 +286,7 @@
           <div class="form-check">
             <label class="form-check-label">
               <input type="checkbox" class="form-check-input" data-ng-model="antecedente.alergia">
-              Alergia
+              Alergias
             </label>
           </div>
           <div class="form-group">
@@ -295,7 +294,7 @@
                        class="form-control border-input"
                        maxlength="50"
                        name="descripcionAlergias"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Alergias"
                        data-ng-model="antecedente.descripcionAlergias"
                        ng-show="antecedente.alergia">
@@ -315,7 +314,7 @@
                        class="form-control border-input"
                        maxlength="50"
                        name="descripcionSuplementos"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Suplementos"
                        data-ng-model="antecedente.descripcionSuplementos"
                        ng-show="antecedente.suplementoVitaminicos">
@@ -327,7 +326,7 @@
           <div class="form-check">
             <label class="form-check-label">
               <input type="checkbox" class="form-check-input" data-ng-model="antecedente.medicamento">
-              Medicamento
+              Medicamentos
             </label>
           </div>
           <div class="form-group">
@@ -335,7 +334,7 @@
                        class="form-control border-input"
                        maxlength="50"
                        name="descripcionMedicamentos"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Medicamentos"
                        data-ng-model="antecedente.descripcionMedicamentos"
                        ng-show="antecedente.medicamento">
@@ -406,8 +405,9 @@
                    class="form-control border-input"
                    name="antecedentesPersonales"
                    maxlength="300"
-                   onkeypress="return validateTextInput(event)"
-                   data-ng-model="antecedente.antecedentesPersonales">
+                   onkeypress="return validateTextInput_punctuation(event)"
+                   data-ng-model="antecedente.antecedentesPersonales"
+                   required>
         </div>
       </div>
     </div>
@@ -420,8 +420,9 @@
                    class="form-control border-input"
                    name="antecedentesFamiliares"
                    maxlength="300"
-                   onkeypress="return validateTextInput(event)"
-                   data-ng-model="antecedente.antecedentesFamiliares">
+                   onkeypress="return validateTextInput_punctuation(event)"
+                   data-ng-model="antecedente.antecedentesFamiliares"
+                   required>
         </div>
       </div>
     </div>
@@ -463,7 +464,7 @@
                     class="form-control border-input"
                     minlength="2"
                     maxlength="50"
-                    onkeypress="return validateTextInput(event)"
+                    onkeypress="return validateTextInput_punctuation(event)"
                     placeholder="Preparadas por"
                     data-ng-model="historiaAlimentaria.preparadoPor">
           </div>
@@ -484,7 +485,7 @@
                        class="form-control border-input"
                        maxlength="50"
                        name="comidaFinesdeSemana"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Descripción Comidas"
                        data-ng-model="historiaAlimentaria.comidaFinesdeSemana"
                        ng-show="historiaAlimentaria.modificaFinesDeSemana">
@@ -504,7 +505,7 @@
                        class="form-control border-input"
                        maxlength="50"
                        name="snacksEntreComidas"
-                       onkeypress="return (event.charCode>64&&event.charCode<91)||(event.charCode>96&&event.charCode<123)||(event.charCode>7&&event.charCode<9)||(event.charCode>31&&event.charCode<33)||(event.charCode>47 && event.charCode<58)"
+                       onkeypress="return validateTextInput_punctuation(event)"
                        placeholder="Descripción Snacks"
                        data-ng-model="historiaAlimentaria.snacksEntreComidas"
                        ng-show="historiaAlimentaria.comeEntreComidas">
@@ -575,7 +576,7 @@
                       placeholder="Nombres"
                       minlength="2"
                       maxlength="50"
-                      onkeypress="return validateTextInput(event)" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
+                      onkeypress="return validateTextInput_punctuation(event)" class="form-control border-input" placeholder="Alimentos que le agradan" data-ng-model="newGrupo.alimentosAgradan">
           </div>
         </div>
         <div class="col-md-3">
@@ -586,7 +587,7 @@
                       placeholder="Nombres"
                       minlength="2"
                       maxlength="50"
-                      onkeypress="return validateTextInput(event)" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
+                      onkeypress="return validateTextInput_punctuation(event)" class="form-control border-input" placeholder="Alimentos que no le agradan" data-ng-model="newGrupo.alimentosDesagradan">
           </div>
         </div>
       </div>

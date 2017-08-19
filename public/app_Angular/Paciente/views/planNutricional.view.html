@@ -2,12 +2,18 @@
     <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-3"></div>
         <div class="col-lg-6 col-md-6 col-sm-6">
-          <div class="card card-stats">
-            <div class="card-header" data-background-color="red">
-              <i class="fa fa-lg fa-file-o"></i>
-            </div>
-            <div class="card-content">
-              <h2 class="title" style="font-weight: bold;">Plan Nutricional Actual</h2>
+            <div class="card card-stats titulo-tabs">
+            <div class="card-header titulo-header" >
+              <div class="row" >
+                <div class="col-md-3">
+                  <i class="fa fa-lg fa-file-o"></i>
+                </div>
+                <div class="col-md-6">
+                  <h2 class="title" style="font-weight: bold;">Plan Nutricional Actual</h2>
+                </div>
+                <div class="col-md-3">
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -17,7 +23,7 @@
     <div class="">
       <div class="" ng-repeat="plan in planNutricional">
 
-          <div class="row">
+          <div class="row" style="margin: 10px;">
             <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8">
                 <iframe ng-src="{{trustSrc(plan.documento)}}" id="preview" height="450" width="100%" frameborder="0" scrolling="auto" style="border: 1px solid black">    
             </div>
@@ -33,5 +39,4 @@
           </div-->
       </div>
     </div>
-    
 </section>

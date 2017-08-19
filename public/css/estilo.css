@@ -1,0 +1,110 @@
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+  margin: 0px 0px;
+  padding-right: 0px;
+}
+
+.sidebar .sidebar-wrapper {
+  background-color: #f2aa00;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+
+@media (max-width: 991px) {
+  .off-canvas-sidebar .sidebar-wrapper {
+    background-color: #f2aa00;
+  }
+}
+
+.sidebar .nav li:not(.active) > a, .sidebar[data-background-color="white"] .nav li:not(.active) > a, .off-canvas-sidebar .nav li:not(.active) > a, .off-canvas-sidebar[data-background-color="white"] .nav li:not(.active) > a {
+    color: white;
+}
+
+.sidebar[data-active-color="danger"] .nav li.active > a, .off-canvas-sidebar[data-active-color="danger"] .nav li.active > a {
+    color: white;
+}
+
+.sidebar .logo {
+  padding: 0px;
+}
+
+.navbar-default .navbar-nav > li > a:not(.btn) {
+    color: white;
+}
+
+.navbar-default {
+    background-color: #adcb1d;
+}
+
+.sidebar .logo .simple-text, .sidebar[data-background-color="white"] .logo .simple-text, .off-canvas-sidebar .logo .simple-text, .off-canvas-sidebar[data-background-color="white"] .logo .simple-text {
+    color: white;
+}
+
+.main-panel {
+  background: url('../img/fondo2.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.card label{
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.4em;
+  text-align: center;
+}
+h3 {
+  font-size: 1.2em;
+  margin: 4%;
+}
+.masinfo{
+  margin-left: 3.5%;
+}
+.masinfo .row{
+   margin: -2% 1.5%;
+}
+.redes .row{
+  margin-top: -4%
+}
+.redes{
+  margin-top: -3%;
+  margin-left: -2%;
+}
+
+card {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    margin: 25px 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+    border-radius: 3px;
+    color: rgba(0,0,0, 0.87);
+    background: #fff;
+}
+
+.card .card-header {
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    margin: -20px 15px 0;
+    border-radius: 3px;
+    padding: 15px;
+    background-color: #999999;
+}
+
+.card .card-content {
+    padding: 15px 20px;
+}
+
+.panelCal {
+  padding: 15px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid #ababab;
+  background-color: rgba(255, 255, 255, 0.9);
+}

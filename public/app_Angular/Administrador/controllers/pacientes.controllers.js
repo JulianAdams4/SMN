@@ -11,7 +11,7 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.historiaAlimentaria = {};
     $scope.historiaAlimentaria.grupoAlimentos = [];
     $scope.newGrupo = {};
-
+    
     $scope.create = function() {
       if ( validarCedula( $scope.paciente.cedula ) ) {
         demo.mostrarNotificacion('danger', "El número de cécula del paciente no es válido");
