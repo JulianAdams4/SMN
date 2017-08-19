@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   celularEsValida: function(celular) {
-    if(celular != undefined){
+    if(celular != undefined && celular != "" ){
       if(celular.length!=10){
         return false;
       }

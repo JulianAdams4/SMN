@@ -3,10 +3,11 @@
 <head>
 	<meta charset="utf-8" />
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.png">
+	
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Paper Dashboard by Creative Tim</title>
+	<title>Angie Del Pezo</title>
+	<link rel="icon" href="/favicon.ico">
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -237,45 +238,51 @@ function validateTextNumericInput(key){
 							return true;
 						}
   }
-  function validateTextInput(key){
-		if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
-                &&
-                (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
-                &&
-                (key.keyCode != 45) //retroceso
-								&&
-                (key.keyCode != 241) //ñ
-                &&
-                (key.keyCode != 209) //Ñ
-                &&
-                (key.keyCode != 32) //espacio
-                &&
-                (key.keyCode != 225) //á
-                &&
-                (key.keyCode != 233) //é
-                &&
-                (key.keyCode != 237) //í
-                &&
-                (key.keyCode != 243) //ó
-                &&
-                (key.keyCode != 250) //ú
-                &&
-                (key.keyCode != 193) //Á
-                &&
-                (key.keyCode != 201) //É
-                &&
-                (key.keyCode != 205) //Í
-                &&
-                (key.keyCode != 211) //Ó
-                &&
-                (key.keyCode != 218) //Ú
-            ){
-							return false;
-						}
-						else {
-							return true;
-						}
-  }
+	function validateTextNumericInput(key){
+			if ((key.keyCode < 97 || key.keyCode > 122) //letras mayusculas
+	                &&
+	                (key.keyCode < 65 || key.keyCode > 90) //letras minusculas
+	                &&
+									(key.keyCode<47 || event.keyCode>58)//números
+									&&
+									(key.keyCode!=44)//comas
+									&&
+									(key.keyCode!=46)//punto
+									&&
+	                (key.keyCode != 45) //retroceso
+	                &&
+	                (key.keyCode != 241) //ñ
+	                &&
+	                (key.keyCode != 209) //Ñ
+	                &&
+	                (key.keyCode != 32) //espacio
+	                &&
+	                (key.keyCode != 225) //á
+	                &&
+	                (key.keyCode != 233) //é
+	                &&
+	                (key.keyCode != 237) //í
+	                &&
+	                (key.keyCode != 243) //ó
+	                &&
+	                (key.keyCode != 250) //ú
+	                &&
+	                (key.keyCode != 193) //Á
+	                &&
+	                (key.keyCode != 201) //É
+	                &&
+	                (key.keyCode != 205) //Í
+	                &&
+	                (key.keyCode != 211) //Ó
+	                &&
+	                (key.keyCode != 218) //Ú
+	            ){
+								return false;
+							}
+							else {
+								return true;
+							}
+	  }
 </script>
 </body>
 
@@ -381,4 +388,3 @@ function validateTextNumericInput(key){
     color: #ccc;
     }
   </style>
-

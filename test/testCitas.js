@@ -32,7 +32,7 @@ describe('/Loggeo-Reservar cita', function(){
 			}
 		}
     cita=new Cita({
-      start: '2017-08-19T14:05:00.000Z',
+      start: '2019-08-19T14:05:00.000Z',
       duracion: 15,
       estaOcupado: false,
       stick: true
@@ -58,7 +58,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.end(function(err, res){
         credenciales={
           email:res.body.email,
-          password:crypto.desencriptar(res.body.password),
+          password:crypto.desencriptar(res.body.password)
         };
         chai.request(puerto)
         .post('/api/pacienteLogin')

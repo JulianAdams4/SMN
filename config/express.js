@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var favicon = require('serve-favicon');
 
 module.exports = function() {
 
@@ -27,6 +28,8 @@ module.exports = function() {
     resave : true,
     saveUninitialized : false
   }));
+
+  app.use(favicon('./public/favicon.ico'));
 
   app.set('view engine', 'hbs');
   app.set('views', './app/views');
