@@ -271,7 +271,8 @@ exports.datoControlEnRango = function (req, res) {
       for (var k = 0; k < fich_j.datos.length; k++) {
         var cd = fich_j.datos[k];
         if ( cd.nombreDato.toUpperCase() == datoABuscar.toUpperCase() ) {
-          arregloAnios[pos][mesfich_j] = arregloAnios[pos][mesfich_j] + parseInt(cd.valorDato);
+          var val = cd.valorDato.replace(',', '.');
+          arregloAnios[pos][mesfich_j] = arregloAnios[pos][mesfich_j] + parseFloat(val);
           uni = cd.unidadDato;
         }
       }
