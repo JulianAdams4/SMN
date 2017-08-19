@@ -136,6 +136,12 @@ exports.createPaciente = function(req, res){
   var paciente = new Paciente(req.body.paciente);
   var historia = new HistoriaAlimentaria(req.body.historia);
   var antecedente=new Antecedentes(req.body.antecedente);
+  if(!validador.celularEsValida(paciente.celular)){
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>La longitud del celular debe ser <b>10</b>',
+      type: "danger"
+    });
+  }
   if ( antecedente.alergia==true && antecedente.descripcionAlergias == undefined) {
     return res.status(500).json({
       message: '<i class="ti-alert"></i>Falta <b>especificar</b> las alergias',

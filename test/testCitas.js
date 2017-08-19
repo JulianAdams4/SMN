@@ -3,69 +3,117 @@ var server = require('../server');
 var mongoose = require('mongoose');
 var Cita = mongoose.model('Cita');
 var Paciente = mongoose.model('Paciente');
-
+var crypto = require('../app/services/crypto.js');
 var paciente = {};
 var puerto = 'http://localhost:3000';
-
-
+var cita={};
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-
 var should = chai.should();
 chai.use(chaiHttp);
 
-var patId = '';
-describe('citas', () => {
+describe('/Loggeo-Reservar cita', function(){
 
-    beforeEach((done) => {
-        Cita.remove({}, (err) => {
-          Paciente.remove({}, (err) => {
-            done();
-          });
-        });
-    });
-    afterEach((done) => {
-        Cita.remove({}, (err) => {
-          Paciente.remove({}, (err) => {
-            done();
-          });
-        });
-    });
+	beforeEach(function(done){
+		objetoPaciente = {
+			paciente : {
+				cedula:		'5928077593',
+				nombres: 	'Stalyn Alfredo',
+				apellidos: 'Gonzabay Yagual',
+				email: 'alfred.leo@hotmail.com',
+				fechaNacimiento: '1990-07-27',
+				sexo: 'Masculino',
+				direccion: 'Santa Elena',
+				celular: '0985493306',
+				ocupacion: 'Estudiante',
+				motivoConsulta: 'Ganar masa muscular',
+				ejercicios: 'Correr en las mañanas',
+				frecuencia: '4 veces por semana'
+			}
+		}
+    cita=new Cita({
+      start: '2017-08-19T14:05:00.000Z',
+      duracion: 15,
+      estaOcupado: false,
+      stick: true
+    })
+    cita.save((err, cita) => {
+			idCita=cita._id;
+		});
+		done();
+	});
 
-  });
-describe('/POST cita', () => {
-  beforeEach((done) => {
-    var paciente = new Paciente({
-      cedula: '0912345678', nombres: 'Julian', apellidos: 'Adams',
-      email: 'jebenitez@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
-      direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
-      motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
-      frecuencia: '3 veces por semana'
-    });
-        paciente.save((err, patient) => {
-            idPat = '' + patient._id;
-            done();
-        });
-  });
-  it('Debe guardar citas definidas por el administrador', (done) => {
-            var datosCita = {
-              start: '2017-08-19T14:05:00.000Z',
-              duracion: 15,
-              estaOcupado: false
-            }
-            chai.request('http://localhost:3000')
-                .post('/api/cita')
-                .send(datosCita)
-                .end((err, res) => {
-                  res.should.have.status(201);
-                  done();
-            });
-  });
-  afterEach((done) => {
-      Cita.remove({}, (err) => {
-        Paciente.remove({}, (err) => {
+	afterEach(function(done){
+		Paciente.remove({},function(err){
+      Cita.remove({},function(err){
+			     done();
+      });
+		});
+	});
+
+	it('Debe loggear un paciente exitosamente', function(done){
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(objetoPaciente)
+			.end(function(err, res){
+        credenciales={
+          email:res.body.email,
+          password:crypto.desencriptar(res.body.password),
+        };
+        chai.request(puerto)
+        .post('/api/pacienteLogin')
+  			.send(credenciales)
+  			.end(function(err, res){
+          res.should.have.status(200);
           done();
-         });
-        });
+        })
+			});
+	});
+
+  it(' No debe loggear por que no coincide el password', function(done){
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(objetoPaciente)
+			.end(function(err, res){
+        credenciales={
+          email:res.body.email,
+          password:"1234",
+        };
+        chai.request(puerto)
+        .post('/api/pacienteLogin')
+  			.send(credenciales)
+  			.end(function(err, res){
+          res.should.have.status(404);
+          done();
+        })
+			});
+	});
+
+  it(' No debe loggear por que no se encuentra el user registrado', function(done){
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(objetoPaciente)
+			.end(function(err, res){
+        credenciales={
+          email:"hola@example.com",
+          password:"1234",
+        };
+        chai.request(puerto)
+        .post('/api/pacienteLogin')
+  			.send(credenciales)
+  			.end(function(err, res){
+          res.should.have.status(400);
+          done();
+        })
+			});
+	});
+
+  it('Reserva una cita el paciente de un horario existente', function(done){
+    chai.request(puerto)
+      .put('/api/reservarCita/'+idCita)
+      .end(function(err, res){
+        res.should.have.status(200);
+        done();
+      });
   });
-});
+})
