@@ -49,6 +49,7 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
          cita.estaOcupado = '';
          cita.duracion = '';
        }, function(errorResponse){
+         dialogItself.close();
          var msj = '<h5> '+errorResponse.data.message+' </h5>';
          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
        })
@@ -82,6 +83,7 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
                  3000
                );
              }, function(errorResponse){
+                dialogItself.close();
                 var msj = '<h5> '+errorResponse.data.message+' </h5>';
                 demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
              });
