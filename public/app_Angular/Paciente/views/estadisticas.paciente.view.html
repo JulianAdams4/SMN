@@ -23,21 +23,20 @@
       </div>
 
       <div class="row panelCal" style="">
-
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
           <!-- Listado de opciones -->
           <ul class="nav nav-tabs">
-            <li class="active">
+            <li class="text-center active" style="width:50%;">
               <a data-toggle="tab" href="#grafico1" ng-click="resetChart()"> Gráfico de línea </a>
             </li>
-            <li>
+            <li class="text-center" style="width:50%;">
               <a data-toggle="tab" href="#grafico2" ng-click="resetChart()"> Gráfico de barras </a>
             </li>
           </ul>
 
           <!-- Opciones -->
-          <div class="tab-content">
+          <div class="tab-content" style="padding-top:25px;">
             <div id="grafico1" class="tab-pane fade in active">
               <div ng-if="!suficientesDatos" class="text-center">
                 <h3> No posee datos suficientes para mostrar este contenido </h3>
