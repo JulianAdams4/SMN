@@ -59,7 +59,35 @@ exports.listCitas = function(req, res){
 }
 
 exports.createCita = function(req, res){
+
   var cita = Cita(req.body);
+  var fechaFinal = moment(cita.start).add(cita.duracion,'m');
+  Cita.find({$or:[{start: {$gte: cita.start, $lt: fechaFinal}},{end: {$gt: cita.start, $lte: fechaFinal}}]}, function(err, citas){
+    if(err){
+      return res.status(500).send({
+        message: getErrorMessage(err)
+      });
+    } else {
+      console.log(citas);
+      if(citas.length == 0){
+        cita.save(function(err, cita){
+          if(err){
+            return res.status(500).send({
+              message: getErrorMessage(err)
+            })
+          } else {
+            return res.status(201).json(cita);
+          }
+        });
+      } else {
+        return res.status(400).send({
+          message: 'Este horario ya se encuentra reservado'
+        })
+      }
+    }
+  });
+
+  /*var cita = Cita(req.body);
   cita.save(function(err, cita){
     if(err){
       return res.status(500).send({
@@ -68,7 +96,7 @@ exports.createCita = function(req, res){
     } else {
       return res.status(201).json(cita);
     }
-  });
+  });*/
 };
 
 //separa la cita el paciente
