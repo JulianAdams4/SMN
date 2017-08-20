@@ -162,7 +162,7 @@ exports.eliminarCita = function(req, res){
         var duracion = moment.duration(tiempoCita.diff(tiempoActual));
         var horas = parseInt(duracion.asHours());
         if (horas < 48){
-           return res.status(500).json({ message: 'Solo puede cancelar citas hasta con 48 horas de anticipación.',type: 'danger'});
+           return res.status(500).send({ message: 'Solo puede cancelar citas hasta con 48 horas de anticipación.'});
         }
       }
       cita.remove(cita._id, function(err, cita){

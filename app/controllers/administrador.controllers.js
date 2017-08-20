@@ -35,7 +35,7 @@ exports.iniciarSesion = function(req, res){
         message: 'Autenticación exitosa'
       })
     } else {
-      console.log(administrador.nutricionista.password);
+      //console.log(administrador.nutricionista.password);
       return res.status(404).send({
         message: 'Contraseña incorrecta'
       })
