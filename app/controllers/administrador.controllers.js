@@ -6,7 +6,7 @@ var Administrador = mongoose.model('Centro');
 var crypto = require('../services/crypto.js');
 
 exports.inicio = function(req, res){
-  //res.render('administrador');
+  //res.render('administrador');     //DESCOMENTAR PARA RENDERIZAR ADMINISTRADOR PARA PRUEBAS
   if(!req.session.administrador){
     res.render('login');
   } else {
@@ -35,7 +35,7 @@ exports.iniciarSesion = function(req, res){
         message: 'Autenticación exitosa'
       })
     } else {
-      //console.log(administrador.nutricionista.password);
+      console.log(administrador.nutricionista.password);
       return res.status(404).send({
         message: 'Contraseña incorrecta'
       })
