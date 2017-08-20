@@ -61,12 +61,12 @@ angular.module('paciente')
                 var valorDC = datosArr[j].valorDato;
                 var elem = {
                   "fecha": fecha,
-                  "nombre": nombreDC.capitalize(),
+                  "nombre": nombreDC,
                   "valor": valorDC
                 }
                 // Si el parametro no está en lista, se añade
-                if( listaParametros.indexOf( nombreDC.capitalize() ) < 0 ){
-                  listaParametros.push( nombreDC.capitalize() );
+                if( listaParametros.indexOf( nombreDC ) < 0 ){
+                  listaParametros.push( nombreDC );
                 }
                 $scope.datosArray.push(elem);
               }
@@ -74,13 +74,13 @@ angular.module('paciente')
             // Lista de string -> lista de objects
             for ( var z=0; z<listaParametros.length ; z++ ){
               var par = {
-                "value": listaParametros[z].capitalize(),
-                "label": listaParametros[z].capitalize()
+                "value": listaParametros[z],
+                "label": listaParametros[z]
               }
               $scope.parametros.push(par);
             }
             $scope.formularioEC = {};
-            $scope.formularioEC.parametro = $scope.parametros[0].label;
+            $scope.formularioEC.parametro = $scope.parametros[0].value;
             // Fechas del formulario 
             $scope.formularioEC.inicio = new Date($scope.Year,  0,  1);
             $scope.formularioEC.fin    = new Date($scope.Year, 11, 31);
@@ -104,11 +104,13 @@ angular.module('paciente')
         $scope.data = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ];
+        $scope.unidadGrafico = "";
     }
 
     // ===================================
     //   Variables del chart 
     // =================================== 
+    $scope.unidadGrafico = "";
     $scope.series = [ "Año" ];
     $scope.labels = [
       'Ene', 'Feb', 'Mar', 'Abr', 
@@ -116,9 +118,9 @@ angular.module('paciente')
       'Sep', 'Oct', 'Nov', 'Dic'
     ];
 
-    $scope.datasetOverride = [
+//    $scope.datasetOverride = [
 //      { backgroundColor: 'transparent' }
-    ];
+//    ];
     // Fake data
     $scope.data = [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -135,6 +137,23 @@ angular.module('paciente')
           position: 'left', 
           ticks: { beginAtZero: true } 
         }]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var allData = data.datasets[tooltipItem.datasetIndex].data;
+            var tooltipLabel = data.labels[tooltipItem.index];
+            var tooltipData = allData[tooltipItem.index];
+            var unidad = $scope.unidadGrafico;
+            // Percentage
+            //var total = 0;
+            //for (var i in allData) {
+            //  total += allData[i];
+            //}
+            //var tooltipPercentage = Math.round((tooltipData / total) * 100);
+            return tooltipLabel + ': ' + tooltipData + ' ' + unidad; 
+          }
+        }
       }
     };
     $scope.barOptions = {
@@ -150,6 +169,17 @@ angular.module('paciente')
             stacked: true 
           }
         ]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var allData = data.datasets[tooltipItem.datasetIndex].data;
+            var tooltipLabel = data.labels[tooltipItem.index];
+            var tooltipData = allData[tooltipItem.index];
+            var unidad = $scope.unidadGrafico;
+            return tooltipLabel + ': ' + tooltipData + ' ' + unidad; 
+          }
+        }
       }
     };
     // ===================================
@@ -170,12 +200,14 @@ angular.module('paciente')
         function(response){
           $scope.series = response.data.series;
           $scope.data = response.data.data;
+          $scope.unidadGrafico = response.data.unidad;
         }, 
         function(errorResponse){
           $scope.series = ["Año"];
           $scope.data = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
           ];
+          $scope.unidadGrafico = "";
           var defaultErrType = errorResponse.data.type || "danger";
           var defaultErrMessage = errorResponse.data.message || "Ha ocurrido un error y no se pudo obtener sus logros";
           demo.mostrarNotificacion( defaultErrType, defaultErrMessage );
