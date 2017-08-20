@@ -34,10 +34,10 @@ module.exports = function(app) {
   app.route('/')
     .get(pacientes.ingresar);
 
-   /*
+   
   app.route('/api/pacienteLogin')
   .post(pacientes.signIn);
-  */
+  
   app.route('/api/pacienteLogout')
     .get(pacientes.singOut);
 };

@@ -15,10 +15,7 @@ exports.inicio = function(req, res){
 };
 
 exports.iniciarSesion = function(req, res){
-  //console.log(req.body);
   var administradorIn = req.body;
-  console.log(administradorIn);
-  console.log(administradorIn.password);
   Administrador.findOne({"nutricionista.email" : administradorIn.email }, function(err, administrador){
     if(err){
       return res.status(500).send({
@@ -44,5 +41,13 @@ exports.iniciarSesion = function(req, res){
       })
     }
   });
+};
+
+exports.signOut =function(req, res){
+  delete req.session.administrador;
+  req.session.destroy(function(err) {
+  // cannot access session here 
+})
+  res.redirect('/');
 };
 

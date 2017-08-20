@@ -104,6 +104,7 @@ body {
   <script type="text/javascript">
     angular.module('loginApp',[]).controller('LoginController',['$scope','$http',
       function($scope, $http){
+        error = 0;
         $scope.iniciarSesion = function(){
 
           $http({
@@ -113,7 +114,20 @@ body {
           }).then(function(response){
             window.location.href="/";
           },function(errorResponse){
-            demo.mostrarNotificacion('danger',errorResponse.data.message);
+            if(errorResponse.data.message!=='Email no se encuentra registrado'){
+              demo.mostrarNotificacion('danger',errorResponse.data.message);
+              return;
+            }
+            $http({
+              method: 'POST',
+              url: 'api/pacienteLogin2',
+              data: $scope.paciente
+            }).then(function(response){
+              window.location.href="/administrador";
+            },function(errorResponse){
+              demo.mostrarNotificacion('danger',errorResponse.data.message);
+              return;
+            })
           })
         }
       }
