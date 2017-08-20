@@ -19,7 +19,7 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
              $scope.citas[i].title = $scope.citas[i].paciente.nombres + ' ' + $scope.citas[i].paciente.apellidos;
            }
          }
-         console.log($scope.citas);
+         //console.log($scope.citas);
          $scope.eventSources.push($scope.citas);
        }, function(errorResponse){
          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
@@ -82,6 +82,7 @@ angular.module('administrador').controller('calendario.controller', ['$scope','$
                  3000
                );
              }, function(errorResponse){
+                dialogItself.close();
                 var msj = '<h5> '+errorResponse.data.message+' </h5>';
                 demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
              });
