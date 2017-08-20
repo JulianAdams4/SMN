@@ -57,14 +57,13 @@ angular.module('paciente').controller('calendario.controller', ['$scope','$http'
                  3000
                );
               }, function(errorResponse){
-                dialogItself.close();
                 var msj = '<h5> '+errorResponse.data.message+' </h5>';
                 demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
              });
             }
           }]
         });
-      }else if(cita.estaOcupado){ // Invariantes
+      }else if(cita.estaOcupado){ // falta validar que sea su cita e invariantes
         BootstrapDialog.show({
           title: 'Cita Programada',
           message: 'Al seleccionar esta opción cancelará su cita con la nutricionista.',
@@ -94,7 +93,6 @@ angular.module('paciente').controller('calendario.controller', ['$scope','$http'
                  3000
                );
               }, function(errorResponse){
-                dialogItself.close();
                 var msj = '<h5> '+errorResponse.data.message+' </h5>';
                 demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
              });
