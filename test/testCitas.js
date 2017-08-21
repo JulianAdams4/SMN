@@ -108,12 +108,12 @@ describe('/Loggeo-Reservar cita', function(){
 			});
 	});
 
-  it('Reserva una cita el paciente de un horario existente', function(done){
+  /*it('Reserva una cita el paciente de un horario existente', function(done){
     chai.request(puerto)
       .put('/api/reservarCita/'+idCita)
       .end(function(err, res){
         res.should.have.status(200);
         done();
       });
-  });
+  });*/
 })

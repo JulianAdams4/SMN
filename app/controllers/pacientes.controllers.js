@@ -6,7 +6,7 @@ var Paciente = mongoose.model('Paciente');
 var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
-var nodemailer = require('nodemailer');
+//var nodemailer = require('nodemailer');
 //var administrador = require('../controllers/administrador.controllers');
 //var Administrador = mongoose.model('Centro');
 
@@ -199,7 +199,7 @@ exports.createPaciente = function(req, res){
                 message: 'Ocurrió un error en el servidor'
               })
             } else {
-              var transporter = nodemailer.createTransport({
+              /*var transporter = nodemailer.createTransport({
                   service: 'Gmail',
                   auth: {
                       user: 'automatic.mensaje@gmail.com',
@@ -223,7 +223,7 @@ exports.createPaciente = function(req, res){
                       console.log('Mensaje enviado: ' + info.response);
                       //res.redirect('/');
                   }
-              })
+              })*/
               return res.status(201).json(paciente);
             }
           });
