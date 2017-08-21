@@ -57,7 +57,11 @@ describe('/POST Paciente', function(){
 
 	afterEach(function(done){
 		Paciente.remove({},function(err){
-			done();
+			Antecedente.remove({}, function(err){
+				HistoriaA.remove({}, function(err){
+					done();
+				})
+			});
 		});
 	});
 
@@ -412,7 +416,11 @@ describe('/PUT Paciente', function(){
 	// Clean collection
 	afterEach(function(done){
 		Paciente.remove({},function(err){
-			done();
+			Antecedente.remove({}, function(err){
+				HistoriaA.remove({}, function(err){
+					done();
+				})
+			});
 		});
 	});
 
