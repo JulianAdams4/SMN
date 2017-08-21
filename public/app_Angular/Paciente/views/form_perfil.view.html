@@ -100,7 +100,7 @@
                        data-ng-model="paciente.ocupacion">
             </div>
         </div>
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-4 col-sm-4">
             <div class="form-group">
                 <label>Correo Electrónico</label>
                 <input type="email"
@@ -111,7 +111,25 @@
                        readonly="1">
             </div>
         </div>
-        <div class="col-md-6 col-sm-6">
+        <div class="col-md-5 col-sm-5">
+            <div class="form-group"
+                ng-class="{'has-error': pacienteForm.password.$invalid && !pacienteForm.password.$pristine }">
+                <label>Contraseña* (De 8 a 12 caracteres)</label>
+                <input type="{{inputType}}"
+                       class="form-control border-input"
+                       minlength="8"
+                       maxlength="12"
+                       name="password"
+                       placeholder="Contraseña"
+                       data-ng-model="paciente.password"
+                       required>
+                <input type="checkbox" id="checkbox" ng-model="passwordCheckbox" ng-click="hideShowPassword()" />
+                <label for="checkbox">Mostrar contraseña</label>
+            </div>
+        </div>
+      </div>    
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
             <div class="form-group"
                   ng-class="{'has-error': pacienteForm.direccion.$invalid && !pacienteForm.direccion.$pristine }">
                 <label>Dirección</label>

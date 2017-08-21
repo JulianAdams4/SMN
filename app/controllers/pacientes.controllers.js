@@ -64,6 +64,7 @@ function GenerarPassword() {
 //<<el servidor antes de entrar a read() primero verifica en pacienteById() que el paciente existe y lo guarda en req.paciente>>
 //Autor: Stalyn Gonzabay
 exports.read = function(req, res){
+  req.paciente.password = crypto.desencriptar(req.paciente.password)
   res.json(req.paciente);
 };
 
@@ -295,6 +296,7 @@ exports.editPaciente = function(req, res){
     paciente.direccion            = datosPaciente.direccion;
     paciente.celular              = datosPaciente.celular;
     paciente.ocupacion            = datosPaciente.ocupacion;
+    paciente.password             = crypto.encriptar(datosPaciente.password);
     paciente.motivoConsulta       = datosPaciente.motivoConsulta;
     paciente.ejercicios           = datosPaciente.ejercicios;
     paciente.frecuenciaEjecicios  = datosPaciente.frecuenciaEjecicios;
