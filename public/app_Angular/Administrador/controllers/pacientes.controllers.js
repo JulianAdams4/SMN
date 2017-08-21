@@ -2,7 +2,6 @@
 
 angular.module('administrador').controller('PacientesController',['$scope','$http','$routeParams','$location',
   function($scope, $http, $routeParams, $location) {
-
     $scope.paciente = {};
     $scope.idPacienteEdit = '';
     $scope.pacienteEdit = {};
@@ -11,37 +10,21 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.historiaAlimentaria = {};
     $scope.historiaAlimentaria.grupoAlimentos = [];
     $scope.newGrupo = {};
-    
     $scope.create = function() {
       if ( validarCedula( $scope.paciente.cedula ) ) {
         demo.mostrarNotificacion('danger', "El número de cécula del paciente no es válido");
-      } 
+      }
       else {
+        var dataFormCreate = {
+          paciente: $scope.paciente,
+          antecedente: $scope.antecedente,
+          historia: $scope.historiaAlimentaria
+        };
         $http({
           method: 'POST',
           url: '/api/pacientes',
-          data: $scope.paciente
+          data: dataFormCreate
         }).then(function(response){
-          $scope.antecedente.idPaciente = response.data._id;
-          $http({
-            method: 'POST',
-            url: '/api/antecedentes',
-            data: $scope.antecedente
-          }).then(function(response){
-          }, function(errorResponse){
-            
-          });
-
-          $scope.historiaAlimentaria.idPaciente = response.data._id;
-          $http({
-            method: 'POST',
-            url: '/api/historiaAlimentaria',
-            data: $scope.historiaAlimentaria
-          }).then(function(response){
-          }, function(errorResponse){
-            console.log(errorResponse);
-            demo.mostrarNotificacion('danger',errorResponse.data.message);
-          });
           demo.showCustomNotification(
             'top',
             'right',
@@ -52,9 +35,10 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           );
           $location.path('pacientes');
         }, function(errorResponse){
-          demo.mostrarNotificacion(errorResponse.data.type, errorResponse.data.message);
+          var msj = '<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
         });
-      }
+      } 
     };
 
     var find = function(){
@@ -224,18 +208,19 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     }
     // ==============================================
     $scope.returnCurrentDate=function (){
-  		var today = new Date();
-  		var dd = today.getDate();
-  		var mm = today.getMonth()+1; //January is 0!
-  		var yyyy = today.getFullYear();
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
       if(dd<10){
         dd='0'+dd
       }
-  		if(mm<10){
+      if(mm<10){
         mm='0'+mm
-  		}
-  		return today = yyyy+'-'+mm+'-'+dd;
-  	}
+      }
+      return today = yyyy+'-'+mm+'-'+dd;
+    }
+
     // ===============================================
     function validarCedula( numeroCedula ) {
       /*  True == Fail validation  */
