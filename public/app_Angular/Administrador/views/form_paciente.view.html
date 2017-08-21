@@ -563,8 +563,8 @@
               <label><small>Frecuencia</small></label>
               <input  type="text"
                       class="form-control border-input"
-                      maxlength="2"
-                      onkeypress="return event.charCode>47 && event.charCode<58"
+                      maxlength="30"
+                      onkeypress="return validateTextNumericInput(event)"
                       class="form-control border-input" placeholder="Frecuencia" data-ng-model="newGrupo.frecuencia">
           </div>
         </div>

@@ -137,7 +137,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
           demo.showCustomNotification(
             'top',
             'right',
-            '<h5> ¡Centro editado <b>exitosamente</b>! </h5>',
+            '<h5> Datos de control editado <b>exitosamente</b>! </h5>',
             'success',
             'ti-check',
             3000
@@ -187,7 +187,7 @@ angular.module('administrador').controller('DatosController',['$scope','$http','
               demo.showCustomNotification(
                 'top',
                 'right',
-                '<h5> Dato de Control eliminado <b>exitosamente</b>! </h5>',
+                '<h5> Datos de Control eliminado <b>exitosamente</b>! </h5>',
                 'success',
                 'ti-check',
                 3000

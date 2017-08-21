@@ -6,7 +6,10 @@ var Paciente = mongoose.model('Paciente');
 var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
-var nodemailer = require('nodemailer');
+//var nodemailer = require('nodemailer');
+//var administrador = require('../controllers/administrador.controllers');
+//var Administrador = mongoose.model('Centro');
+
 
 //Sprint 1 : Crear el controlador para consultar un paciente
 //Controlador de mensajes de errores
@@ -204,7 +207,7 @@ exports.createPaciente = function(req, res){
                 message: 'Ocurrió un error en el servidor'
               })
             } else {
-              var transporter = nodemailer.createTransport({
+              /*var transporter = nodemailer.createTransport({
                   service: 'Gmail',
                   auth: {
                       user: 'automatic.mensaje@gmail.com',
@@ -217,7 +220,7 @@ exports.createPaciente = function(req, res){
                   to: paciente.email,
                   subject: 'Notificación de registro como paciente en Sistema de Nutrición',
                   text: 'Contraseña: ' + passwordNoEncriptada,
-                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.email+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
+                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.cedula+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
               };
 
               transporter.sendMail(mailOptions, function(error, info) {
@@ -228,7 +231,7 @@ exports.createPaciente = function(req, res){
                       console.log('Mensaje enviado: ' + info.response);
                       //res.redirect('/');
                   }
-              })
+              })*/
               return res.status(201).json(paciente);
             }
           });
@@ -272,7 +275,12 @@ exports.editPaciente = function(req, res){
   var datosPaciente = req.body.paciente;
   var datosAntecedente = req.body.antecedente;
   var datosHistoria = req.body.historia;
-
+  if(!validador.celularEsValida(datosPaciente.celular)){
+    return res.status(500).json({
+      message: '<i class="ti-alert"></i>La longitud del celular debe ser <b>10</b>',
+      type: "danger"
+    });
+  }
   // Editamos el paciente
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
@@ -446,12 +454,12 @@ exports.ingresar = function(req, res){
   } else {
     res.render('paciente');
   }
-}
+};
 
 
 exports.signIn = function(req, res){
   var pacienteIn = Paciente(req.body);
-  Paciente.findOne({'email': pacienteIn.email}, function(err, paciente){
+  Paciente.findOne({'cedula': pacienteIn.cedula}, function(err, paciente){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err),
@@ -460,7 +468,7 @@ exports.signIn = function(req, res){
     }
     if(!paciente){
       return res.status(400).send({
-        message: 'Email no se encuentra registrado'
+        message: 'Usuario no se encuentra registrado'
       })
     }
     if(pacienteIn.password === crypto.desencriptar(paciente.password)){
@@ -479,5 +487,8 @@ exports.signIn = function(req, res){
 
 exports.singOut =function(req, res){
   delete req.session.paciente;
+  req.session.destroy(function(err) {
+  // cannot access session here 
+  })
   res.redirect('/');
 };

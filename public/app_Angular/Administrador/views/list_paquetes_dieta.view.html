@@ -1,6 +1,6 @@
 <div class="row" data-ng-controller="PaquetesController" data-ng-init="find()">
     <div class="col-md-12">
-        <div class="card">
+        <div class="panelCal">
             <div class="header">
               <div class="row">
                 <div class="col-md-8">
@@ -20,8 +20,8 @@
             </div>
             <div class="row pull-right">
                 <div class="col-md-12">
-                  <div class="card col-md-4 panel" ng-repeat="paquetedieta in paquetesDieta" style="margin: 5px;">
-                    <div class="card-content paquete panel-body" >
+                  <div class="panelCal col-md-4 panel" ng-repeat="paquetedieta in paquetesDieta" style="margin: 5px;">
+                    <div class="panelCal-content paquete panel-body" >
                           <div class="imageupload col-md-12 portfolio-filters wow fadeInUp " style="padding:0px;">
                               <div class="file-tab">
                                 <img id="preview" class="thumbnail" ng-src="{{paquetedieta.foto}}" style="width: 100%; height: 271px;" />
