@@ -57,7 +57,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.send(objetoPaciente)
 			.end(function(err, res){
         credenciales={
-          email:res.body.email,
+          cedula:res.body.cedula,
           password:crypto.desencriptar(res.body.password)
         };
         chai.request(puerto)
@@ -76,7 +76,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.send(objetoPaciente)
 			.end(function(err, res){
         credenciales={
-          email:res.body.email,
+          cedula:res.body.cedula,
           password:"1234",
         };
         chai.request(puerto)
@@ -95,7 +95,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.send(objetoPaciente)
 			.end(function(err, res){
         credenciales={
-          email:"hola@example.com",
+          cedula:"4658575985",
           password:"1234",
         };
         chai.request(puerto)

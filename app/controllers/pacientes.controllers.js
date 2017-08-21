@@ -212,7 +212,7 @@ exports.createPaciente = function(req, res){
                   to: paciente.email,
                   subject: 'Notificación de registro como paciente en Sistema de Nutrición',
                   text: 'Contraseña: ' + passwordNoEncriptada,
-                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.email+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
+                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.cedula+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
               };
 
               transporter.sendMail(mailOptions, function(error, info) {
@@ -451,7 +451,7 @@ exports.ingresar = function(req, res){
 
 exports.signIn = function(req, res){
   var pacienteIn = Paciente(req.body);
-  Paciente.findOne({'email': pacienteIn.email}, function(err, paciente){
+  Paciente.findOne({'cedula': pacienteIn.cedula}, function(err, paciente){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err),
@@ -460,7 +460,7 @@ exports.signIn = function(req, res){
     }
     if(!paciente){
       return res.status(400).send({
-        message: 'Email no se encuentra registrado'
+        message: 'Usuario no se encuentra registrado'
       })
     }
     if(pacienteIn.password === crypto.desencriptar(paciente.password)){
