@@ -19,7 +19,7 @@ exports.listCitas = function(req, res){
   if(req.session.paciente){
     var today = new Date();
     var tomorrow = moment(today).add(1, 'days');
-    Cita.find({$or:[{paciente: req.session.paciente._id}, {paciente: undefined, start:{$gte:today}}]}, function(err, citas){
+    Cita.find({start:{$gte:today}, $or:[{paciente: req.session.paciente._id}, {paciente: undefined}]}, function(err, citas){
       if(err){
         return res.status(500).send({
           message: getErrorMessage(err)
@@ -38,7 +38,7 @@ exports.listCitas = function(req, res){
         });
       }
     });
-  } else {
+  }else if(req.session.administrador){
     Cita.find({},function(err, citas){
       if(err){
         return res.status(500).send({
@@ -55,6 +55,8 @@ exports.listCitas = function(req, res){
         });
       }
     })
+  }else{
+    return res.status(500).json({ message: 'Debe iniciar sesión para ver esta información.',type: 'danger'});
   }
 }
 // crea horario
@@ -86,34 +88,45 @@ exports.createCita = function(req, res){
 
 //separa la cita el paciente
 exports.reservarCita = function(req, res){
-  Cita.findById(req.params.citaId, function(err, cita){
-    if(err){
-      return res.status(500).send({
-        message: getErrorMessage(err)
-      })
-    } else {
-      var tiempoCita = moment(cita.start);
-      var tiempoActual = moment(new Date());
-      var duracion = moment.duration(tiempoCita.diff(tiempoActual));
-      var horas = parseInt(duracion.asHours());
-      if (horas < 24){
-        return res.status(500).json({ message: 'Solo puede separar citas hasta con 24 horas de anticipación.',type: 'danger'});
+  if(req.session.paciente){
+    Cita.findById(req.params.citaId, function(err, cita){
+      if(err){
+        return res.status(500).send({
+          message: getErrorMessage(err)
+        })
+      } 
+      if(!cita){
+        return res.status(404).send({
+            message: 'No existe disponibilidad en el horario seleccionado. Si esto no se ve reflejado en el calendario, por favor actualice la página.',
+            type: 'danger'});
+      }else {
+        var tiempoCita = moment(cita.start);
+        var tiempoActual = moment(new Date());
+        var duracion = moment.duration(tiempoCita.diff(tiempoActual));
+        var horas = parseInt(duracion.asHours());
+        if(cita.estaOcupado){
+          return res.status(400).json({ message: 'No existe disponibilidad en el horario seleccionado. Si esto no se ve reflejado en el calendario, por favor actualice la página.',type: 'danger'});
+        }else if (horas < 24){
+          return res.status(500).json({ message: 'Solo puede separar citas hasta con 24 horas de anticipación.',type: 'danger'});
+        }
+        cita.paciente = req.session.paciente;
+        cita.estaOcupado = true;
+        cita.backgroundColor = '#666';
+        cita.title = 'Mi Cita';
+         cita.save(function(err){
+            if(err){
+              return res.status(500).send({
+                message: getErrorMessage(err)
+              })
+            } else {
+              return res.status(200).json(cita);
+            }
+          });
       }
-      cita.paciente = req.session.paciente;
-      cita.estaOcupado = true;
-      cita.backgroundColor = '#666';
-      cita.title = 'Mi Cita';
-       cita.save(function(err){
-          if(err){
-            return res.status(500).send({
-              message: getErrorMessage(err)
-            })
-          } else {
-            return res.status(200).json(cita);
-          }
-        });
-    }
-  });
+    });
+  }else{
+    return res.status(500).json({ message: 'Debe iniciar sesión para separar una cita.',type: 'danger'});
+  }
 };
 
 //Cancela la cita el paciente, se encuentra disponible una vez más.
@@ -123,6 +136,10 @@ exports.cancelarCita = function(req, res){
       return res.status(500).send({
         message: getErrorMessage(err)
       })
+    }if(!cita){
+      return res.status(404).send({
+          message: 'No posee una cita en el horario seleccionado. Si esto no se ve reflejado en el calendario, por favor actualice la página.',
+          type: 'danger'});
     } else {
       var tiempoCita = moment(cita.start);
       var tiempoActual = moment(new Date());
@@ -155,6 +172,10 @@ exports.eliminarCita = function(req, res){
       return res.status(500).send({
         message: getErrorMessage(err)
       })
+    }if(!cita){
+      return res.status(404).send({
+          message: 'No posee una cita en el horario seleccionado. Si esto no se ve reflejado en el calendario, por favor actualice la página.',
+          type: 'danger'});
     } else {
       if(cita.estaOcupado){
         var tiempoCita = moment(cita.start);
