@@ -87,7 +87,7 @@ body {
 
       <form class="login" data-ng-submit="iniciarSesion()" novalidate>
           <h1>Iniciar Sesión</h1>
-          <input type="email" class="form-control" placeholder="Correo Electrónico" ng-model="paciente.email">
+          <input type="text" class="form-control" placeholder="Usuario" ng-model="paciente.cedula" onkeypress="return event.charCode>47 && event.charCode<58">
           <input type="password" class="form-control" placeholder="Password" ng-model="paciente.password">
           <h5 class="mensaje" ng-show="mensaje" ng-bind="mensaje"></h5>
           <button class="button" type="submit">Ingresar</button>
@@ -114,7 +114,7 @@ body {
           }).then(function(response){
             window.location.href="/";
           },function(errorResponse){
-            if(errorResponse.data.message!=='Email no se encuentra registrado'){
+            if(errorResponse.data.message!=='Usuario no se encuentra registrado'){
               demo.mostrarNotificacion('danger',errorResponse.data.message);
               return;
             }

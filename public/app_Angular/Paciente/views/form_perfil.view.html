@@ -15,7 +15,8 @@
                       name='cedula'
                       onkeypress="return event.charCode>47 && event.charCode<58"
                       data-ng-model="paciente.cedula"
-                      required>
+                      required
+                      readonly="1">
           </div>
         </div>
         <div class="col-md-4 col-sm-4">
@@ -108,7 +109,7 @@
                        name="email"
                        placeholder="Correo Electrónico"
                        data-ng-model="paciente.email"
-                       readonly="1">
+                       >
             </div>
         </div>
         <div class="col-md-5 col-sm-5">

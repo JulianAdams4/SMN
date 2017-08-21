@@ -38,7 +38,7 @@ describe('/POST Paciente', function(){
 	beforeEach(function(done){
 		objetoPaciente = {
 			paciente : {
-				cedula:		'5928077593',
+				cedula:		'1721989364',
 				nombres: 	'Stalyn Alfredo',
 				apellidos: 'Gonzabay Yagual',
 				email: 'alfred.leo@hotmail.com',
@@ -57,7 +57,11 @@ describe('/POST Paciente', function(){
 
 	afterEach(function(done){
 		Paciente.remove({},function(err){
-			done();
+			Antecedente.remove({}, function(err){
+				HistoriaA.remove({}, function(err){
+					done();
+				})
+			});
 		});
 	});
 
@@ -412,7 +416,11 @@ describe('/PUT Paciente', function(){
 	// Clean collection
 	afterEach(function(done){
 		Paciente.remove({},function(err){
-			done();
+			Antecedente.remove({}, function(err){
+				HistoriaA.remove({}, function(err){
+					done();
+				})
+			});
 		});
 	});
 

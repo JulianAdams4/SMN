@@ -6,7 +6,7 @@ var Paciente = mongoose.model('Paciente');
 var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
-var nodemailer = require('nodemailer');
+//var nodemailer = require('nodemailer');
 //var administrador = require('../controllers/administrador.controllers');
 //var Administrador = mongoose.model('Centro');
 
@@ -177,6 +177,14 @@ exports.createPaciente = function(req, res){
     });
   }
   var passwordNoEncriptada = "";
+
+  // Validaciones
+  if ( validador.validarCedula(paciente.cedula) ) {
+    return res.status(500).send({
+      message: "El número de cécula del paciente no es válido", type: "danger"
+    });
+  }
+
   passwordNoEncriptada = GenerarPassword();//Genera contraseña sin encriptar
   paciente.password = crypto.encriptar(passwordNoEncriptada);//Asigna un password encriptado a un paciente
   paciente.save(function(err){
@@ -184,7 +192,7 @@ exports.createPaciente = function(req, res){
       return res.status(500).send({
         message: getErrorMessage(err),
         type: "danger"
-      })
+      });
     } else {
       antecedente.idPaciente=paciente._id;
       antecedente.save(function(err){
@@ -200,7 +208,7 @@ exports.createPaciente = function(req, res){
                 message: 'Ocurrió un error en el servidor'
               })
             } else {
-              var transporter = nodemailer.createTransport({
+              /*var transporter = nodemailer.createTransport({
                   service: 'Gmail',
                   auth: {
                       user: 'automatic.mensaje@gmail.com',
@@ -213,7 +221,7 @@ exports.createPaciente = function(req, res){
                   to: paciente.email,
                   subject: 'Notificación de registro como paciente en Sistema de Nutrición',
                   text: 'Contraseña: ' + passwordNoEncriptada,
-                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.email+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
+                  html: '<h1>Bienvenido '+paciente.nombres+' al Sistema de Nutrición</h1><p>Ingrese al sitio web con los siguientes datos: </p><ul><li>Usuario: '+paciente.cedula+'</li><li>Contraseña: '+passwordNoEncriptada+'</li></ul><p>Para ingresar haga click <a href="http://goo.gl/jAuCvt">aquí</a></p>',
               };
 
               transporter.sendMail(mailOptions, function(error, info) {
@@ -224,7 +232,7 @@ exports.createPaciente = function(req, res){
                       console.log('Mensaje enviado: ' + info.response);
                       //res.redirect('/');
                   }
-              })
+              })*/
               return res.status(201).json(paciente);
             }
           });
@@ -453,7 +461,7 @@ exports.ingresar = function(req, res){
 
 exports.signIn = function(req, res){
   var pacienteIn = Paciente(req.body);
-  Paciente.findOne({'email': pacienteIn.email}, function(err, paciente){
+  Paciente.findOne({'cedula': pacienteIn.cedula}, function(err, paciente){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err),
@@ -462,7 +470,7 @@ exports.signIn = function(req, res){
     }
     if(!paciente){
       return res.status(400).send({
-        message: 'Email no se encuentra registrado'
+        message: 'Usuario no se encuentra registrado'
       })
     }
     if(pacienteIn.password === crypto.desencriptar(paciente.password)){

@@ -12,20 +12,17 @@ var should = chai.should();
 chai.use(chaiHttp);
 centroId = ''
 
-describe('Paquete de Dieta', () => {
-  beforeEach((done) => { //Before each test we empty the database
+describe('/POST PaqueteDieta', () => {
+    beforeEach((done) => { //Before each test we empty the database
       PaqueteDieta.remove({}, (err) => {
          done();
       });
     });
-  afterEach((done) => {
+    afterEach((done) => {
         PaqueteDieta.remove({}, (err) => {
           done();
         });
     });
-});
-
-  describe('/POST PaqueteDieta', () => {
     it('Debe guardar los datos del paquete de dieta', (done) => {
     var paquete = {
             nombre: "Almuerzo light",
@@ -100,6 +97,16 @@ describe('Paquete de Dieta', () => {
   });
 
   describe('/PUT PaqueteDieta', () => {
+    beforeEach((done) => { //Before each test we empty the database
+      PaqueteDieta.remove({}, (err) => {
+         done();
+      });
+    });
+  afterEach((done) => {
+        PaqueteDieta.remove({}, (err) => {
+          done();
+        });
+    });
     it('Actualiza los datos de un paquete de dieta exitosamente', function(done){
         var paquete = new PaqueteDieta({
             nombre: "Almuerzo light",
@@ -194,6 +201,16 @@ describe('Paquete de Dieta', () => {
     });
   });
   describe('/DELETE PaqueteDieta', () => {
+    beforeEach((done) => { //Before each test we empty the database
+      PaqueteDieta.remove({}, (err) => {
+         done();
+      });
+    });
+  afterEach((done) => {
+        PaqueteDieta.remove({}, (err) => {
+          done();
+        });
+    });
     it('Debe eliminar el paquete de dieta', (done) => {
     var paquete = new PaqueteDieta({
             nombre: "Almuerzo light",
@@ -213,6 +230,16 @@ describe('Paquete de Dieta', () => {
     });
    });
   describe('/GET PaqueteDieta', () => {
+    beforeEach((done) => { //Before each test we empty the database
+      PaqueteDieta.remove({}, (err) => {
+         done();
+      });
+    });
+  afterEach((done) => {
+        PaqueteDieta.remove({}, (err) => {
+          done();
+        });
+    });
     it('Debe obtener el paquete de dieta', (done) => {
     var paquete = new PaqueteDieta({
             nombre: "Almuerzo light",
