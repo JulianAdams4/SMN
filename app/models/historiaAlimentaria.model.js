@@ -24,7 +24,7 @@ var historiaAlimentariaSchema = new Schema({
   grupoAlimentos:[
     {
       descripcion: String,
-      frecuencia: Number,
+      frecuencia: String,
       alimentosAgradan: String,
       alimentosDesagradan: String
     }
