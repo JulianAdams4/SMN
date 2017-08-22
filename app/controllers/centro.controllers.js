@@ -58,6 +58,14 @@ exports.centroById = function(req, res, next, id){
 //Función que permite almacenar en la base de datos un nuevo centro con su respectivo nutricionista a cargo.
 exports.createCentro = function(req, res){
   var centro = new Centro(req.body);
+
+  // Validaciones
+  if ( validador.validarCedula(centro.nutricionista.cedula) ) {
+    return res.status(500).send({
+      message: "El número de cécula no es válido", type: "danger"
+    });
+  }
+
   centro.save( function(err){
     if (err) {
       return res.status(500).send({
@@ -85,6 +93,13 @@ exports.editCentro = function(req, res){
     // centro no encontrado
     if (!centro) {
       return res.status(404).send({ message: 'No se encontró información del centro.', type: 'danger' });
+    }
+
+    // Validaciones
+    if ( validador.validarCedula(req.body.nutricionista.cedula) ) {
+      return res.status(500).send({
+        message: "El número de cécula no es válido", type: "danger"
+      });
     }
 
     // Si existe el campo en el body, se reemplaza
