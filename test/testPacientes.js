@@ -123,6 +123,17 @@ describe('/POST Paciente', function(){
 			});
 	});
 
+	it('No crea el paciente si la cédula ingresada no es válida', function(done){
+		objetoPaciente.paciente.cedula = '0950322528';
+		chai.request(puerto)
+			.post('/api/pacientes')
+			.send(objetoPaciente)
+			.end(function(err, res){
+				res.should.have.status(500);
+				done();
+			});
+	});
+
 	it('No crea el paciente si no ingresa los nombres', function(done){
 		objetoPaciente.paciente.nombres = '';
 		chai.request(puerto)
@@ -403,7 +414,7 @@ describe('/PUT Paciente', function(){
 	beforeEach( function(done) {
 		// Creamos un nuevo paciente
 		var datos = {
-		  cedula: '5928077593', nombres: 'Julian', apellidos: 'Adams',
+		  cedula: '0925467227', nombres: 'Julian', apellidos: 'Adams',
 		  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 		  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 		  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
@@ -428,7 +439,7 @@ describe('/PUT Paciente', function(){
 		paciente.save((err, pacienteSaved) => {
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
-			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
+			  _id: idPat, cedula: '0950322529', nombres: 'Adams', apellidos: 'Julian',
 			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
@@ -482,7 +493,7 @@ describe('/PUT Paciente', function(){
 		paciente.save((err, pacienteSaved) => {
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
-			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
+			  _id: idPat, cedula: '0950322529', nombres: 'Adams', apellidos: 'Julian',
 			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: '',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
@@ -645,6 +656,60 @@ describe('/PUT Paciente', function(){
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
 			  _id: idPat, cedula: '123', nombres: 'Adams', apellidos: 'Julian',
+			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
+			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
+			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
+			  frecuencia: '3 veces por semana'
+			};
+			var anteced = {
+			  idPaciente: idPat, alteracionApetito: false, nausea: false, vomito: false,
+			  estrenimiento: false, diarrea: false, flatulencia: false, acidez: false,
+			  gastritis: false, problemasMasticacion: false, cambioSaborComidas: false,
+			  alergia: false, descripcionAlergias: "", suplementoVitaminicos: false,
+			  descripcionSuplementos: "", medicamento: false, descripcionMedicamentos: "",
+			  ojos: false, cabello: false, unias: false, piel: false, antecedentesPersonales: "",
+			  antecedentesFamiliares: "", observaciones: ""
+			}
+			// Guardamos el antecedente
+			var antecedEditado = new Antecedente(anteced);
+			antecedEditado.save((err, antecedenteSaved) => {
+				var histo = {
+				  idPaciente: idPat, comidasAlDia: 3, preparadoPor: "Casa", modificaFinesDeSemana: false,
+				  comidaFinesdeSemana: "", comeEntreComidas: true, snacksEntreComidas: "Frutas",
+				  queCome: "Pollo y pescado", aguaAlDia: 3, cafeAlDia: 5, cigarrosAlDia: 0, alcoholALaSemana: 0,
+				  grupoAlimentos:[
+				    {
+				      descripcion: "Lácteos", frecuencia: 3,
+				      alimentosAgradan: "leche", alimentosDesagradan: "queso"
+				  	}
+				  ]
+				}
+				// Guardamos la historia alimentaria
+				var histEditado = new HistoriaA(histo);
+				histEditado.save((err, historiaSaved) => {
+					// Data a enviarse para editar
+					var data = {
+					  paciente: pacienteEditado, antecedente: antecedenteSaved, historia: historiaSaved
+					}
+					// Chai test
+					chai.request(puerto)
+					  .put('/api/pacientes/'+idPat)
+					  .send(data)
+					  .end((err, res) => {
+						res.should.have.status(500);
+						done();
+					}); // End chai
+				}); // historia save
+			}); // antecedente save
+		}); // save paciente
+	}); // end it
+
+
+	it('No edita un paciente con cedula no es correcta', function(done){
+		paciente.save((err, pacienteSaved) => {
+			var idPat = pacienteSaved._id;
+			var pacienteEditado = {
+			  _id: idPat, cedula: '0950322528', nombres: 'Adams', apellidos: 'Julian',
 			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
@@ -1022,7 +1087,7 @@ describe('/PUT Paciente', function(){
 		paciente.save((err, pacienteSaved) => {
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
-			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
+			  _id: idPat, cedula: '0950322529', nombres: 'Adams', apellidos: 'Julian',
 			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Masculino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',
@@ -1076,7 +1141,7 @@ describe('/PUT Paciente', function(){
 		paciente.save((err, pacienteSaved) => {
 			var idPat = pacienteSaved._id;
 			var pacienteEditado = {
-			  _id: idPat, cedula: '5928077593', nombres: 'Adams', apellidos: 'Julian',
+			  _id: idPat, cedula: '0950322529', nombres: 'Adams', apellidos: 'Julian',
 			  email: 'jadams@espol.edu.ec', fechaNacimiento: '2000-01-01', sexo: 'Femenino',
 			  direccion: 'Av Siempreviva', celular: '0912345678', ocupacion: 'Estudiante',
 			  motivoConsulta: 'Bajar de peso', ejercicios: 'Correr en las mañanas',

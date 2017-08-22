@@ -53,6 +53,10 @@ module.exports = {
         return true;
     } 
     else {
+      // Casos especiales
+      if ( numeroCedula == '0000000000' || numeroCedula == '2222222222' || numeroCedula == '4444444444' || numeroCedula == '5555555555' || numeroCedula == '7777777777' || numeroCedula == '9999999999' ){
+        return true;
+      }
       var total = 0;
       var digito = (array[9]*1);
       for(var i=0; i < (num-1); i++ ){

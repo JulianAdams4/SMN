@@ -274,12 +274,20 @@ exports.editPaciente = function(req, res){
   var datosPaciente = req.body.paciente;
   var datosAntecedente = req.body.antecedente;
   var datosHistoria = req.body.historia;
+
+  // Validaciones
+  if ( validador.validarCedula(datosPaciente.cedula) ) {
+    return res.status(500).send({
+      message: "El número de cécula del paciente no es válido", type: "danger"
+    });
+  }
   if(!validador.celularEsValida(datosPaciente.celular)){
     return res.status(500).json({
       message: '<i class="ti-alert"></i>La longitud del celular debe ser <b>10</b>',
       type: "danger"
     });
   }
+  
   // Editamos el paciente
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
