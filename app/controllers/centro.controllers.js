@@ -96,10 +96,13 @@ exports.editCentro = function(req, res){
     }
 
     // Validaciones
-    if ( validador.validarCedula(req.body.nutricionista.cedula) ) {
-      return res.status(500).send({
-        message: "El número de cécula no es válido", type: "danger"
-      });
+    // Si se envía la cedula al editar, se valida
+    if ( req.body.nutricionista && req.body.nutricionista.cedula ) {
+      if ( validador.validarCedula(req.body.nutricionista.cedula) ) {
+        return res.status(500).send({
+          message: "El número de cécula no es válido", type: "danger"
+        });
+      }
     }
 
     // Si existe el campo en el body, se reemplaza
