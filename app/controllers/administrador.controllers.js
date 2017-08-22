@@ -5,6 +5,9 @@ var mongoose = require('mongoose');
 var Administrador = mongoose.model('Centro');
 var crypto = require('../services/crypto.js');
 
+/*
+*  Función para renderizar vista del administrador, dependiendo si está loggueado al sistema o no.
+*/
 exports.inicio = function(req, res){
   //res.render('administrador');     //DESCOMENTAR PARA RENDERIZAR ADMINISTRADOR PARA PRUEBAS
   if(!req.session.administrador){
@@ -14,6 +17,9 @@ exports.inicio = function(req, res){
   }
 };
 
+/*
+*  Función que permite al administrador iniciar sesión al sistema ingresando su cédula y contraseña.
+*/
 exports.iniciarSesion = function(req, res){
   var administradorIn = req.body;
   Administrador.findOne({"nutricionista.cedula" : administradorIn.cedula }, function(err, administrador){
@@ -42,6 +48,9 @@ exports.iniciarSesion = function(req, res){
   });
 };
 
+/*
+*  Función para cerrar sesión al sistema como administrador.
+*/
 exports.signOut =function(req, res){
   delete req.session.administrador;
   req.session.destroy(function(err) {

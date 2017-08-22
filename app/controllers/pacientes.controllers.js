@@ -7,8 +7,6 @@ var Antecedentes = mongoose.model('Antecedentes');
 var HistoriaAlimentaria = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../services/crypto.js');
 //var nodemailer = require('nodemailer');
-//var administrador = require('../controllers/administrador.controllers');
-//var Administrador = mongoose.model('Centro');
 
 
 //Sprint 1 : Crear el controlador para consultar un paciente
@@ -449,7 +447,9 @@ exports.activarPaciente = function(req, res){
     });
 };
 
-
+/*
+*  Función para renderizar vista de un paciente, dependiendo si está loggueado al sistema o no.
+*/
 exports.ingresar = function(req, res){
   if(!req.session.paciente){
     res.render('publico');
@@ -459,6 +459,9 @@ exports.ingresar = function(req, res){
 };
 
 
+/*
+*  Función que permite a un determindado paciente iniciar sesión al sistema ingresando su cédula y contraseña.
+*/
 exports.signIn = function(req, res){
   var pacienteIn = Paciente(req.body);
   Paciente.findOne({'cedula': pacienteIn.cedula}, function(err, paciente){
@@ -486,7 +489,9 @@ exports.signIn = function(req, res){
   });
 };
 
-
+/*
+*  Función para cerrar sesión al sistema como paciente.
+*/
 exports.singOut =function(req, res){
   delete req.session.paciente;
   req.session.destroy(function(err) {
