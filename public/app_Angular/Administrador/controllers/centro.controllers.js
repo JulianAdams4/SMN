@@ -17,24 +17,26 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
     };
 
     $scope.create = function() {
-      $http({
-        method: 'POST',
-        url: 'api/centro',
-        data: $scope.centro
-      }).then(function(response){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> ¡Centro creado <b>exitosamente</b>! </h5>',
-            'success',
-            'ti-check',
-            3000
-          );
-        $location.path('/centro');
-      }, function(errorResponse){
-        var msj = '<h5> '+errorResponse.data.message+' </h5>';
-        demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
-      });
+      if ( validarCedula($scope.centro.nutricionista.cedula) ) {
+        demo.mostrarNotificacion('danger', "El número de cécula no es válido");
+      } 
+      else {
+        $http({
+          method: 'POST',
+          url: 'api/centro',
+          data: $scope.centro
+        })
+        .then(
+        function(response){
+            demo.showCustomNotification('top','right','<h5> ¡Centro creado <b>exitosamente</b>! </h5>','success','ti-check', 3000);
+          $location.path('/centro');
+        }, 
+        function(errorResponse){
+          var msj = '<h5> '+ errorResponse.data.message + ' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
+        });
+
+      }
     };
 
     var find = function(){
@@ -68,29 +70,26 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
     }
 
     $scope.edit = function () {
-      var centroForm = $scope.centro
-     $http({
-        method: 'PUT',
-        url: 'api/centro/'+$routeParams.centroId,
-        data: centroForm
-      })
-     .then(
+      if ( validarCedula($scope.centro.nutricionista.cedula) ) {
+        demo.mostrarNotificacion('danger', "El número de cécula no es válido");
+      } 
+      else {
+        var centroForm = $scope.centro
+        $http({
+          method: 'PUT',
+          url: 'api/centro/'+$routeParams.centroId,
+          data: centroForm
+        })
+        .then(
         function(response){
-          demo.showCustomNotification(
-            'top',
-            'right',
-            '<h5> Información general del centro editada <b>exitosamente</b>! </h5>',
-            'success',
-            'ti-check',
-            3000
-          );
-          $location.path('/centro');
-        },
-        function(errorResponse){
-          var msj = '<h5> '+errorResponse.data.message+' </h5>';
-          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
-        }
-      );
+          demo.showCustomNotification('top','right', '<h5> Información general del centro editada <b>exitosamente</b>! </h5>','success','ti-check',3000);
+           $location.path('/centro');
+         },
+         function(errorResponse){
+            var msj = '<h5> '+errorResponse.data.message+' </h5>';
+            demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
+         });
+      }
     }
 
     $scope.goEditView = function(){
@@ -113,4 +112,51 @@ angular.module('administrador').controller('CentroController',['$scope','$http',
             }
           }
     }
+
+    // ===============================================
+    function validarCedula( numeroCedula ) {
+      /*  True == Fail validation  */
+      var array = numeroCedula.split('');
+      var num = array.length;
+
+      if ( num != 10 ) {
+          return true;
+      } 
+      else {
+          // Casos especiales
+          if ( numeroCedula == '0000000000' || numeroCedula == '2222222222' || numeroCedula == '4444444444' || numeroCedula == '5555555555' || numeroCedula == '7777777777' || numeroCedula == '9999999999' ){
+              return true;
+          }
+
+          var total = 0;
+          var digito = (array[9]*1);
+
+          for(var i=0; i < (num-1); i++ ){
+              var mult = 0;
+              if ( ( i%2 ) !== 0 ) {
+                  total = total + ( array[i] * 1 );
+              }
+              else {
+                  mult = array[i] * 2;
+                  if ( mult > 9 )
+                    total = total + ( mult - 9 );
+                  else
+                    total = total + mult;
+              }
+          }
+
+          var decena = total / 10;
+          decena = Math.floor( decena );
+          decena = ( decena + 1 ) * 10;
+          var final = ( decena - total );
+
+          if ( ( final == 10 && digito === 0 ) || ( final == digito ) ) {
+              return false;
+          }
+          else {
+              return true;
+          }
+      } // else
+    }
+
   }]);

@@ -25,7 +25,7 @@ describe('/POST Centro', () => {
             telefono: "0912345578",
             horariosAtencion:"08:00-15:00",
             nutricionista: {
-    			    cedula:'1721989364',
+    			    cedula:'0925467227',
     			    nombres:'Angie',
     			    apellidos: 'Del Pezo',
               email: 'evelynbenitez263@gmail.com',
@@ -44,7 +44,7 @@ describe('/POST Centro', () => {
     var centro = {
             telefono: "0912345578",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               nombres:'Angie',
               apellidos: 'Del Pezo',
               email: 'evelynbenitez263@gmail.com',
@@ -63,7 +63,7 @@ describe('/POST Centro', () => {
     var centro = {
             direccion: "Direccion prueba",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               nombres:'Angie',
               apellidos: 'Del Pezo',
             },
@@ -81,7 +81,7 @@ describe('/POST Centro', () => {
             direccion: "Direccion prueba",
             telefono: "0912345578",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               apellidos: 'Del Pezo',
             },
         };
@@ -115,7 +115,7 @@ describe('/POST Centro', () => {
             direccion: "Direccion prueba",
             telefono: "0912345578",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               nombres:'Angie',
             },
         };
@@ -141,7 +141,7 @@ describe('/POST Centro', () => {
             telefono: "0912345578",
             horariosAtencion:"08:00-15:00",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               nombres:'Angie',
               apellidos: 'Del Pezo',
               email: 'evelynbenitez263@gmail.com',
@@ -165,7 +165,7 @@ describe('/POST Centro', () => {
             telefono: "0912345578",
             horariosAtencion:"08:00-15:00",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               nombres:'Angie',
               apellidos: 'Del Pezo',
               email: 'evelynbenitez263@gmail.com',
@@ -179,7 +179,7 @@ describe('/POST Centro', () => {
                     direccion: "",
                     telefono: "0912345578",
                     nutricionista: {
-                      cedula:'1721989364',
+                      cedula:'0925467227',
                       nombres:'Angie',
                       apellidos: 'Del Pezo',
                     },
@@ -204,7 +204,7 @@ describe('/GET Centro', () => {
             telefono: "0912345578",
             horariosAtencion:"08:00-15:00",
             nutricionista: {
-              cedula:'1721989364',
+              cedula:'0925467227',
               nombres:'Angie',
               apellidos: 'Del Pezo',
               email: 'evelynbenitez263@gmail.com',
@@ -221,6 +221,31 @@ describe('/GET Centro', () => {
         });
       });
   });
+
+  it('No actualiza los datos de un centro si la cedula no es correcta', function(done){
+        var centro = new Centro({
+            direccion: "Direccion prueba2",
+            telefono: "0912345578",
+            horariosAtencion:"08:00-15:00",
+            nutricionista: {
+              cedula:'0925467224',
+              nombres:'Angie',
+              apellidos: 'Del Pezo',
+              email: 'evelynbenitez263@gmail.com',
+              password:'12345678'
+            },
+        });
+        centro.save((err, centro) => {
+                chai.request('http://localhost:3000')
+                .get('/api/centro/'+centro._id)
+                .end((err, res) => {
+                  res.should.have.status(200);
+                  done();
+
+        });
+      });
+  });
+
   it('No encuentra un centro con un determinado ID', function(done){
         chai.request('http://localhost:3000')
                 .get('/api/centro/'+'5928bafb9fa058092098ae88')
