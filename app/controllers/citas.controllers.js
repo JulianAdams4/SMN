@@ -63,7 +63,50 @@ exports.listCitas = function(req, res){
 exports.createCita = function(req, res){
   var cita = Cita(req.body);
   var fechaFinal = moment(cita.start).add(cita.duracion,'m');
-  Cita.find({$or:[{start: {$gte: cita.start, $lt: fechaFinal}},{end: {$gt: cita.start, $lte: fechaFinal}}]}, function(err, citas){
+  Cita.find({
+    $or: [
+      {
+        start: {
+          $gte: cita.start,
+          $lt: fechaFinal
+        }
+      },
+      {
+        end: {
+          $gt: cita.start,
+          $lte: fechaFinal
+        }
+      },
+      {
+        $and: [
+          {
+            start: {
+              $gte: cita.start
+            }
+          },
+          {
+            end: {
+              $lte: fechaFinal
+            }
+          }
+        ]
+      },
+      {
+        $and: [
+          {
+            start: {
+              $lte: cita.start
+            }
+          },
+          {
+            end: {
+              $gte: fechaFinal
+            }
+          }
+        ]
+      }
+    ]
+  }, function(err, citas){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err)
