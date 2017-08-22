@@ -79,7 +79,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
             }
             else {
               esArchivoValido=false;
-              demo.showCustomNotification('top', 'right', "Formato inválido,sólo pfd", 'danger', 'ti-close', 3000);
+              demo.showCustomNotification('top', 'right', "Formato inválido, sólo PDF", 'danger', 'ti-close', 3000);
             }
         };
         // lee el archivo seleccionado como url

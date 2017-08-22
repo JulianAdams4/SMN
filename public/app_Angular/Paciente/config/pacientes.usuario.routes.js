@@ -27,6 +27,9 @@ angular.module('paciente').config(['$routeProvider',
     })
     .when('/citas', {
       templateUrl: '/app_Angular/Paciente/views/view_citas.view.html'
+    })
+    .when('/paquetes-dieta', {
+      templateUrl: '/app_Angular/Paciente/views/paquetes.dieta.view.html'
     });
   }
 ]);
