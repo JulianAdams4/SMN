@@ -79,7 +79,7 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
             }
             else {
               esArchivoValido=false;
-              demo.showCustomNotification('top', 'right', "Formato inválido, sólo PDF", 'danger', 'ti-close', 3000);
+              demo.showCustomNotification('top', 'right', "Formato inválido, sólo debe ser formato PDF", 'danger', 'ti-close', 3000);
             }
         };
         // lee el archivo seleccionado como url
@@ -247,5 +247,18 @@ angular.module('administrador').controller('PlanesController',['$scope','$http',
       });
     }
 
+    $scope.returnCurrentDate=function (){
+      var today = new Date();
+      var dd = today.getDate()+7;
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+      if(dd<10){
+        dd='0'+dd
+      }
+      if(mm<10){
+        mm='0'+mm
+      }
+      return today = yyyy+'-'+mm+'-'+dd;
+    }
 
   }]);
