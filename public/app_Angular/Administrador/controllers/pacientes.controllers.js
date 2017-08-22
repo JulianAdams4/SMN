@@ -138,36 +138,41 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     }
 
     $scope.edit = function () {
-      // Necesario para la ruta
-      var idToEdit = $scope.idPacienteEdit;
-      // Los checks con inputs se limpian si no estan marcados
-      if ($scope.antecedente.alergia==false) {
-          $scope.antecedente.descripcionAlergias = "";
+
+      if ( validarCedula( $scope.paciente.cedula ) ) {
+        demo.mostrarNotificacion('danger', "El número de cécula del paciente no es válido");
       }
-      if ($scope.antecedente.suplementoVitaminicos==false) {
-          $scope.antecedente.descripcionSuplementos = "";
-      }
-      if ($scope.antecedente.medicamento==false) {
-          $scope.antecedente.descripcionMedicamentos = "";
-      }
-      if ($scope.historiaAlimentaria.modificaFinesDeSemana==false) {
-          $scope.antecedente.comidaFinesdeSemana = "";
-      }
-      if ($scope.historiaAlimentaria.comeEntreComidas==false) {
-          $scope.antecedente.snacksEntreComidas = "";
-      }
-      // Se envian las 3 tabs
-      var dataFormEdit = {
-        paciente: $scope.paciente,
-        antecedente: $scope.antecedente,
-        historia: $scope.historiaAlimentaria
-      };
-      $http({
-        method: 'PUT',
-        url: '/api/pacientes/' + idToEdit,
-        data: dataFormEdit
-      })
-      .then(
+      else {
+        // Necesario para la ruta
+        var idToEdit = $scope.idPacienteEdit;
+        // Los checks con inputs se limpian si no estan marcados
+        if ($scope.antecedente.alergia==false) {
+            $scope.antecedente.descripcionAlergias = "";
+        }
+        if ($scope.antecedente.suplementoVitaminicos==false) {
+            $scope.antecedente.descripcionSuplementos = "";
+        }
+        if ($scope.antecedente.medicamento==false) {
+            $scope.antecedente.descripcionMedicamentos = "";
+        }
+        if ($scope.historiaAlimentaria.modificaFinesDeSemana==false) {
+            $scope.antecedente.comidaFinesdeSemana = "";
+        }
+        if ($scope.historiaAlimentaria.comeEntreComidas==false) {
+            $scope.antecedente.snacksEntreComidas = "";
+        }
+        // Se envian las 3 tabs
+        var dataFormEdit = {
+          paciente: $scope.paciente,
+          antecedente: $scope.antecedente,
+          historia: $scope.historiaAlimentaria
+        };
+        $http({
+          method: 'PUT',
+          url: '/api/pacientes/' + idToEdit,
+          data: dataFormEdit
+        })
+        .then(
         function(response){
           var msj = '<h5> ¡Paciente editado <b>exitosamente</b>! </h5>';
           demo.showCustomNotification('top', 'right', msj, 'success', 'ti-check', 3000);
@@ -176,8 +181,8 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
         function(errorResponse){
           var msj = errorResponse.data.message ? '<h5> '+errorResponse.data.message+' </h5>' : '<h5> Ocurrio un <b>error</b> al editar el paciente </h5>';
           demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
-        }
-      );
+        });
+      }
     }
 
     $scope.desactivarPaciente = function (idPaciente) {
@@ -231,6 +236,11 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
           return true;
       } 
       else {
+          // Casos especiales
+          if ( numeroCedula == '0000000000' || numeroCedula == '2222222222' || numeroCedula == '4444444444' || numeroCedula == '5555555555' || numeroCedula == '7777777777' || numeroCedula == '9999999999' ){
+              return true;
+          }
+
           var total = 0;
           var digito = (array[9]*1);
 
