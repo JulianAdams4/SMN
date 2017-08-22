@@ -11,29 +11,34 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     $scope.historiaAlimentaria.grupoAlimentos = [];
     $scope.newGrupo = {};
     $scope.create = function() {
-      var dataFormCreate = {
-        paciente: $scope.paciente,
-        antecedente: $scope.antecedente,
-        historia: $scope.historiaAlimentaria
-      };
-      $http({
-        method: 'POST',
-        url: '/api/pacientes',
-        data: dataFormCreate
-      }).then(function(response){
-        demo.showCustomNotification(
-          'top',
-          'right',
-          'Paciente creado exitosamente',
-          'success',
-          'ti-check',
-          3000
-        );
-        $location.path('pacientes');
-      }, function(errorResponse){
-        var msj = '<h5> '+errorResponse.data.message+' </h5>';
-        demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
-      });
+      if ( validarCedula( $scope.paciente.cedula ) ) {
+        demo.mostrarNotificacion('danger', "El número de cécula del paciente no es válido");
+      }
+      else {
+        var dataFormCreate = {
+          paciente: $scope.paciente,
+          antecedente: $scope.antecedente,
+          historia: $scope.historiaAlimentaria
+        };
+        $http({
+          method: 'POST',
+          url: '/api/pacientes',
+          data: dataFormCreate
+        }).then(function(response){
+          demo.showCustomNotification(
+            'top',
+            'right',
+            'Paciente creado exitosamente',
+            'success',
+            'ti-check',
+            3000
+          );
+          $location.path('pacientes');
+        }, function(errorResponse){
+          var msj = '<h5> '+errorResponse.data.message+' </h5>';
+          demo.showCustomNotification('top', 'right', msj, 'danger', 'ti-close', 3000);
+        });
+      } 
     };
 
     var find = function(){
@@ -203,16 +208,58 @@ angular.module('administrador').controller('PacientesController',['$scope','$htt
     }
     // ==============================================
     $scope.returnCurrentDate=function (){
-  		var today = new Date();
-  		var dd = today.getDate();
-  		var mm = today.getMonth()+1; //January is 0!
-  		var yyyy = today.getFullYear();
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
       if(dd<10){
         dd='0'+dd
       }
-  		if(mm<10){
+      if(mm<10){
         mm='0'+mm
-  		}
-  		return today = yyyy+'-'+mm+'-'+dd;
-  	}
+      }
+      return today = yyyy+'-'+mm+'-'+dd;
+    }
+
+    // ===============================================
+    function validarCedula( numeroCedula ) {
+      /*  True == Fail validation  */
+      var array = numeroCedula.split('');
+      var num = array.length;
+
+      if ( num != 10 ) {
+          return true;
+      } 
+      else {
+          var total = 0;
+          var digito = (array[9]*1);
+
+          for(var i=0; i < (num-1); i++ ){
+              var mult = 0;
+              if ( ( i%2 ) !== 0 ) {
+                  total = total + ( array[i] * 1 );
+              }
+              else {
+                  mult = array[i] * 2;
+                  if ( mult > 9 )
+                    total = total + ( mult - 9 );
+                  else
+                    total = total + mult;
+              }
+          }
+
+          var decena = total / 10;
+          decena = Math.floor( decena );
+          decena = ( decena + 1 ) * 10;
+          var final = ( decena - total );
+
+          if ( ( final == 10 && digito === 0 ) || ( final == digito ) ) {
+              return false;
+          }
+          else {
+              return true;
+          }
+      } // else
+    }
+
   }]);

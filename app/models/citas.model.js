@@ -44,7 +44,7 @@ var citaSchema = new Schema({
 citaSchema.pre('save', function(next){
   if(this.estaOcupado){
     this.backgroundColor = '#666';
-    this.title = 'Ocupado';
+    this.title = 'Mi Cita';
   } else {
     this.backgroundColor = '#449a2e';
     this.title = 'Disponible'

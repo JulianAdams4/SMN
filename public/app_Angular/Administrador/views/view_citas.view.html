@@ -23,8 +23,8 @@
             <option value="60">1 hora</option>
           </select>
         </div>
-        <label>
-          <input type="checkbox" data-ng-model='cita.estaOcupado' checked="false" /> Marcar como Ocupado
+        <label ng-hide="true">
+          <input type="checkbox" data-ng-model='cita.estaOcupado' checked="false"/> Marcar como Ocupado
         </label>
         <br>
         <button class="btn btn-primary" type="button" name="button" ng-click="guardarCita(cita)">Guardar Evento</button>

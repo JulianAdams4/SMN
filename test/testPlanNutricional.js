@@ -14,20 +14,18 @@ chai.use(chaiHttp);
 
 describe('planNutricional', () => {
     beforeEach((done) => {
-        PlanNutricional.remove({}, (err) => {
-          done();
-          });
         Paciente.remove({}, (err) => {
-          done();
+          PlanNutricional.remove({}, (err) => {
+            done();
+          });
          });
     });
     afterEach((done) => {
-        PlanNutricional.remove({}, (err) => {
-          done();
-          });
         Paciente.remove({}, (err) => {
-          done();
-         });
+          PlanNutricional.remove({}, (err) => {
+            done();
+          });
+        });
     });
 });
 

@@ -6,7 +6,7 @@ var Administrador = mongoose.model('Centro');
 var crypto = require('../services/crypto.js');
 
 exports.inicio = function(req, res){
-  //res.render('administrador');
+  //res.render('administrador');     //DESCOMENTAR PARA RENDERIZAR ADMINISTRADOR PARA PRUEBAS
   if(!req.session.administrador){
     res.render('login');
   } else {
@@ -16,7 +16,7 @@ exports.inicio = function(req, res){
 
 exports.iniciarSesion = function(req, res){
   var administradorIn = req.body;
-  Administrador.findOne({"nutricionista.email" : administradorIn.email }, function(err, administrador){
+  Administrador.findOne({"nutricionista.cedula" : administradorIn.cedula }, function(err, administrador){
     if(err){
       return res.status(500).send({
         message: getErrorMessage(err),
@@ -25,7 +25,7 @@ exports.iniciarSesion = function(req, res){
     }
     if(!administrador){
       return res.status(400).send({
-        message: 'Email no se encuentra registrado'
+        message: 'Usuario no se encuentra registrado'
       })
     }
     if(administradorIn.password === administrador.nutricionista.password){
@@ -35,7 +35,6 @@ exports.iniciarSesion = function(req, res){
         message: 'Autenticación exitosa'
       })
     } else {
-      console.log(administrador.nutricionista.password);
       return res.status(404).send({
         message: 'Contraseña incorrecta'
       })

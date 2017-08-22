@@ -3,6 +3,8 @@ var server = require('../server');
 var mongoose = require('mongoose');
 var Cita = mongoose.model('Cita');
 var Paciente = mongoose.model('Paciente');
+var Antecedente = mongoose.model('Antecedentes');
+var HistoriaA = mongoose.model('HistoriaAlimentaria');
 var crypto = require('../app/services/crypto.js');
 var paciente = {};
 var puerto = 'http://localhost:3000';
@@ -17,7 +19,7 @@ describe('/Loggeo-Reservar cita', function(){
 	beforeEach(function(done){
 		objetoPaciente = {
 			paciente : {
-				cedula:		'5928077593',
+				cedula:		'1721989364',
 				nombres: 	'Stalyn Alfredo',
 				apellidos: 'Gonzabay Yagual',
 				email: 'alfred.leo@hotmail.com',
@@ -45,10 +47,14 @@ describe('/Loggeo-Reservar cita', function(){
 
 	afterEach(function(done){
 		Paciente.remove({},function(err){
-      Cita.remove({},function(err){
-			     done();
+      Antecedente.remove({}, function(err){
+        HistoriaA.remove({}, function(err){
+          Cita.remove({},function(err){
+            done();
+          });
+        });
       });
-		});
+    });
 	});
 
 	it('Debe loggear un paciente exitosamente', function(done){
@@ -57,7 +63,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.send(objetoPaciente)
 			.end(function(err, res){
         credenciales={
-          email:res.body.email,
+          cedula:res.body.cedula,
           password:crypto.desencriptar(res.body.password)
         };
         chai.request(puerto)
@@ -76,7 +82,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.send(objetoPaciente)
 			.end(function(err, res){
         credenciales={
-          email:res.body.email,
+          cedula:res.body.cedula,
           password:"1234",
         };
         chai.request(puerto)
@@ -95,7 +101,7 @@ describe('/Loggeo-Reservar cita', function(){
 			.send(objetoPaciente)
 			.end(function(err, res){
         credenciales={
-          email:"hola@example.com",
+          cedula:"4658575985",
           password:"1234",
         };
         chai.request(puerto)
@@ -108,12 +114,27 @@ describe('/Loggeo-Reservar cita', function(){
 			});
 	});
 
-  it('Reserva una cita el paciente de un horario existente', function(done){
+  /*it('Reserva una cita el paciente de un horario existente', function(done){
     chai.request(puerto)
-      .put('/api/reservarCita/'+idCita)
+      .post('/api/pacientes')
+      .send(objetoPaciente)
       .end(function(err, res){
-        res.should.have.status(200);
-        done();
+        credenciales={
+          cedula:res.body.cedula,
+          password:crypto.desencriptar(res.body.password)
+        };
+        chai.request(puerto)
+        .post('/api/pacienteLogin')
+        .send(credenciales)
+        .end(function(err, res){
+          chai.request(puerto)
+          .put('/api/reservarCita/'+idCita)
+          .end(function(err, res){
+            res.should.have.status(200);
+            done();
+          });
+        });
       });
-  });
+
+  });*/
 })

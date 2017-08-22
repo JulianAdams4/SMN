@@ -7,6 +7,16 @@ angular.module('paciente').controller('UsuarioController',['$scope','$http','$ro
     $scope.historiaAlimentaria.grupoAlimentos = [];
     $scope.newGrupo = {};
 
+    $scope.inputType = 'password';
+
+    // Función para mostrar o esconder contraseña
+    $scope.hideShowPassword = function(){
+      if ($scope.inputType == 'password')
+        $scope.inputType = 'text';
+      else
+        $scope.inputType = 'password';
+    };
+
     $scope.initEdit = function () {
       $http({
         method: 'GET',
