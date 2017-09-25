@@ -287,7 +287,7 @@ exports.editPaciente = function(req, res){
       type: "danger"
     });
   }
-  
+
   // Editamos el paciente
   Paciente.findById( pacienteId, function (err, paciente) {
     // Error del servidor
@@ -503,7 +503,7 @@ exports.signIn = function(req, res){
 exports.singOut =function(req, res){
   delete req.session.paciente;
   req.session.destroy(function(err) {
-  // cannot access session here 
+  // cannot access session here
   })
   res.redirect('/');
 };

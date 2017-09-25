@@ -25,6 +25,7 @@
                     	<th>Apellidos</th>
                     	<th>Sexo</th>
                     	<th>Dirección</th>
+                      <th>Fecha de ingreso</th>
                       <th>Contraseña</th>
                       <th>Acciones</th>
                     </thead>
@@ -39,6 +40,8 @@
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.sexo"></td>
                         	<td ng-if="paciente.borrado==true" style="color:gray" data-ng-bind="paciente.direccion"></td>
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.direccion"></td>
+                          <td ng-if="paciente.borrado==true" style="color:gray" data-ng-bind="paciente.fechaIngreso | date:'dd/MM/yyyy'"></td>
+                          <td ng-if="paciente.borrado==false" data-ng-bind="paciente.fechaIngreso | date:'dd/MM/yyyy'"></td>
                           <td ng-if="paciente.borrado==false" data-ng-bind="paciente.password"></td>
                           <td ng-if="paciente.borrado==true" data-ng-bind="paciente.password"></td>
                             <td>

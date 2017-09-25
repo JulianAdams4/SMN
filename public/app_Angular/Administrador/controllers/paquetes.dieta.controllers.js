@@ -177,7 +177,7 @@ angular.module('administrador').controller('PaquetesController',['$scope','$http
     // ==============================================
     $scope.selectFile = function (){
       cambioArchivo = true;//si se da click en seleccionar archivo es por que se cambió el archivo
-      var formatosPermitidos= ['jpg', 'jpeg', 'png', 'gif',"JPG"];
+      var formatosPermitidos= ['jpg', 'jpeg', 'png', 'gif',"JPG","PNG"];
       var archivo = document.getElementById("image_file").files[0];
       if(archivo!=undefined){
         var nombreArchivo = archivo.name;
